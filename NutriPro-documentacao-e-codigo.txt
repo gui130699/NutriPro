@@ -1,378 +1,565 @@
-NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E CATÁLOGO COMPLETO DO CÓDIGO
-===============================================================
+NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E ÍNDICE DO CÓDIGO
+==================================================
 
-Versão documentada: dce7bd8 (feat: redesign NutriPro experience)
+Versão funcional documentada: 51b6ff31a90149a52f06eb7bbfd2f8e845627474
+Mensagem do commit funcional: feat: add food catalog, custom lists, meal types and themes
+Relatório documental de testes: 49bff405506f9a70f36838f57f176f02b298fc27
+Data da atualização: 30/07/2026
 Repositório: https://github.com/gui130699/NutriPro
 GitHub Pages: https://gui130699.github.io/NutriPro/
-Firebase Hosting: https://nutripro-9115a.web.app
+Firebase Hosting: https://nutripro-9115a.web.app/
 
-Este arquivo é o dossiê técnico consolidado do NutriPro. Ele reúne a
-documentação de arquitetura, instalação, segurança, deploy, estrutura e um
-índice completo e fixado do código-fonte. Cada item do índice aponta para a
-versão exata do arquivo no commit documentado; assim, o conteúdo pode ser
-consultado integralmente sem incluir dependências, arquivos binários ou builds
-gerados neste documento.
+Este é o dossiê técnico consolidado do NutriPro. Os links de código abaixo
+estão fixados no commit funcional 51b6ff31a90149a52f06eb7bbfd2f8e845627474;
+o relatório de testes está fixado no commit documental 49bff405506f9a70f36838f57f176f02b298fc27.
+O dossiê em si é atualizado em um commit documental posterior para evitar uma
+referência Git autorreferencial. Não há links restantes para o commit antigo.
 
-O que foi intencionalmente excluído:
-- node_modules/ (dependências instaladas)
+Itens intencionalmente excluídos deste índice:
+- node_modules/ e package-lock.json (dependências e arquivo gerado)
 - dist/ (build gerado)
-- package-lock.json (arquivo gerado pelo npm)
-- src/assets/hero.png (arquivo binário)
-- .env (contém configuração local e não deve ser versionado)
+- .env e qualquer conta de serviço, senha ou credencial administrativa
+- relatórios HTML, vídeos e imagens temporárias do Playwright
+- assets binários que não são código-fonte
 
 
-1. VISÃO GERAL
---------------
+1. FINALIDADE DO SISTEMA
+------------------------
 
-NutriPro é uma PWA responsiva para registro alimentar, hidratação, metas
-nutricionais, evolução de peso e perfil de usuário. A interface está em
-português do Brasil, possui autenticação por e-mail/senha e utiliza Firebase
-Authentication, Cloud Firestore e Firebase Hosting.
+NutriPro é uma PWA profissional e responsiva, em português do Brasil, para
+controle alimentar pessoal. O sistema permite registrar refeições e água,
+acompanhar calorias e macronutrientes, organizar alimentos, personalizar
+refeições, acompanhar metas e utilizar o app com uma experiência consistente
+nos temas Claro, Escuro e Sistema.
 
-Principais módulos da interface:
-- Tela de acesso, cadastro e recuperação de senha.
-- Onboarding inicial.
-- Dashboard com progresso calórico, macronutrientes e hidratação.
-- Diário alimentar por data com registro de alimento e água.
-- Cadastro de alimentos e medidas de porção.
-- Evolução de peso e gráfico de tendência.
-- Perfil, metas, privacidade e logout.
-- PWA instalável, cache e aviso de atualização.
-
-
-2. TECNOLOGIAS
---------------
-
-- React 19 + TypeScript
-- Vite 8
-- Tailwind CSS 4 via @tailwindcss/vite
-- React Router
-- React Hook Form + Zod
-- TanStack Query
-- Recharts
-- Lucide React
-- Firebase Authentication
-- Cloud Firestore
-- Firebase Hosting
-- Dexie / IndexedDB para fila offline
-- vite-plugin-pwa
-- Vitest
+Módulos principais:
+- Acesso, cadastro, recuperação de senha e onboarding persistente.
+- Dashboard diário de calorias, nutrientes e hidratação.
+- Diário por data com snapshots de alimentos e refeições.
+- Catálogo público local, lista particular, favoritos e personalizações.
+- Cadastro e ordenação de refeições com ícones Lucide.
+- Perfil, metas nutricionais, meta de hidratação e logout.
+- PWA instalável, cache e funcionamento offline do catálogo após o primeiro
+  carregamento bem-sucedido.
 
 
-3. ARQUITETURA
---------------
+2. TECNOLOGIAS E ARQUITETURA
+---------------------------
 
-Frontend
-  src/main.tsx
-    -> QueryClient + BrowserRouter + registro do service worker.
-  src/App.tsx
-    -> Rotas públicas, privadas e verificação de configuração Firebase.
-  src/hooks/useAuth.tsx
-    -> Estado do usuário autenticado via onAuthStateChanged.
-  src/services/nutrition-service.ts
-    -> Operações de leitura e escrita do Firestore.
-  src/lib/nutrition.ts
-    -> Cálculos nutricionais puros e formatadores brasileiros.
+Tecnologias:
+- React 19, TypeScript e Vite 8.
+- Tailwind CSS 4 e CSS responsivo próprio.
+- TanStack Query, React Hook Form e Zod.
+- Firebase Authentication, Cloud Firestore e Firebase Hosting.
+- Dexie/IndexedDB para fila offline e catálogo local.
+- Lucide React, Recharts e vite-plugin-pwa.
+- Vitest, Playwright/Chromium e Oxlint.
 
-Firebase
-  Authentication
-    -> Login, cadastro, logout e recuperação de senha.
-  Firestore
-    -> Collections profiles, goals, foods, mealItems, waterLogs,
-       weightLogs, recipes e dailyNotes.
-  Hosting
-    -> Publicação do build Vite em nutripro-9115a.web.app.
+Fluxo da aplicação:
 
-GitHub Pages
-  .github/workflows/deploy-pages.yml
-    -> Gera dist/ a cada push para main e publica em /NutriPro/.
+src/main.tsx
+  -> QueryClient, BrowserRouter e service worker.
+src/App.tsx
+  -> Rotas públicas/privadas, carregamento sob demanda e gerenciador do tema.
+src/hooks/useAuth.tsx
+  -> Sessão Firebase e criação idempotente das refeições iniciais.
+src/services/nutrition-service.ts
+  -> Leitura, escrita e compatibilidade dos dados Firestore.
+src/lib/food-catalog.ts + src/lib/offline.ts
+  -> Download por versão, IndexedDB e pesquisa do catálogo sem Firestore.
+src/pages/Lists.tsx
+  -> Catálogo público, lista particular e administração de refeições.
+
+O bundle separa páginas por importação dinâmica para reduzir o carregamento
+inicial. O build ainda informa um aviso de chunk principal acima de 500 kB,
+sem erro de compilação; ele é composto principalmente pelas bibliotecas de
+Firebase e visualização.
 
 
-4. MODELO DE DADOS FIRESTORE
-----------------------------
+3. CATÁLOGO PÚBLICO DE ALIMENTOS
+--------------------------------
 
-Coleções usadas pelo aplicativo:
+Estratégia:
+1. O script scripts/convert-foods.ts recebe o CSV oficial.
+2. Ele identifica colunas comuns, aceita vírgula/ponto e vírgula/tabulação,
+   converte decimais brasileiros e normaliza campos.
+3. O código original do alimento vira externalId e elimina duplicatas de forma
+   idempotente.
+4. O resultado vai para public/data/foods.json e a versão para
+   public/data/foods-version.json.
+5. O app verifica a versão, armazena o catálogo completo no IndexedDB e apenas
+   atualiza o cache quando a versão ou a contagem mudam.
+6. A pesquisa local aplica normalização sem acento, filtro por categoria/marca,
+   favoritos/ocultos e paginação; nunca renderiza milhares de itens de uma vez.
+
+Campos normalizados:
+- externalId, name, nameNormalized, searchKeywords.
+- category, brand, calories, protein, carbs, fat, fiber.
+- saturatedFat, sugar, sodium quando presentes.
+- baseUnit, unitWeightG, portionWeightG, source, language, isActive.
+
+Comando de importação:
+
+  npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0
+
+Estado atual importante:
+O arquivo oficial lista_7083_alimentos_nutrientes_100g.csv não foi fornecido
+no workspace. Portanto, foods.json contém um stub seguro vazio e
+foods-version.json informa totalFoods: 0. A aplicação, o conversor, o cache e
+os testes estão prontos, mas esta versão não afirma falsamente que 7.083
+alimentos foram importados. Ao receber o CSV, deve-se executar a importação,
+conferir totalFoods: 7083 e repetir os testes de busca antes do deploy.
+
+
+4. LISTAS, PERSONALIZAÇÕES E FAVORITOS
+---------------------------------------
+
+Rota: /listas
+
+Abas:
+- Lista pública: pesquisa em todo o catálogo local, detalhes, favorito,
+  personalização individual, ocultar e restaurar.
+- Minha lista: alimentos particulares, versões personalizadas de públicos,
+  favoritos, filtros e ordenação por nome, mais recentes ou mais utilizados.
+- Refeições: criação, edição, ativação, exclusão lógica e reordenação.
+
+Um alimento público nunca é alterado globalmente pelo usuário. A camada
+foodOverrides aplica apenas os campos modificados quando aquele usuário vê ou
+usa o alimento. isHidden remove somente a visualização individual. Restaurar
+valores originais remove o override sem modificar foods.json. Favoritos usam
+uma chave determinística por usuário, origem e alimento para evitar duplicidade.
+
+Alimentos particulares ficam em foods com isPublic: false. A exclusão é lógica
+(isActive: false), preservando por completo os snapshots já armazenados em
+mealItems.
+
+
+5. REFEIÇÕES E DIÁRIO
+--------------------
+
+Cada usuário recebe de modo idempotente estas refeições iniciais:
+- Café da manhã, Lanche da manhã, Almoço, Lanche da tarde, Jantar e Ceia.
+
+mealTypes armazena somente a chave textual do ícone, nome, cor, horário
+sugerido, ordem, isActive e isDefault. O catálogo central inclui 33 ícones
+Lucide, busca sem acentos, grade clicável, destaque de seleção e suporte de
+teclado.
+
+Novos lançamentos no diário gravam:
+- mealTypeId, mealNameSnapshot e mealIconSnapshot.
+- foodId, foodSource, foodNameSnapshot, unitWeightGSnapshot.
+- Quantidade, unidade, gramas consumidas e nutrientes calculados.
+
+Leituras antigas com somente mealName continuam compatíveis: o sistema resolve
+um nome e ícone de fallback. scripts/migrate-meal-snapshots.ts oferece uma
+migração administrativa opcional, primeiro em modo de simulação e depois com
+--apply. O script exige GOOGLE_APPLICATION_CREDENTIALS ou
+FIREBASE_SERVICE_ACCOUNT_JSON e jamais é executado no navegador.
+
+No diário, unidade e porção são bloqueadas quando o alimento não possui peso
+médio/peso de porção maior que zero. Hidratação aceita atalhos e valor
+personalizado, respeita a data selecionada e permite excluir registros.
+
+
+6. TEMA, PWA E OFFLINE
+----------------------
+
+Tema:
+- Opções Claro, Escuro e Sistema na página de perfil.
+- Cache imediato no localStorage com chave nutripro.theme.
+- Sincronização em userPreferences/{uid} quando autenticado.
+- Script em index.html aplica data-theme, color-scheme e a classe dark antes
+  do React para evitar flash de cor incorreta.
+- A paleta escura possui fundos, cards, formulários, modais, navegação,
+  dashboard, diário, listas e perfil próprios, mantendo contraste e verde
+  NutriPro.
+
+PWA/offline:
+- vite-plugin-pwa gera manifest e service worker.
+- O catálogo usa IndexedDB com metadados de versão e troca atômica de cache.
+- Quando a atualização remota falha e existe cache, a lista continua disponível
+  em modo offline/stale.
+- A fila pending do Dexie foi preservada para operações offline futuras.
+
+
+7. MODELO DE DADOS E SEGURANÇA FIRESTORE
+-----------------------------------------
+
+Coleções protegidas:
 
 profiles
-  userId, dados de perfil, preferências e timestamps.
-
+  userId, nome, nascimento, altura, objetivo e conclusão do onboarding.
 goals
-  userId, calories, protein, carbs, fat, fiber, water_ml.
-
+  userId, calories, protein, carbs, fat, fiber e waterMl.
 foods
-  userId, nome, categoria, nutrientes por 100 g/ml, porções, visibilidade.
-
+  alimento particular, nutrientes por 100 g/ml e isActive.
+foodOverrides
+  userId, publicFoodId, campos individualmente personalizados e isHidden.
+foodFavorites
+  userId, foodId, foodSource e createdAt.
+mealTypes
+  userId, nome, ícone, cor, horário, ordem, estado e timestamps.
 mealItems
-  userId, date, mealName, snapshots nutricionais, quantidade e unidade.
-
+  snapshots de refeição/alimento e nutrientes por lançamento.
 waterLogs
-  userId, date, amount_ml, logged_at e created_at.
+  userId, date, amountMl e loggedAt.
+weightLogs, recipes, dailyNotes, userPreferences
+  dados privados associados ao próprio userId.
 
-weightLogs
-  userId, logged_on, weight_kg, percentual de gordura e observações.
+firestore.rules possui correspondências explícitas para todas essas coleções.
+Dados privados somente podem ser lidos, criados, atualizados e excluídos pelo
+proprietário. Atualizações não podem alterar userId. Alimentos públicos no
+Firestore, se existirem, não podem ser criados/alterados/excluídos por um
+usuário comum. O catálogo oficial em JSON é separado do Firestore.
 
-As regras de segurança exigem userId igual a request.auth.uid para operações
-sobre dados particulares. Alimentos públicos somente são lidos por usuários
-autenticados e devem ser administrados pelo Console Firebase ou por uma futura
-função administrativa protegida.
-
-
-5. INSTALAÇÃO LOCAL
--------------------
-
-1. Instale Node.js 22 ou superior.
-2. Clone o repositório.
-3. Execute: npm install
-4. Copie .env.example para .env.
-5. Preencha VITE_FIREBASE_API_KEY e VITE_FIREBASE_APP_ID.
-6. No Firebase Console, ative Authentication > E-mail/senha.
-7. Execute: firebase login
-8. Execute: firebase deploy --only firestore:rules,firestore:indexes
-9. Execute: npm run dev
-
-Comandos úteis:
-- npm run dev       inicia o ambiente local
-- npm run test      executa os testes unitários
-- npm run build     gera o build de produção e o service worker
-- npm run preview   abre o build local
-- firebase deploy   publica Firestore e Hosting
+Índices compostos adicionados:
+- mealItems: userId + date.
+- waterLogs: userId + date.
+- foods: userId + name.
+- mealTypes: userId + order.
 
 
-6. DEPLOY
----------
+8. INSTALAÇÃO, EXECUÇÃO E DEPLOY
+--------------------------------
 
-Firebase Hosting
-  1. npm run build
-  2. firebase deploy --only hosting
+1. Instale Node.js 20 ou superior e Firebase CLI.
+2. Execute npm install.
+3. Copie .env.example para .env e preencha todas as variáveis VITE_FIREBASE_*.
+4. Ative Authentication > E-mail/senha no Firebase.
+5. Publique regras e índices antes de usar dados reais:
 
-GitHub Pages
-  O workflow deploy-pages.yml é disparado automaticamente em pushes para main.
-  As variáveis VITE_FIREBASE_API_KEY e VITE_FIREBASE_APP_ID devem existir em:
-  Settings > Secrets and variables > Actions > Variables do repositório.
+  firebase login
+  firebase deploy --only firestore:rules,firestore:indexes
 
-O Vite utiliza base /NutriPro/ no GitHub Actions e / nos demais ambientes.
-Isso garante que scripts, CSS, manifest e rotas sejam encontrados nas duas
-plataformas de hosting.
+6. Ambiente local:
 
+  npm run dev
 
-7. PWA E OFFLINE
-----------------
+7. Build e Firebase Hosting:
 
-- O manifest e o service worker são gerados pelo vite-plugin-pwa.
-- A aplicação solicita atualização quando uma nova versão está disponível.
-- src/lib/offline.ts fornece uma fila Dexie/IndexedDB com UUIDs de cliente.
-- A implementação pode usar enqueueOffline e syncPending em mutações que
-  precisarem sobreviver a indisponibilidade de rede.
+  npm run build
+  firebase deploy
 
+8. GitHub Pages é publicado por .github/workflows/deploy-pages.yml em pushes
+   para main. As variáveis VITE_FIREBASE_* precisam estar nas Actions Variables
+   do repositório. Vite usa /NutriPro/ no GitHub Actions e / nos demais casos.
 
-8. QUALIDADE E TESTES
----------------------
+Comandos de qualidade:
 
-Testes unitários atuais:
-- Conversão de quilogramas, unidades e porções para gramas.
-- Cálculo nutricional sem arredondamento indevido.
-- Soma diária de nutrientes e meta restante.
-- Nutrientes de receita por porção.
-
-Última validação desta versão:
-- npm run test: 4 testes aprovados.
-- npm run build: aprovado.
-- GitHub Actions de GitHub Pages: aprovado.
-- Firebase Hosting: deploy concluído.
+  npm run test
+  npm run build
+  npm run lint
+  npx playwright install chromium
+  npm run test:e2e
 
 
-9. DIRETRIZES DE SEGURANÇA
+9. TESTES EXECUTADOS E LIMITAÇÕES
+---------------------------------
+
+Versão funcional validada: 51b6ff31a90149a52f06eb7bbfd2f8e845627474
+
+- npm run test: 25 testes aprovados em 8 arquivos.
+- npm run build: aprovado com PWA e TypeScript sem erros.
+- npm run lint: aprovado sem warnings.
+- npm run test:e2e: 13 testes Playwright/Chromium aprovados.
+- Navegador real local: tela de acesso, rota privada, tema escuro, contraste,
+  ausência de overflow horizontal e console sem erros relevantes verificados.
+- Responsividade automatizada: 375 × 667, 390 × 844, 768 × 1024,
+  1366 × 768 e 1920 × 1080 aprovadas na tela sem autenticação.
+- Revisão textual: terminologia em PT-BR padronizada; nenhuma ocorrência de
+  “Teses” foi encontrada no projeto.
+
+O relatório detalhado está em:
+https://raw.githubusercontent.com/gui130699/NutriPro/49bff405506f9a70f36838f57f176f02b298fc27/docs/TESTES-FUNCIONAIS.md
+
+Limitações não ocultadas:
+- O CSV oficial de 7.083 alimentos ainda não foi fornecido; não foi possível
+  validar a contagem, uma busca de item no fim da base ou cache offline real
+  dessa base.
+- Não foram executadas mutações autenticadas contra produção. Não havia conta
+  de homologação nem Firebase Emulator Suite completo; o Firestore Emulator
+  requer Java, que não está instalado neste ambiente.
+- Cadastro real, onboarding persistido, overrides reais entre dois usuários,
+  refeições persistidas, diário, hidratação e tema sincronizado devem ser
+  repetidos campo a campo em Firebase de teste antes de qualquer teste destrutivo.
+
+
+10. HISTÓRICO DE ALTERAÇÕES
 --------------------------
 
-- Nunca versione o arquivo .env.
-- Nunca exponha chave administrativa do Firebase no frontend.
-- A API key web do Firebase é pública por natureza, mas deve ser restringida
-  no Google Cloud Console para domínios e APIs necessários.
-- Mantenha as regras firestore.rules publicadas antes de liberar o app.
-- Revise as regras ao adicionar novas coleções ou papéis administrativos.
+30/07/2026 — versão funcional 51b6ff31a90149a52f06eb7bbfd2f8e845627474
+- Adicionado pipeline de catálogo JSON/IndexedDB, pesquisa e importador CSV.
+- Adicionada rota Listas com personalização individual, favoritos e alimentos
+  particulares.
+- Adicionados tipos de refeição, 33 ícones e snapshots compatíveis no diário.
+- Adicionados temas Claro/Escuro/Sistema, perfil persistente e onboarding real.
+- Reforçadas regras e índices do Firestore.
+- Adicionados testes unitários, E2E, responsividade e relatório funcional.
+- Corrigidos testes de acessibilidade e de responsividade durante a validação.
+
+30/07/2026 — relatório documental 49bff405506f9a70f36838f57f176f02b298fc27
+- Registrados os 25 testes unitários, 13 E2E e a verificação manual no navegador.
+- Declaradas as limitações de CSV e de homologação Firebase.
 
 
-10. ÍNDICE COMPLETO DO CÓDIGO-FONTE
------------------------------------
+11. VALIDAÇÃO DA VERSÃO
+-----------------------
 
-DOCUMENTAÇÃO, METADADOS E CONFIGURAÇÃO
+[APROVADO] npm run test — 25/25 testes unitários.
+[APROVADO] npm run build — build PWA concluído sem erro.
+[APROVADO] npm run lint — análise estática sem warning.
+[APROVADO] npm run test:e2e — 13/13 cenários Chromium.
+[APROVADO] Navegador local — acesso, redirecionamento privado, tema escuro,
+            sem overflow e console sem erros.
+[APROVADO] Responsividade não autenticada nas cinco dimensões descritas.
+[APROVADO] Revisão ortográfica e ausência do campo/texto “Teses”.
+[APROVADO] Temas Claro, Escuro e Sistema por testes unitários; bootstrap dark
+            também confirmado em E2E.
+[PENDENTE] Pesquisa sobre 7.083 alimentos — depende do CSV oficial ausente.
+[PENDENTE] Escritas autenticadas/isolamento entre duas contas — depende de
+            Emulator Suite ou projeto Firebase de homologação.
 
-===== README.md =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/README.md
 
-===== .env.example =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.env.example
+12. ESTRUTURA DE PASTAS
+-----------------------
 
-===== .gitignore =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.gitignore
+NutriPro/
+├── docs/
+│   └── TESTES-FUNCIONAIS.md
+├── public/data/
+│   ├── foods.json
+│   └── foods-version.json
+├── scripts/
+│   ├── convert-foods.ts
+│   └── migrate-meal-snapshots.ts
+├── src/
+│   ├── components/foods/, components/meals/, components/theme/
+│   ├── data/meal-icons.ts
+│   ├── hooks/
+│   ├── lib/
+│   ├── pages/Lists.tsx e demais páginas
+│   └── services/nutrition-service.ts
+├── tests/e2e/
+├── firestore.rules
+├── firestore.indexes.json
+├── package.json
+└── vite.config.ts
 
-===== package.json =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/package.json
 
-===== vite.config.ts =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/vite.config.ts
+13. ÍNDICE FIXADO DO CÓDIGO-FONTE
+---------------------------------
 
-===== tsconfig.json =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/tsconfig.json
+Base funcional dos links: 51b6ff31a90149a52f06eb7bbfd2f8e845627474
 
-===== tsconfig.app.json =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/tsconfig.app.json
+DOCUMENTAÇÃO E CONFIGURAÇÃO
 
-===== tsconfig.node.json =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/tsconfig.node.json
+README.md
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/README.md
 
-===== .oxlintrc.json =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.oxlintrc.json
+.env.example
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/.env.example
 
-===== index.html =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/index.html
+.gitignore
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/.gitignore
 
-===== .firebaserc =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.firebaserc
+package.json
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/package.json
 
-===== firebase.json =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/firebase.json
+vite.config.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/vite.config.ts
 
-===== .github/workflows/deploy-pages.yml =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.github/workflows/deploy-pages.yml
+playwright.config.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/playwright.config.ts
+
+index.html
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/index.html
+
+firebase.json
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/firebase.json
+
+.firebaserc
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/.firebaserc
 
 FIREBASE
 
-===== firestore.rules =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/firestore.rules
+firestore.rules
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/firestore.rules
 
-===== firestore.indexes.json =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/firestore.indexes.json
+firestore.indexes.json
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/firestore.indexes.json
 
-ENTRADA, ROTAS E ESTILOS
+CATÁLOGO E SCRIPTS
 
-===== src/main.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/main.tsx
+public/data/foods.json
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/public/data/foods.json
 
-===== src/App.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/App.tsx
+public/data/foods-version.json
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/public/data/foods-version.json
 
-===== src/index.css =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/index.css
+scripts/convert-foods.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/scripts/convert-foods.ts
 
-===== src/App.css (legado do template Vite; não importado) =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/App.css
+scripts/migrate-meal-snapshots.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/scripts/migrate-meal-snapshots.ts
 
-===== src/vite-env.d.ts =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/vite-env.d.ts
+ENTRADA E UI
 
-COMPONENTES
+src/main.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/main.tsx
 
-===== src/components/Layout.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/components/Layout.tsx
+src/App.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/App.tsx
 
-===== src/components/MetricCard.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/components/MetricCard.tsx
+src/index.css
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/index.css
 
-===== src/components/OfflineStatus.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/components/OfflineStatus.tsx
+src/components/Layout.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/Layout.tsx
 
-AUTENTICAÇÃO
+src/components/ConfirmDialog.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/ConfirmDialog.tsx
 
-===== src/hooks/useAuth.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/hooks/useAuth.tsx
+src/components/MetricCard.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/MetricCard.tsx
 
-===== src/lib/firebase.ts =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/firebase.ts
+src/components/OfflineStatus.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/OfflineStatus.tsx
 
-===== src/pages/Auth.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Auth.tsx
+COMPONENTES DE ALIMENTOS, REFEIÇÕES E TEMA
+
+src/components/foods/FoodForm.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/foods/FoodForm.tsx
+
+src/components/meals/MealIconPicker.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/meals/MealIconPicker.tsx
+
+src/components/meals/MealTypeForm.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/meals/MealTypeForm.tsx
+
+src/components/theme/ThemeSelector.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/theme/ThemeSelector.tsx
 
 PÁGINAS
 
-===== src/pages/Dashboard.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Dashboard.tsx
+src/pages/Auth.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Auth.tsx
 
-===== src/pages/Diary.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Diary.tsx
+src/pages/Dashboard.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Dashboard.tsx
 
-===== src/pages/AddFood.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/AddFood.tsx
+src/pages/Diary.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Diary.tsx
 
-===== src/pages/Evolution.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Evolution.tsx
+src/pages/Lists.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Lists.tsx
 
-===== src/pages/Profile.tsx =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Profile.tsx
+src/pages/AddFood.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/AddFood.tsx
 
-DOMÍNIO, SERVIÇOS E TESTES
+src/pages/Profile.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Profile.tsx
 
-===== src/lib/types.ts =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/types.ts
+src/pages/Evolution.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Evolution.tsx
 
-===== src/lib/nutrition.ts =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/nutrition.ts
+DOMÍNIO, HOOKS E SERVIÇOS
 
-===== src/lib/nutrition.test.ts =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/nutrition.test.ts
+src/hooks/useAuth.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/hooks/useAuth.tsx
 
-===== src/lib/offline.ts =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/offline.ts
+src/hooks/useTheme.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/hooks/useTheme.ts
 
-===== src/services/nutrition-service.ts =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/services/nutrition-service.ts
+src/lib/firebase.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/firebase.ts
 
-ARQUIVOS SQL HISTÓRICOS / ALTERNATIVOS
+src/lib/types.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/types.ts
 
-O app atual está configurado para Firebase. Os arquivos abaixo foram mantidos
-no repositório como referência da arquitetura original em Supabase/PostgreSQL.
+src/lib/nutrition.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/nutrition.ts
 
-===== supabase/migrations/202607300001_initial_schema.sql =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/supabase/migrations/202607300001_initial_schema.sql
+src/lib/offline.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/offline.ts
 
-===== supabase/seed.sql =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/supabase/seed.sql
+src/lib/food-catalog.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-catalog.ts
 
-ASSETS TEXTUAIS
+src/lib/food-search.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-search.ts
 
-===== public/favicon.svg =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/public/favicon.svg
+src/lib/food-overrides.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-overrides.ts
 
-===== public/pwa-192.svg =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/public/pwa-192.svg
+src/lib/meal-types.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/meal-types.ts
 
-===== public/pwa-512.svg =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/public/pwa-512.svg
+src/lib/theme.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/theme.ts
 
-===== public/icons.svg (legado / não referenciado) =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/public/icons.svg
+src/data/meal-icons.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/data/meal-icons.ts
 
-===== src/assets/react.svg (legado / não referenciado) =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/assets/react.svg
+src/services/nutrition-service.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/services/nutrition-service.ts
 
-===== src/assets/vite.svg (legado / não referenciado) =====
-https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/assets/vite.svg
+TESTES UNITÁRIOS
+
+src/lib/nutrition.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/nutrition.test.ts
+
+src/lib/food-catalog.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-catalog.test.ts
+
+src/lib/food-search.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-search.test.ts
+
+src/lib/food-overrides.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-overrides.test.ts
+
+src/lib/meal-types.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/meal-types.test.ts
+
+src/lib/theme.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/theme.test.ts
+
+src/data/meal-icons.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/data/meal-icons.test.ts
+
+TESTES E2E E RELATÓRIO
+
+tests/e2e/auth-and-theme.smoke.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/tests/e2e/auth-and-theme.smoke.spec.ts
+
+tests/e2e/accessibility.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/tests/e2e/accessibility.spec.ts
+
+tests/e2e/private-routes.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/tests/e2e/private-routes.spec.ts
+
+tests/e2e/responsive.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/tests/e2e/responsive.spec.ts
+
+docs/TESTES-FUNCIONAIS.md
+https://raw.githubusercontent.com/gui130699/NutriPro/49bff405506f9a70f36838f57f176f02b298fc27/docs/TESTES-FUNCIONAIS.md
+
+ARQUIVOS HISTÓRICOS NÃO UTILIZADOS PELO FRONTEND FIREBASE
+
+supabase/migrations/202607300001_initial_schema.sql
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/supabase/migrations/202607300001_initial_schema.sql
+
+supabase/seed.sql
+https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/supabase/seed.sql
 
 
-11. ESTRUTURA DE PASTAS
-------------------------
+14. PRÓXIMOS PASSOS
+-------------------
 
-NutriPro/
-├── .github/workflows/deploy-pages.yml
-├── public/
-├── src/
-│   ├── components/
-│   ├── hooks/
-│   ├── lib/
-│   ├── pages/
-│   ├── services/
-│   ├── App.tsx
-│   ├── index.css
-│   └── main.tsx
-├── supabase/
-│   ├── migrations/
-│   └── seed.sql
-├── firebase.json
-├── firestore.indexes.json
-├── firestore.rules
-├── package.json
-├── README.md
-└── vite.config.ts
-
+1. Anexar o CSV oficial, executar a importação e validar exatamente 7.083 itens.
+2. Configurar Firebase Emulator Suite ou um projeto de homologação com conta
+   de teste exclusiva.
+3. Executar em homologação os fluxos autenticados descritos em
+   docs/TESTES-FUNCIONAIS.md, sem modificar dados reais.
+4. Publicar regras/índices e Hosting apenas após essa rodada de homologação.
 
 FIM DO DOCUMENTO
