@@ -1,10 +1,26 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>nutripro</title>
+    <script>
+      ;(() => {
+        try {
+          const saved = localStorage.getItem('nutripro.theme')
+          const preference = ['light', 'dark', 'system'].includes(saved) ? saved : 'system'
+          const supportsMediaQuery = typeof window.matchMedia === 'function'
+          const isDark = preference === 'dark' || (preference === 'system' && supportsMediaQuery && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          const root = document.documentElement
+          root.classList.toggle('dark', isDark)
+          root.dataset.theme = isDark ? 'dark' : 'light'
+          root.style.colorScheme = isDark ? 'dark' : 'light'
+        } catch {
+          // Keep the browser default when storage or media queries are unavailable.
+        }
+      })()
+    </script>
+    <title>NutriPro — controle alimentar</title>
   </head>
   <body>
     <div id="root"></div>

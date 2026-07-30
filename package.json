@@ -8,6 +8,12 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:report": "playwright show-report",
+    "catalog:import": "tsx scripts/convert-foods.ts",
+    "migrate:meals": "tsx scripts/migrate-meal-snapshots.ts",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -27,6 +33,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.0",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
@@ -35,10 +42,12 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
     "eslint-config-prettier": "^10.1.8",
+    "firebase-admin": "^14.2.0",
     "jsdom": "^29.1.1",
     "oxlint": "^1.75.0",
     "prettier": "^3.9.6",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.1",
     "typescript": "~6.0.2",
     "vite": "^8.2.0",
     "vitest": "^4.1.10"

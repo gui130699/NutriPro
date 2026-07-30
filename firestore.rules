@@ -1,17 +1,118 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    function signedIn() { return request.auth != null; }
-    function ownsData() { return signedIn() && resource.data.userId == request.auth.uid; }
-    function createsOwn() { return signedIn() && request.resource.data.userId == request.auth.uid; }
-    match /foods/{foodId} {
-      allow read: if signedIn() && (resource.data.is_public == true || resource.data.userId == request.auth.uid);
-      allow create: if createsOwn() && request.resource.data.is_public == false;
-      allow update, delete: if ownsData() && resource.data.is_public == false;
+    function signedIn() {
+      return request.auth != null;
     }
-    match /{collection}/{document} {
-      allow read, update, delete: if ownsData();
+
+    function ownsExisting() {
+      return signedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    function createsOwn() {
+      return signedIn() && request.resource.data.userId == request.auth.uid;
+    }
+
+    function updatesOwnWithoutChangingOwner() {
+      return ownsExisting()
+        && request.resource.data.userId == resource.data.userId;
+    }
+
+    match /profiles/{userId} {
+      allow read: if signedIn() && userId == request.auth.uid;
+      allow create: if signedIn()
+        && userId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid;
+      allow update: if signedIn()
+        && userId == request.auth.uid
+        && request.resource.data.userId == resource.data.userId;
+      allow delete: if signedIn() && userId == request.auth.uid;
+    }
+
+    match /userPreferences/{userId} {
+      allow read: if signedIn() && userId == request.auth.uid;
+      allow create: if signedIn()
+        && userId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid;
+      allow update: if signedIn()
+        && userId == request.auth.uid
+        && request.resource.data.userId == resource.data.userId;
+      allow delete: if signedIn() && userId == request.auth.uid;
+    }
+
+    match /goals/{goalId} {
+      allow read: if ownsExisting();
       allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
+    }
+
+    match /foods/{foodId} {
+      allow read: if signedIn()
+        && (resource.data.isPublic == true || resource.data.userId == request.auth.uid);
+      allow create: if createsOwn() && request.resource.data.isPublic == false;
+      allow update: if ownsExisting()
+        && resource.data.isPublic == false
+        && request.resource.data.userId == resource.data.userId
+        && request.resource.data.isPublic == false;
+      allow delete: if ownsExisting() && resource.data.isPublic == false;
+    }
+
+    match /foodOverrides/{overrideId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
+    }
+
+    match /foodFavorites/{favoriteId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
+    }
+
+    match /mealTypes/{mealTypeId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
+    }
+
+    match /mealItems/{mealItemId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
+    }
+
+    match /waterLogs/{waterLogId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
+    }
+
+    match /weightLogs/{weightLogId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
+    }
+
+    match /recipes/{recipeId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
+    }
+
+    match /dailyNotes/{noteId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn();
+      allow update: if updatesOwnWithoutChangingOwner();
+      allow delete: if ownsExisting();
     }
   }
 }

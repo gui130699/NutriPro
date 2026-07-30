@@ -1,25 +1,24 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Apple, BookOpenCheck, ChevronRight, Info, Save, Scale, Sparkles } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { Apple, Sparkles } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { FoodForm, type FoodFormValues } from '../components/foods/FoodForm'
 import { useAuth } from '../hooks/useAuth'
 import { nutritionService } from '../services/nutrition-service'
-
-const schema = z.object({ name: z.string().min(2, 'Informe o nome'), brand: z.string().optional(), category: z.string().optional(), base_unit: z.enum(['g', 'ml']), calories: z.coerce.number().min(0), protein: z.coerce.number().min(0), carbs: z.coerce.number().min(0), fat: z.coerce.number().min(0), fiber: z.coerce.number().min(0), unit_weight_g: z.coerce.number().optional(), portion_weight_g: z.coerce.number().optional() })
-type Form = z.infer<typeof schema>
 
 export function AddFood() {
   const { user } = useAuth()
   const queryClient = useQueryClient()
-  const { register, handleSubmit, formState: { errors } } = useForm<Form>({ resolver: zodResolver(schema), defaultValues: { base_unit: 'g', calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 } })
-  const save = useMutation({ mutationFn: (values: Form) => nutritionService.createFood(user!.id, values), onSuccess: () => queryClient.invalidateQueries({ queryKey: ['foods'] }) })
+  const navigate = useNavigate()
+  const save = useMutation({
+    mutationFn: (values: FoodFormValues) => nutritionService.createFood(user!.uid, values),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['private-foods', user?.uid] })
+      void queryClient.invalidateQueries({ queryKey: ['foods'] })
+    },
+  })
 
-  return <section className="food-page"><header className="food-header"><div><p className="eyebrow">Sua base alimentar</p><h1 className="page-title">Um alimento novo,<br/><span>mais praticidade depois.</span></h1><p className="page-subtitle">Cadastre informações que você consulta com frequência para tornar o diário ainda mais rápido.</p></div><div className="food-header-aside"><span><Sparkles size={16}/></span><p>Os valores nutricionais são salvos por 100 g ou 100 ml.</p></div></header>
-    <form onSubmit={handleSubmit((values) => save.mutate(values))} className="food-form">
-      <section className="food-form-main card"><div className="form-section-heading"><span className="icon-badge"><Apple size={17}/></span><div><p>01 · Identificação</p><h2>Sobre este alimento</h2></div></div><div className="form-grid form-grid-basic"><label className="form-label form-label-full">Nome do alimento <em>*</em><input className="field" placeholder="Ex.: Iogurte natural" {...register('name')}/>{errors.name && <small className="field-error">{errors.name.message}</small>}</label><label className="form-label">Marca <input className="field" placeholder="Opcional" {...register('brand')}/></label><label className="form-label">Categoria <input className="field" placeholder="Ex.: Laticínios" {...register('category')}/></label></div><div className="form-divider"/><div className="form-section-heading"><span className="icon-badge nutrition-badge"><BookOpenCheck size={17}/></span><div><p>02 · Informação nutricional</p><h2>Valores de referência</h2></div></div><div className="nutrition-context"><Info size={15}/><span>Os números abaixo correspondem a cada <strong><select {...register('base_unit')}><option value="g">100 gramas</option><option value="ml">100 mililitros</option></select></strong> do alimento.</span></div><div className="macro-grid">{([['calories', 'Calorias', 'kcal', 'macro-calories'], ['protein', 'Proteínas', 'g', 'macro-protein'], ['carbs', 'Carboidratos', 'g', 'macro-carbs'], ['fat', 'Gorduras', 'g', 'macro-fat'], ['fiber', 'Fibras', 'g', 'macro-fiber']] as const).map(([key, label, unit, tone]) => <label key={key} className={`macro-field ${tone}`}><span>{label}</span><div><input type="number" min="0" step="0.01" {...register(key)}/><small>{unit}</small></div></label>)}</div></section>
-      <aside className="food-form-side"><section className="serving-card"><div className="form-section-heading"><span className="icon-badge serving-badge"><Scale size={17}/></span><div><p>03 · Porções</p><h2>Medidas práticas</h2></div></div><p className="serving-intro">Ajude o NutriPro a converter unidades que você usa no dia a dia.</p><label className="form-label">Peso médio da unidade<input className="field" type="number" min="0" step="0.01" placeholder="Ex.: 80" {...register('unit_weight_g')}/><small>Em gramas · para banana, ovo, fatia etc.</small></label><label className="form-label">Peso de uma porção<input className="field" type="number" min="0" step="0.01" placeholder="Ex.: 30" {...register('portion_weight_g')}/><small>Em gramas · para scoop, concha, medida etc.</small></label></section><section className="food-tip"><span><Sparkles size={16}/></span><p><strong>Dica rápida</strong>Use os dados do rótulo ou uma fonte nutricional confiável.</p></section></aside>
-      <footer className="food-form-footer"><div>{save.isSuccess && <span className="save-status save-success">Alimento salvo com sucesso.</span>}{save.error && <span className="save-status save-error">Não foi possível salvar agora.</span>}</div><button className="btn btn-primary" disabled={save.isPending}>{save.isPending ? 'Salvando…' : <><Save size={16}/> Salvar alimento</>}<ChevronRight size={15}/></button></footer>
-    </form>
+  return <section className="food-page">
+    <header className="food-header"><div><p className="eyebrow">Minha lista</p><h1 className="page-title">Cadastre um <span>alimento particular.</span></h1><p className="page-subtitle">Ele ficará disponível somente na sua conta e poderá ser usado no diário alimentar.</p></div><div className="food-header-aside"><span><Sparkles size={16}/></span><p>Os valores nutricionais são informados por 100 g ou 100 ml.</p></div></header>
+    <section className="food-form-main card"><div className="form-section-heading"><span className="icon-badge"><Apple size={17}/></span><div><p>Novo alimento</p><h2>Informações nutricionais</h2></div></div>{save.isSuccess && <p className="save-status save-success">Alimento salvo com sucesso. Você já pode encontrá-lo em Minha lista.</p>}{save.error && <p className="save-status save-error">Não foi possível salvar o alimento. Tente novamente.</p>}<FoodForm isSubmitting={save.isPending} onCancel={() => navigate('/listas')} onSubmit={async (values) => { await save.mutateAsync(values) }}/></section>
   </section>
 }

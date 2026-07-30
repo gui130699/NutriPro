@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
@@ -22,7 +22,9 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../lib/firebase";
+import { doc, serverTimestamp, writeBatch } from "firebase/firestore";
+import { useAuth } from "../hooks/useAuth";
+import { auth, db } from "../lib/firebase";
 
 type AuthMode = "login" | "signup" | "recover";
 type Notice = { type: "success" | "error"; text: string };
@@ -33,6 +35,79 @@ const authSchema = z.object({
 });
 
 type AuthForm = z.infer<typeof authSchema>;
+
+const isValidBirthDate = (value: string) => {
+  if (!value) return true;
+
+  const date = new Date(`${value}T12:00:00`);
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+
+  return (
+    /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+    !Number.isNaN(date.getTime()) &&
+    date.toISOString().slice(0, 10) === value &&
+    date <= today &&
+    date.getFullYear() >= 1900
+  );
+};
+
+const onboardingSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "Informe pelo menos 2 caracteres para o seu nome.")
+    .max(80, "Use no máximo 80 caracteres."),
+  birthDate: z
+    .string()
+    .trim()
+    .refine(isValidBirthDate, "Informe uma data de nascimento válida."),
+  goal: z.enum(["Emagrecimento", "Manutenção", "Ganho de peso"], {
+    errorMap: () => ({ message: "Escolha o seu objetivo principal." }),
+  }),
+  heightCm: z.coerce
+    .number({ invalid_type_error: "Informe sua altura em centímetros." })
+    .finite("Informe uma altura válida.")
+    .min(80, "A altura deve ser de pelo menos 80 cm.")
+    .max(260, "A altura deve ser de no máximo 260 cm."),
+  currentWeightKg: z.coerce
+    .number({ invalid_type_error: "Informe seu peso atual em quilogramas." })
+    .finite("Informe um peso válido.")
+    .min(25, "O peso deve ser de pelo menos 25 kg.")
+    .max(500, "O peso deve ser de no máximo 500 kg."),
+  calories: z.coerce
+    .number({ invalid_type_error: "Informe sua meta de calorias." })
+    .finite("Informe uma meta válida.")
+    .min(500, "A meta deve ser de pelo menos 500 kcal.")
+    .max(10000, "A meta deve ser de no máximo 10.000 kcal."),
+  protein: z.coerce
+    .number({ invalid_type_error: "Informe sua meta de proteínas." })
+    .finite("Informe uma meta válida.")
+    .min(0, "A meta não pode ser negativa.")
+    .max(1000, "A meta deve ser de no máximo 1.000 g."),
+  carbs: z.coerce
+    .number({ invalid_type_error: "Informe sua meta de carboidratos." })
+    .finite("Informe uma meta válida.")
+    .min(0, "A meta não pode ser negativa.")
+    .max(2000, "A meta deve ser de no máximo 2.000 g."),
+  fat: z.coerce
+    .number({ invalid_type_error: "Informe sua meta de gorduras." })
+    .finite("Informe uma meta válida.")
+    .min(0, "A meta não pode ser negativa.")
+    .max(1000, "A meta deve ser de no máximo 1.000 g."),
+  fiber: z.coerce
+    .number({ invalid_type_error: "Informe sua meta de fibras." })
+    .finite("Informe uma meta válida.")
+    .min(0, "A meta não pode ser negativa.")
+    .max(300, "A meta deve ser de no máximo 300 g."),
+  waterMl: z.coerce
+    .number({ invalid_type_error: "Informe sua meta de hidratação." })
+    .finite("Informe uma meta válida.")
+    .min(250, "A meta deve ser de pelo menos 250 ml.")
+    .max(10000, "A meta deve ser de no máximo 10.000 ml."),
+});
+
+type OnboardingForm = z.infer<typeof onboardingSchema>;
 
 const modeCopy: Record<
   AuthMode,
@@ -488,6 +563,111 @@ export function Login({ setup = false }: { setup?: boolean }) {
 
 export function Onboarding() {
   const nav = useNavigate();
+  const { user, loading } = useAuth();
+  const [notice, setNotice] = useState<Notice | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<OnboardingForm>({
+    resolver: zodResolver(onboardingSchema),
+    defaultValues: {
+      name: "",
+      birthDate: "",
+      goal: "Emagrecimento",
+      heightCm: undefined,
+      currentWeightKg: undefined,
+      calories: 2000,
+      protein: 120,
+      carbs: 250,
+      fat: 65,
+      fiber: 30,
+      waterMl: 2500,
+    },
+  });
+
+  useEffect(() => {
+    if (!loading && !user) nav("/entrar", { replace: true });
+  }, [loading, nav, user]);
+
+  async function submit(values: OnboardingForm) {
+    const currentUser = auth?.currentUser ?? user;
+
+    if (!currentUser || !db) {
+      setNotice({
+        type: "error",
+        text: "Entre na sua conta para salvar o perfil inicial.",
+      });
+      return;
+    }
+
+    setNotice(null);
+
+    try {
+      const batch = writeBatch(db);
+      const now = serverTimestamp();
+      const today = new Date().toISOString().slice(0, 10);
+      const profileRef = doc(db, "profiles", currentUser.uid);
+      const goalsRef = doc(db, "goals", currentUser.uid);
+      const initialWeightRef = doc(
+        db,
+        "weightLogs",
+        `${currentUser.uid}_initial`,
+      );
+
+      batch.set(
+        profileRef,
+        {
+          userId: currentUser.uid,
+          name: values.name.trim(),
+          displayName: values.name.trim(),
+          email: currentUser.email ?? null,
+          birthDate: values.birthDate || null,
+          heightCm: values.heightCm,
+          goal: values.goal,
+          onboardingCompleted: true,
+          onboardingCompletedAt: now,
+          updatedAt: now,
+        },
+        { merge: true },
+      );
+      batch.set(
+        goalsRef,
+        {
+          userId: currentUser.uid,
+          calories: values.calories,
+          protein: values.protein,
+          carbs: values.carbs,
+          fat: values.fat,
+          fiber: values.fiber,
+          waterMl: values.waterMl,
+          updatedAt: now,
+        },
+        { merge: true },
+      );
+      batch.set(
+        initialWeightRef,
+        {
+          userId: currentUser.uid,
+          weightKg: values.currentWeightKg,
+          weight: values.currentWeightKg,
+          date: today,
+          source: "onboarding",
+          updatedAt: now,
+        },
+        { merge: true },
+      );
+
+      await batch.commit();
+      nav("/", { replace: true });
+    } catch (error) {
+      console.error("Não foi possível salvar o onboarding.", error);
+      setNotice({
+        type: "error",
+        text: "Não foi possível salvar seu perfil agora. Verifique a conexão e tente novamente.",
+      });
+    }
+  }
 
   return (
     <main className="min-h-[100dvh] bg-[#f3f7f2] p-3 sm:p-5 lg:p-6">
@@ -561,21 +741,21 @@ export function Onboarding() {
 
             <form
               className="mt-8 grid gap-5 sm:grid-cols-2"
-              onSubmit={(event) => {
-                event.preventDefault();
-                nav("/");
-              }}
+              noValidate
+              onSubmit={handleSubmit(submit)}
             >
               <label className="block sm:col-span-2">
                 <span className="mb-2 block text-sm font-bold text-[#294b41]">
                   Como podemos chamar você?
                 </span>
                 <input
-                  required
                   autoComplete="name"
                   placeholder="Seu nome"
+                  aria-invalid={!!errors.name}
                   className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition placeholder:text-[#a0b0aa] focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                  {...register("name")}
                 />
+                <FieldError>{errors.name?.message}</FieldError>
               </label>
               <label className="block">
                 <span className="mb-2 block text-sm font-bold text-[#294b41]">
@@ -583,21 +763,27 @@ export function Onboarding() {
                 </span>
                 <input
                   type="date"
+                  max={new Date().toISOString().slice(0, 10)}
+                  aria-invalid={!!errors.birthDate}
                   className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                  {...register("birthDate")}
                 />
+                <FieldError>{errors.birthDate?.message}</FieldError>
               </label>
               <label className="block">
                 <span className="mb-2 block text-sm font-bold text-[#294b41]">
                   Objetivo principal
                 </span>
                 <select
-                  defaultValue="Emagrecimento"
+                  aria-invalid={!!errors.goal}
                   className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                  {...register("goal")}
                 >
                   <option>Emagrecimento</option>
                   <option>Manutenção</option>
                   <option>Ganho de peso</option>
                 </select>
+                <FieldError>{errors.goal?.message}</FieldError>
               </label>
               <label className="block">
                 <span className="mb-2 block text-sm font-bold text-[#294b41]">
@@ -606,11 +792,15 @@ export function Onboarding() {
                 </span>
                 <input
                   type="number"
-                  min="1"
+                  min="80"
+                  max="260"
                   inputMode="decimal"
                   placeholder="Ex.: 168"
+                  aria-invalid={!!errors.heightCm}
                   className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition placeholder:text-[#a0b0aa] focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                  {...register("heightCm")}
                 />
+                <FieldError>{errors.heightCm?.message}</FieldError>
               </label>
               <label className="block">
                 <span className="mb-2 block text-sm font-bold text-[#294b41]">
@@ -619,12 +809,16 @@ export function Onboarding() {
                 </span>
                 <input
                   type="number"
-                  min="1"
+                  min="25"
+                  max="500"
                   step="0.1"
                   inputMode="decimal"
                   placeholder="Ex.: 65,5"
+                  aria-invalid={!!errors.currentWeightKg}
                   className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition placeholder:text-[#a0b0aa] focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                  {...register("currentWeightKg")}
                 />
+                <FieldError>{errors.currentWeightKg?.message}</FieldError>
               </label>
               <label className="block sm:col-span-2">
                 <span className="mb-2 block text-sm font-bold text-[#294b41]">
@@ -635,28 +829,140 @@ export function Onboarding() {
                 </span>
                 <div className="relative">
                   <input
-                    defaultValue="2000"
                     type="number"
-                    min="1"
+                    min="500"
+                    max="10000"
                     inputMode="numeric"
+                    aria-invalid={!!errors.calories}
                     className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 pr-16 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                    {...register("calories")}
                   />
                   <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm font-semibold text-[#82938d]">
                     kcal
                   </span>
                 </div>
+                <FieldError>{errors.calories?.message}</FieldError>
               </label>
+              <fieldset className="grid gap-4 rounded-[1.4rem] border border-[#e2ece5] bg-[#fbfdfb] p-4 sm:col-span-2 sm:grid-cols-2">
+                <legend className="px-1 text-sm font-bold text-[#294b41]">
+                  Metas nutricionais diárias
+                </legend>
+                <p className="-mt-2 text-xs leading-5 text-[#81928c] sm:col-span-2">
+                  Comece com estas referências e ajuste quando quiser.
+                </p>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-bold text-[#294b41]">
+                    Proteínas <small className="font-medium text-[#81928c]">(g)</small>
+                  </span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="1000"
+                    step="0.1"
+                    inputMode="decimal"
+                    aria-invalid={!!errors.protein}
+                    className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                    {...register("protein")}
+                  />
+                  <FieldError>{errors.protein?.message}</FieldError>
+                </label>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-bold text-[#294b41]">
+                    Carboidratos <small className="font-medium text-[#81928c]">(g)</small>
+                  </span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="2000"
+                    step="0.1"
+                    inputMode="decimal"
+                    aria-invalid={!!errors.carbs}
+                    className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                    {...register("carbs")}
+                  />
+                  <FieldError>{errors.carbs?.message}</FieldError>
+                </label>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-bold text-[#294b41]">
+                    Gorduras <small className="font-medium text-[#81928c]">(g)</small>
+                  </span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="1000"
+                    step="0.1"
+                    inputMode="decimal"
+                    aria-invalid={!!errors.fat}
+                    className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                    {...register("fat")}
+                  />
+                  <FieldError>{errors.fat?.message}</FieldError>
+                </label>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-bold text-[#294b41]">
+                    Fibras <small className="font-medium text-[#81928c]">(g)</small>
+                  </span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="300"
+                    step="0.1"
+                    inputMode="decimal"
+                    aria-invalid={!!errors.fiber}
+                    className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                    {...register("fiber")}
+                  />
+                  <FieldError>{errors.fiber?.message}</FieldError>
+                </label>
+                <label className="block sm:col-span-2">
+                  <span className="mb-2 block text-sm font-bold text-[#294b41]">
+                    Meta de hidratação <small className="font-medium text-[#81928c]">(ml)</small>
+                  </span>
+                  <input
+                    type="number"
+                    min="250"
+                    max="10000"
+                    step="50"
+                    inputMode="numeric"
+                    aria-invalid={!!errors.waterMl}
+                    className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
+                    {...register("waterMl")}
+                  />
+                  <FieldError>{errors.waterMl?.message}</FieldError>
+                </label>
+              </fieldset>
+              {notice && (
+                <div
+                  role="alert"
+                  aria-live="polite"
+                  className={`flex gap-3 rounded-2xl border px-4 py-3.5 text-sm leading-5 sm:col-span-2 ${notice.type === "success" ? "border-[#ccebd4] bg-[#effaf1] text-[#226644]" : "border-[#f4d5d9] bg-[#fff6f7] text-[#a63546]"}`}
+                >
+                  {notice.type === "success" ? (
+                    <CircleCheck size={19} className="mt-0.5 shrink-0" />
+                  ) : (
+                    <span className="mt-2 size-2 shrink-0 rounded-full bg-current" />
+                  )}
+                  <span>{notice.text}</span>
+                </div>
+              )}
               <div className="sm:col-span-2 mt-1 flex flex-col-reverse gap-4 border-t border-[#e5ece7] pt-6 sm:flex-row sm:items-center sm:justify-between">
                 <p className="max-w-sm text-xs leading-5 text-[#83938e]">
                   As estimativas são informativas e não substituem orientação
                   médica ou nutricional.
                 </p>
-                <button className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-[#143c35] px-5 py-3.5 text-sm font-bold text-white shadow-[0_12px_22px_rgba(20,60,53,0.2)] transition hover:-translate-y-0.5 hover:bg-[#0e3029] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17835c]">
-                  <span>Salvar e começar</span>
-                  <ArrowRight
-                    size={18}
-                    className="transition-transform group-hover:translate-x-0.5"
-                  />
+                <button
+                  type="submit"
+                  disabled={isSubmitting || loading}
+                  aria-busy={isSubmitting}
+                  className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-[#143c35] px-5 py-3.5 text-sm font-bold text-white shadow-[0_12px_22px_rgba(20,60,53,0.2)] transition hover:-translate-y-0.5 hover:bg-[#0e3029] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17835c]"
+                >
+                  <span>{isSubmitting ? "Salvando…" : "Salvar e começar"}</span>
+                  {!isSubmitting && (
+                    <ArrowRight
+                      size={18}
+                      className="transition-transform group-hover:translate-x-0.5"
+                    />
+                  )}
                 </button>
               </div>
             </form>

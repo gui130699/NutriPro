@@ -1,17 +1,18 @@
-import { Activity, Apple, BookOpen, ChevronRight, Droplets, Home, Plus, UserRound } from 'lucide-react'
+import { Activity, BookOpen, ChevronRight, Droplets, Home, ListChecks, UserRound } from 'lucide-react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const links = [
   { to: '/', label: 'Visão geral', icon: Home },
   { to: '/diario', label: 'Meu diário', icon: BookOpen },
-  { to: '/adicionar', label: 'Alimentos', icon: Apple },
+  { to: '/listas', label: 'Listas', icon: ListChecks },
   { to: '/evolucao', label: 'Evolução', icon: Activity },
   { to: '/perfil', label: 'Perfil', icon: UserRound },
 ]
 
 export function Layout() {
   const location = useLocation()
-  const pageName = links.find((link) => link.to === location.pathname)?.label ?? 'NutriPro'
+  const pageName = links.find((link) => link.to === location.pathname)?.label
+    ?? (location.pathname === '/adicionar' ? 'Novo alimento' : 'NutriPro')
   return <div className="app-shell">
     <aside className="desktop-sidebar">
       <NavLink to="/" className="brand-lockup"><span className="brand-mark"><Droplets size={22} strokeWidth={2.8} /></span><span>nutri<span>pro</span></span></NavLink>
@@ -24,6 +25,6 @@ export function Layout() {
       <div className="mobile-topbar"><NavLink to="/" className="brand-lockup"><span className="brand-mark"><Droplets size={19}/></span><span>nutri<span>pro</span></span></NavLink><span className="page-caption">{pageName}</span></div>
       <div className="page-container"><Outlet /></div>
     </main>
-    <nav className="mobile-nav">{links.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `mobile-link ${isActive ? 'mobile-link-active' : ''}`}>{({ isActive }) => <><span className="mobile-icon"><Icon size={19} strokeWidth={isActive ? 2.7 : 2}/></span><span>{to === '/adicionar' ? <Plus size={19} strokeWidth={3}/> : label}</span></>}</NavLink>)}</nav>
+    <nav className="mobile-nav">{links.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `mobile-link ${isActive ? 'mobile-link-active' : ''}`}>{({ isActive }) => <><span className="mobile-icon"><Icon size={19} strokeWidth={isActive ? 2.7 : 2}/></span><span>{label}</span></>}</NavLink>)}</nav>
   </div>
 }
