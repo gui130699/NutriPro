@@ -106,3 +106,5 @@ html.dark #root > main { background:#0e1813!important; } html.dark #root > main 
 
 /* Keeps the onboarding nutrition group legible when the app follows a dark system theme. */
 html.dark #root > main .onboarding-goals { border-color:#294737; background:#102019; }
+html.dark #root > main .auth-signup-cta { border-color:#355a45; color:#d4f6df; background:#1d3b2a; }
+html.dark #root > main .auth-signup-cta:hover { background:#294d37; }

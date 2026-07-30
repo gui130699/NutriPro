@@ -534,19 +534,32 @@ export function Login({ setup = false }: { setup?: boolean }) {
               </button>
             </form>
 
-            {mode !== "recover" && (
+            {mode === "login" && (
               <div className="mt-7 border-t border-[#e5ece7] pt-6 text-center text-sm text-[#71827c]">
-                {mode === "login"
-                  ? "Ainda não tem uma conta?"
-                  : "Já faz parte do NutriPro?"}{" "}
+                <p>Ainda não tem uma conta?</p>
                 <button
                   type="button"
-                  onClick={() =>
-                    selectMode(mode === "login" ? "signup" : "login")
-                  }
+                  onClick={() => selectMode("signup")}
+                  className="auth-signup-cta group mt-3 flex w-full items-center justify-center gap-2 rounded-2xl border border-[#b7dec1] bg-[#eff9ef] px-5 py-3.5 font-bold text-[#176c4c] transition hover:-translate-y-0.5 hover:bg-[#dff4e5] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#17835c]"
+                >
+                  Criar conta grátis
+                  <ArrowRight
+                    size={17}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </button>
+              </div>
+            )}
+
+            {mode === "signup" && (
+              <div className="mt-7 border-t border-[#e5ece7] pt-6 text-center text-sm text-[#71827c]">
+                Já faz parte do NutriPro?{" "}
+                <button
+                  type="button"
+                  onClick={() => selectMode("login")}
                   className="font-bold text-[#17835c] underline decoration-[#9dd3aa] decoration-2 underline-offset-4 transition hover:text-[#0d5f42] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#17835c]"
                 >
-                  {mode === "login" ? "Criar conta" : "Entrar"}
+                  Entrar
                 </button>
               </div>
             )}

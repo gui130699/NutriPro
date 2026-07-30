@@ -52,6 +52,20 @@ function Private() {
   return user ? <PrivateWithOnboarding userId={user.uid} /> : <Navigate to="/entrar" replace />
 }
 
+function EntryGate() {
+  const { user, loading, configured } = useAuth()
+  if (loading) return <div className="grid min-h-screen place-items-center text-brand">Carregando o NutriPro…</div>
+  if (!configured) return <Login setup />
+  return user ? <Navigate to="/" replace /> : <Login />
+}
+
+function OnboardingGate() {
+  const { user, loading, configured } = useAuth()
+  if (loading) return <div className="grid min-h-screen place-items-center text-brand">Carregando o NutriPro…</div>
+  if (!configured || !user) return <Navigate to="/entrar" replace />
+  return <Onboarding />
+}
+
 function PrivateWithOnboarding({ userId }: { userId: string }) {
   const onboarding = useOnboardingState(userId)
   if (onboarding === 'loading') return <div className="grid min-h-screen place-items-center text-brand">Carregando seu {'espa\u00e7o'}…</div>
@@ -60,8 +74,8 @@ function PrivateWithOnboarding({ userId }: { userId: string }) {
 
 export default function App() {
   return <AuthProvider><ThemeProvider><PwaInstallControl /><Suspense fallback={<div className="app-loading">Carregando o NutriPro…</div>}><Routes>
-    <Route path="/entrar" element={<Login />} />
-    <Route path="/onboarding" element={<Onboarding />} />
+    <Route path="/entrar" element={<EntryGate />} />
+    <Route path="/onboarding" element={<OnboardingGate />} />
     <Route element={<Private />}>
       <Route path="/" element={<Dashboard />} />
       <Route path="/diario" element={<Diary />} />

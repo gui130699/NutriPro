@@ -26,6 +26,17 @@ test.describe('Acesso sem credenciais Firebase', () => {
     await expect(page.getByText('Use ao menos 6 caracteres.')).toBeVisible()
   })
 
+  test('oferece cadastro destacado para quem ainda não tem conta', async ({ page }) => {
+    await page.getByRole('button', { name: 'Criar conta grátis' }).click()
+
+    await expect(
+      page.getByRole('heading', { name: 'Crie uma rotina mais leve.' }),
+    ).toBeVisible()
+    await expect(
+      page.getByRole('button', { name: 'Criar minha conta' }),
+    ).toBeVisible()
+  })
+
   test('oferece recuperação de acesso e valida o formulário localmente', async ({
     page,
   }) => {
