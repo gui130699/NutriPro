@@ -764,6 +764,8 @@ acesso; a correção de rota está incluída no próximo push deste commit.
 Resultados desta rodada:
 - npm ci --no-audit --no-fund: concluído normalmente, 775 pacotes, após
   sincronização do package-lock.json para o CI.
+- npm 10.9.4 (runtime do Node 22 usado no Pages): npm ci --dry-run aprovado,
+  incluindo as dependências opcionais wasm do Tailwind.
 - npm run lint: aprovado.
 - npm run test: 55/55 em 15 arquivos aprovados.
 - npm run test:e2e: 15/15 Chromium aprovados.

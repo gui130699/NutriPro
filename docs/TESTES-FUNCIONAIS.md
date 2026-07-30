@@ -34,6 +34,7 @@ Resultados observados:
 - Build para Pages: 39 entradas no precache depois da limpeza de `dist`; builds antigos não permaneceram no service worker.
 - Regras e índices Firestore: compilação aprovada no dry run para `nutripro-9115a`.
 - Após sincronizar o lockfile, `npm ci --no-audit --no-fund` concluiu normalmente; o erro de CI por dependência ausente foi removido antes do novo push.
+- O mesmo lockfile foi validado com `npx --yes npm@10.9.4 ci --dry-run --ignore-scripts --no-audit --no-fund`, correspondente ao npm do runner Node 22 do Pages.
 
 O aviso de chunk principal acima de 500 kB veio do Vite como recomendação de otimização; não é erro de compilação. Os bundles antigos passaram a ser removidos antes do build para impedir que esse precache cresça a cada publicação.
 
