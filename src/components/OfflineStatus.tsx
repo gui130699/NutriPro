@@ -1,0 +1,3 @@
+import { Cloud, CloudOff } from 'lucide-react'
+import { useEffect, useState } from 'react'
+export function OfflineStatus() { const [online, setOnline] = useState(navigator.onLine); useEffect(() => { const on = () => setOnline(true), off = () => setOnline(false); addEventListener('online', on); addEventListener('offline', off); return () => { removeEventListener('online', on); removeEventListener('offline', off) } }, []); return <span className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ${online ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>{online ? <Cloud size={13} /> : <CloudOff size={13} />}{online ? 'Online' : 'Offline'}</span> }
