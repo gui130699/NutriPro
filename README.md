@@ -116,6 +116,7 @@ npx playwright install chromium
 - **Android, Windows, macOS e Linux:** no Chrome ou Edge, use o botão **Instalar app** quando ele aparecer. O navegador exibirá a confirmação nativa.
 - **iPhone e iPad:** use o botão **Instalar app** para ver o passo a passo. No Safari, toque em **Compartilhar → Adicionar à Tela de Início**. A Apple exige essa ação manual.
 - O botão não é mostrado quando o NutriPro já está aberto como aplicativo. A instalação requer uma URL HTTPS publicada, como o Firebase Hosting ou GitHub Pages.
+- Quando uma atualização do NutriPro estiver disponível, confirme a recarga: o novo service worker é ativado antes de abrir a versão atualizada.
 
 ## Publicação
 

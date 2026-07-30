@@ -7,5 +7,12 @@ import './index.css'
 import App from './App'
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 30_000, retry: 1 } } })
-registerSW({ onNeedRefresh: () => { if (confirm('Uma nova versão está disponível. Atualizar agora?')) window.location.reload() } })
+const updateServiceWorker = registerSW({
+  immediate: true,
+  onNeedRefresh: () => {
+    if (window.confirm('Uma nova versão está disponível. Atualizar agora?')) {
+      void updateServiceWorker(true)
+    }
+  },
+})
 createRoot(document.getElementById('root')!).render(<StrictMode><QueryClientProvider client={queryClient}><BrowserRouter basename={import.meta.env.BASE_URL}><App /></BrowserRouter></QueryClientProvider></StrictMode>)
