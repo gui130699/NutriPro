@@ -4,6 +4,7 @@ NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E ÍNDICE DO CÓDIGO
 Versão funcional documentada: 51b6ff31a90149a52f06eb7bbfd2f8e845627474
 Mensagem do commit funcional: feat: add food catalog, custom lists, meal types and themes
 Relatório documental de testes: 49bff405506f9a70f36838f57f176f02b298fc27
+Commit da atualização documental principal: aa77492
 Data da atualização: 30/07/2026
 Repositório: https://github.com/gui130699/NutriPro
 GitHub Pages: https://gui130699.github.io/NutriPro/
