@@ -10,7 +10,7 @@
 | Ambiente | Windows, Node.js local, Vite e Chromium do Playwright |
 | Firebase | Nenhuma escrita de dados de produção durante os testes |
 | Unitários | 55 aprovados em 15 arquivos |
-| E2E | 15 aprovados no Chromium |
+| E2E | 15 aprovados no Chromium, em modo isolado `VITE_E2E=true` |
 | Build PWA | normal e com `GITHUB_ACTIONS=true` aprovados |
 
 ## Comandos executados
@@ -29,7 +29,7 @@ Resultados observados:
 
 - `npm run lint`: aprovado, sem avisos.
 - `npm run test`: 15 arquivos e 55 testes aprovados.
-- `npm run test:e2e`: 15 cenários aprovados.
+- `npm run test:e2e`: 15 cenários aprovados com `VITE_E2E=true`; esse modo não inicializa Auth ou Firestore e impede chamadas e escritas no Firebase de produção durante os smoke tests.
 - `npm run build`: TypeScript e PWA aprovados.
 - Build para Pages: 39 entradas no precache depois da limpeza de `dist`; builds antigos não permaneceram no service worker.
 - Regras e índices Firestore: compilação aprovada no dry run para `nutripro-9115a`.

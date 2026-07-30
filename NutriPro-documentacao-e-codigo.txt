@@ -758,7 +758,9 @@ acesso; a correção de rota está incluída no próximo push deste commit.
 - .github/workflows/deploy-pages.yml executa npm ci, lint, testes e build antes
   do deploy do GitHub Pages.
 - .github/workflows/playwright.yml executa Chromium em push, pull request e
-  execução manual, publicando relatório como artefato.
+  execução manual, publicando relatório como artefato. Ele define
+  VITE_E2E=true: o cliente não inicializa Firebase nesse modo, mantendo os
+  smoke tests de interface isolados de leituras e escritas na produção.
 - npm run build agora executa scripts/clean-build.mjs, tsc -b e vite build.
 
 Resultados desta rodada:
@@ -768,7 +770,7 @@ Resultados desta rodada:
   incluindo as dependências opcionais wasm do Tailwind.
 - npm run lint: aprovado.
 - npm run test: 55/55 em 15 arquivos aprovados.
-- npm run test:e2e: 15/15 Chromium aprovados.
+- npm run test:e2e com VITE_E2E=true: 15/15 Chromium aprovados.
 - npm run build e GITHUB_ACTIONS=true npm run build: aprovados.
 - firebase deploy --only firestore:rules,firestore:indexes --dry-run:
   regras compiladas e índices lidos com sucesso no projeto nutripro-9115a.
