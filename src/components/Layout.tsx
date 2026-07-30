@@ -1,4 +1,29 @@
-import { Activity, BookOpen, Droplets, Home, Plus, UserRound } from 'lucide-react'
-import { NavLink, Outlet } from 'react-router-dom'
-const links = [{ to: '/', label: 'Início', icon: Home }, { to: '/diario', label: 'Diário', icon: BookOpen }, { to: '/adicionar', label: 'Adicionar', icon: Plus }, { to: '/evolucao', label: 'Evolução', icon: Activity }, { to: '/perfil', label: 'Perfil', icon: UserRound }]
-export function Layout() { return <div className="min-h-screen md:flex"><aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white p-6 md:block"><div className="mb-10 flex items-center gap-2 text-xl font-bold text-brand"><Droplets /> NutriPro</div><nav className="space-y-2">{links.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `flex items-center gap-3 rounded-xl px-4 py-3 font-medium ${isActive ? 'bg-mint text-brand' : 'text-slate-600 hover:bg-slate-50'}`}><Icon size={19} />{label}</NavLink>)}</nav></aside><main className="mx-auto w-full max-w-6xl px-4 pb-24 pt-5 md:px-8 md:py-8"><Outlet /></main><nav className="fixed bottom-0 left-0 right-0 z-20 flex justify-around border-t border-slate-200 bg-white px-1 py-2 md:hidden">{links.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `flex flex-col items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-medium ${isActive ? 'text-brand' : 'text-slate-500'}`}><Icon size={20}/>{label}</NavLink>)}</nav></div> }
+import { Activity, Apple, BookOpen, ChevronRight, Droplets, Home, Plus, UserRound } from 'lucide-react'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
+
+const links = [
+  { to: '/', label: 'Visão geral', icon: Home },
+  { to: '/diario', label: 'Meu diário', icon: BookOpen },
+  { to: '/adicionar', label: 'Alimentos', icon: Apple },
+  { to: '/evolucao', label: 'Evolução', icon: Activity },
+  { to: '/perfil', label: 'Perfil', icon: UserRound },
+]
+
+export function Layout() {
+  const location = useLocation()
+  const pageName = links.find((link) => link.to === location.pathname)?.label ?? 'NutriPro'
+  return <div className="app-shell">
+    <aside className="desktop-sidebar">
+      <NavLink to="/" className="brand-lockup"><span className="brand-mark"><Droplets size={22} strokeWidth={2.8} /></span><span>nutri<span>pro</span></span></NavLink>
+      <p className="sidebar-label">Seu espaço</p>
+      <nav className="sidebar-nav">{links.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}><Icon size={19} strokeWidth={2.1}/><span>{label}</span>{to === '/' && <ChevronRight size={16} className="side-arrow" />}</NavLink>)}</nav>
+      <div className="sidebar-goal"><div className="sidebar-goal-icon"><Activity size={16}/></div><p>Uma escolha de cada vez.</p><strong>Seu bem-estar é o foco.</strong></div>
+      <NavLink to="/perfil" className="profile-chip"><span className="profile-avatar">NP</span><span><strong>Minha conta</strong><small>Configurações</small></span><ChevronRight size={16}/></NavLink>
+    </aside>
+    <main className="main-stage">
+      <div className="mobile-topbar"><NavLink to="/" className="brand-lockup"><span className="brand-mark"><Droplets size={19}/></span><span>nutri<span>pro</span></span></NavLink><span className="page-caption">{pageName}</span></div>
+      <div className="page-container"><Outlet /></div>
+    </main>
+    <nav className="mobile-nav">{links.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `mobile-link ${isActive ? 'mobile-link-active' : ''}`}>{({ isActive }) => <><span className="mobile-icon"><Icon size={19} strokeWidth={isActive ? 2.7 : 2}/></span><span>{to === '/adicionar' ? <Plus size={19} strokeWidth={3}/> : label}</span></>}</NavLink>)}</nav>
+  </div>
+}

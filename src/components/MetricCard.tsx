@@ -1,2 +1,15 @@
+import type { LucideIcon } from 'lucide-react'
 import { br, remaining } from '../lib/nutrition'
-export function MetricCard({ label, value, goal, unit, color = 'bg-brand' }: { label: string; value: number; goal: number; unit: string; color?: string }) { const pct = goal ? Math.round(value / goal * 100) : 0; const over = value > goal; return <article className="card p-4"><div className="flex justify-between"><span className="font-medium">{label}</span><span className={over ? 'font-semibold text-rose-600' : 'text-slate-500'}>{pct}%</span></div><div className="mt-3 text-2xl font-bold">{br(value)} <small className="text-sm font-medium text-slate-500">{unit}</small></div><div className="mt-1 text-xs text-slate-500">Meta: {br(goal)} {unit} · {over ? `${br(value - goal)} acima` : `${br(remaining(goal, value))} restantes`}</div><div className="progress mt-4"><span className={over ? 'bg-rose-500' : color} style={{ width: `${Math.min(pct, 100)}%` }} /></div></article> }
+
+type Props = { label: string; value: number; goal: number; unit: string; color?: string; icon?: LucideIcon; compact?: boolean }
+export function MetricCard({ label, value, goal, unit, color = '#64b996', icon: Icon, compact = false }: Props) {
+  const pct = goal ? Math.round(value / goal * 100) : 0
+  const over = value > goal
+  return <article className={`metric-card ${compact ? 'metric-card-compact' : ''}`} style={{ '--metric-color': over ? '#ef6d65' : color } as React.CSSProperties}>
+    <div className="metric-head"><span className="metric-icon">{Icon && <Icon size={17} strokeWidth={2.4}/>}</span><span className="metric-percent">{pct}%</span></div>
+    <div className="metric-name">{label}</div>
+    <div className="metric-value">{br(value)} <small>{unit}</small></div>
+    <div className="metric-caption">{over ? `${br(value - goal)} acima da meta` : `${br(remaining(goal, value))} para a meta`}</div>
+    <div className="metric-track"><span style={{ width: `${Math.min(pct, 100)}%` }} /></div>
+  </article>
+}
