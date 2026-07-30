@@ -17,7 +17,7 @@ PWA responsiva em português do Brasil para diário alimentar, hidratação, met
 - Alimentos particulares, favoritos, personalização individual de itens públicos, ocultação e restauração sem alterar a base global.
 - Tipos de refeição editáveis, ordenáveis, ativáveis e com catálogo acessível de ícones Lucide.
 - Tema Claro, Escuro e Sistema com cache local, sincronização em `userPreferences` e aplicação sem flash de cor.
-- PWA com manifest, service worker e cache de catálogo no IndexedDB.
+- PWA com manifest, service worker, cache de catálogo no IndexedDB e instalação guiada em Android, iOS e desktop.
 
 ## Tecnologias
 
@@ -103,12 +103,19 @@ Defina `GOOGLE_APPLICATION_CREDENTIALS` ou `FIREBASE_SERVICE_ACCOUNT_JSON` somen
 | `npm run test:e2e:report` | abre o relatório HTML mais recente |
 | `npm run catalog:import -- arquivo.csv --version x.y.z` | converte a base oficial |
 | `npm run migrate:meals` | simula migração de snapshots legados |
+| `npm run pwa:icons` | regenera os ícones PNG do manifest e do iOS |
 
 Instale o navegador do Playwright uma vez quando necessário:
 
 ```bash
 npx playwright install chromium
 ```
+
+## Instalar como aplicativo
+
+- **Android, Windows, macOS e Linux:** no Chrome ou Edge, use o botão **Instalar app** quando ele aparecer. O navegador exibirá a confirmação nativa.
+- **iPhone e iPad:** use o botão **Instalar app** para ver o passo a passo. No Safari, toque em **Compartilhar → Adicionar à Tela de Início**. A Apple exige essa ação manual.
+- O botão não é mostrado quando o NutriPro já está aberto como aplicativo. A instalação requer uma URL HTTPS publicada, como o Firebase Hosting ou GitHub Pages.
 
 ## Publicação
 

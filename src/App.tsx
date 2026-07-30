@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import { Layout } from './components/Layout'
+import { PwaInstallControl } from './components/PwaInstallControl'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import { useTheme } from './hooks/useTheme'
 
@@ -27,7 +28,7 @@ function Private() {
 }
 
 export default function App() {
-  return <AuthProvider><ThemeManager /><Suspense fallback={<div className="app-loading">Carregando o NutriPro…</div>}><Routes>
+  return <AuthProvider><ThemeManager /><PwaInstallControl /><Suspense fallback={<div className="app-loading">Carregando o NutriPro…</div>}><Routes>
     <Route path="/entrar" element={<Login />} />
     <Route path="/onboarding" element={<Onboarding />} />
     <Route element={<Private />}>
