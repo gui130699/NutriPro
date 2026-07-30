@@ -3,7 +3,9 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
-const base = process.env.GITHUB_ACTIONS ? '/NutriPro/' : '/'
+// GitHub Actions also runs the Playwright development server. Only the Pages
+// deploy step opts into the repository subpath; all other environments use /.
+const base = process.env.NUTRIPRO_GITHUB_PAGES === 'true' ? '/NutriPro/' : '/'
 
 export default defineConfig({
   base,

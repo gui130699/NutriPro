@@ -11,7 +11,7 @@
 | Firebase | Nenhuma escrita de dados de produção durante os testes |
 | Unitários | 55 aprovados em 15 arquivos |
 | E2E | 15 aprovados no Chromium, em modo isolado `VITE_E2E=true` |
-| Build PWA | normal e com `GITHUB_ACTIONS=true` aprovados |
+| Build PWA | normal e com `NUTRIPRO_GITHUB_PAGES=true` aprovados |
 
 ## Comandos executados
 
@@ -21,7 +21,7 @@ npm run lint
 npm run test
 npm run test:e2e
 npm run build
-GITHUB_ACTIONS=true npm run build
+NUTRIPRO_GITHUB_PAGES=true npm run build
 firebase deploy --only firestore:rules,firestore:indexes --dry-run
 ```
 
@@ -110,7 +110,7 @@ npm run lint
 npm run test
 npm run test:e2e
 npm run build
-GITHUB_ACTIONS=true npm run build
+NUTRIPRO_GITHUB_PAGES=true npm run build
 firebase deploy --only firestore:rules,firestore:indexes --dry-run
 ```
 

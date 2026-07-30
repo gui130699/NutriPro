@@ -259,7 +259,9 @@ usuário comum. O catálogo oficial em JSON é separado do Firestore.
 
 8. GitHub Pages é publicado por .github/workflows/deploy-pages.yml em pushes
    para main. As variáveis VITE_FIREBASE_* precisam estar nas Actions Variables
-   do repositório. Vite usa /NutriPro/ no GitHub Actions e / nos demais casos.
+   do repositório. Apenas o passo de deploy define NUTRIPRO_GITHUB_PAGES=true,
+   então Vite usa /NutriPro/ no artefato do Pages e / no Firebase Hosting,
+   desenvolvimento e testes de navegador.
 
 Comandos de qualidade:
 
@@ -771,7 +773,7 @@ Resultados desta rodada:
 - npm run lint: aprovado.
 - npm run test: 55/55 em 15 arquivos aprovados.
 - npm run test:e2e com VITE_E2E=true: 15/15 Chromium aprovados.
-- npm run build e GITHUB_ACTIONS=true npm run build: aprovados.
+- npm run build e NUTRIPRO_GITHUB_PAGES=true npm run build: aprovados.
 - firebase deploy --only firestore:rules,firestore:indexes --dry-run:
   regras compiladas e índices lidos com sucesso no projeto nutripro-9115a.
 

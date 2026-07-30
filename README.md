@@ -102,7 +102,7 @@ npm run test:e2e
 npm run build
 ```
 
-`npm run build` limpa somente o diretório gerado `dist` após validar que ele pertence ao workspace. Isso impede que hashes de bundles antigos entrem no precache do Workbox. O GitHub Pages executa `npm ci`, lint, testes unitários e build antes de publicar; o workflow Playwright é separado e roda em pushes e pull requests. Nesse workflow, `VITE_E2E=true` desativa a conexão Firebase apenas para a suíte de interface: os cenários usam a tela de acesso local e não leem nem gravam dados do projeto publicado.
+`npm run build` limpa somente o diretório gerado `dist` após validar que ele pertence ao workspace. Isso impede que hashes de bundles antigos entrem no precache do Workbox. O GitHub Pages executa `npm ci`, lint, testes unitários e build antes de publicar, usando `NUTRIPRO_GITHUB_PAGES=true` somente no build que precisa da base `/NutriPro/`; o workflow Playwright é separado e roda em pushes e pull requests. Nesse workflow, `VITE_E2E=true` desativa a conexão Firebase apenas para a suíte de interface: os cenários usam a tela de acesso local e não leem nem gravam dados do projeto publicado.
 
 ## Publicação
 
