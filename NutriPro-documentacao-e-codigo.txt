@@ -1,9 +1,9 @@
 NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E ÍNDICE DO CÓDIGO
 ==================================================
 
-Versão funcional documentada: 51b6ff31a90149a52f06eb7bbfd2f8e845627474
-Mensagem do commit funcional: feat: add food catalog, custom lists, meal types and themes
-Relatório documental de testes: 49bff405506f9a70f36838f57f176f02b298fc27
+Versão funcional documentada: 5023219de53205d2b20ea258d29f12aa69285fc3
+Mensagem do commit funcional: feat: add cross-platform PWA install
+Relatório documental de testes: 5023219de53205d2b20ea258d29f12aa69285fc3
 Commit da atualização documental principal: aa77492
 Data da atualização: 30/07/2026
 Repositório: https://github.com/gui130699/NutriPro
@@ -11,8 +11,8 @@ GitHub Pages: https://gui130699.github.io/NutriPro/
 Firebase Hosting: https://nutripro-9115a.web.app/
 
 Este é o dossiê técnico consolidado do NutriPro. Os links de código abaixo
-estão fixados no commit funcional 51b6ff31a90149a52f06eb7bbfd2f8e845627474;
-o relatório de testes está fixado no commit documental 49bff405506f9a70f36838f57f176f02b298fc27.
+estão fixados no commit funcional 5023219de53205d2b20ea258d29f12aa69285fc3;
+o relatório de testes está fixado no commit documental 5023219de53205d2b20ea258d29f12aa69285fc3.
 O dossiê em si é atualizado em um commit documental posterior para evitar uma
 referência Git autorreferencial. Não há links restantes para o commit antigo.
 
@@ -40,8 +40,8 @@ Módulos principais:
 - Catálogo público local, lista particular, favoritos e personalizações.
 - Cadastro e ordenação de refeições com ícones Lucide.
 - Perfil, metas nutricionais, meta de hidratação e logout.
-- PWA instalável, cache e funcionamento offline do catálogo após o primeiro
-  carregamento bem-sucedido.
+- PWA instalável por botão em Android/Desktop e instruções nativas no iOS,
+  com cache e funcionamento offline do catálogo após o primeiro carregamento.
 
 
 2. TECNOLOGIAS E ARQUITETURA
@@ -175,8 +175,18 @@ Tema:
   dashboard, diário, listas e perfil próprios, mantendo contraste e verde
   NutriPro.
 
-PWA/offline:
-- vite-plugin-pwa gera manifest e service worker.
+PWA/offline e instalação:
+- vite-plugin-pwa gera manifest, service worker e URLs relativas de start/scope,
+  compatíveis com Firebase Hosting e com /NutriPro/ no GitHub Pages.
+- PwaInstallControl captura beforeinstallprompt no Chrome/Edge de Android e
+  desktop, exibe o botão “Instalar app” e chama o prompt nativo somente após
+  uma ação explícita da pessoa usuária.
+- No iPhone/iPad, onde a Apple não permite abrir o prompt por código, o mesmo
+  botão mostra a instrução Safari: Compartilhar > Adicionar à Tela de Início.
+- O controle some em display-mode standalone ou navigator.standalone, evitando
+  oferecer instalação a quem já usa o NutriPro como aplicativo.
+- Ícones PNG 192, 512, maskable e apple-touch-icon são gerados pelo comando
+  npm run pwa:icons; o manifest declara os formatos próprios para instalação.
 - O catálogo usa IndexedDB com metadados de versão e troca atômica de cache.
 - Quando a atualização remota falha e existe cache, a lista continua disponível
   em modo offline/stale.
@@ -252,26 +262,31 @@ Comandos de qualidade:
   npm run lint
   npx playwright install chromium
   npm run test:e2e
+  npm run pwa:icons
 
 
 9. TESTES EXECUTADOS E LIMITAÇÕES
 ---------------------------------
 
-Versão funcional validada: 51b6ff31a90149a52f06eb7bbfd2f8e845627474
+Versão funcional validada: 5023219de53205d2b20ea258d29f12aa69285fc3
 
-- npm run test: 25 testes aprovados em 8 arquivos.
+- npm run test: 28 testes aprovados em 9 arquivos.
 - npm run build: aprovado com PWA e TypeScript sem erros.
 - npm run lint: aprovado sem warnings.
-- npm run test:e2e: 13 testes Playwright/Chromium aprovados.
+- npm run test:e2e: 15 testes Playwright/Chromium aprovados.
 - Navegador real local: tela de acesso, rota privada, tema escuro, contraste,
   ausência de overflow horizontal e console sem erros relevantes verificados.
 - Responsividade automatizada: 375 × 667, 390 × 844, 768 × 1024,
   1366 × 768 e 1920 × 1080 aprovadas na tela sem autenticação.
+- Preview de produção PWA: manifest, apple-touch-icon, tela de acesso e
+  console sem erros verificados no navegador.
+- Instalação: evento nativo simulado em E2E e instruções Safari/iOS testadas
+  em viewport 390 × 844, sem overflow horizontal.
 - Revisão textual: terminologia em PT-BR padronizada; nenhuma ocorrência de
   “Teses” foi encontrada no projeto.
 
 O relatório detalhado está em:
-https://raw.githubusercontent.com/gui130699/NutriPro/49bff405506f9a70f36838f57f176f02b298fc27/docs/TESTES-FUNCIONAIS.md
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/docs/TESTES-FUNCIONAIS.md
 
 Limitações não ocultadas:
 - O CSV oficial de 7.083 alimentos ainda não foi fornecido; não foi possível
@@ -283,6 +298,9 @@ Limitações não ocultadas:
 - Cadastro real, onboarding persistido, overrides reais entre dois usuários,
   refeições persistidas, diário, hidratação e tema sincronizado devem ser
   repetidos campo a campo em Firebase de teste antes de qualquer teste destrutivo.
+- A instalação real pelo sistema operacional não foi executada em um aparelho
+  Android/iOS físico; Playwright validou os fluxos de interface e o build
+  validou manifest, service worker e ícones.
 
 
 10. HISTÓRICO DE ALTERAÇÕES
@@ -302,20 +320,29 @@ Limitações não ocultadas:
 - Registrados os 25 testes unitários, 13 E2E e a verificação manual no navegador.
 - Declaradas as limitações de CSV e de homologação Firebase.
 
+30/07/2026 — versão funcional 5023219de53205d2b20ea258d29f12aa69285fc3
+- Adicionado botão de instalação PWA global para Chrome/Edge em Android e desktop.
+- Adicionado guia acessível de Compartilhar > Adicionar à Tela de Início no iOS.
+- Adicionados ícones PNG any, maskable e apple-touch-icon; start_url, scope e
+  fallback do service worker passaram a respeitar a base do GitHub Pages.
+- Adicionados 3 testes unitários e 2 testes E2E de instalação PWA.
+
 
 11. VALIDAÇÃO DA VERSÃO
 -----------------------
 
-[APROVADO] npm run test — 25/25 testes unitários.
+[APROVADO] npm run test — 28/28 testes unitários.
 [APROVADO] npm run build — build PWA concluído sem erro.
 [APROVADO] npm run lint — análise estática sem warning.
-[APROVADO] npm run test:e2e — 13/13 cenários Chromium.
+[APROVADO] npm run test:e2e — 15/15 cenários Chromium.
 [APROVADO] Navegador local — acesso, redirecionamento privado, tema escuro,
             sem overflow e console sem erros.
 [APROVADO] Responsividade não autenticada nas cinco dimensões descritas.
 [APROVADO] Revisão ortográfica e ausência do campo/texto “Teses”.
 [APROVADO] Temas Claro, Escuro e Sistema por testes unitários; bootstrap dark
             também confirmado em E2E.
+[APROVADO] PWA — manifest e ícones PNG válidos, prompt nativo testado por E2E
+            e guia iOS testado em viewport de iPhone sem overflow.
 [PENDENTE] Pesquisa sobre 7.083 alimentos — depende do CSV oficial ausente.
 [PENDENTE] Escritas autenticadas/isolamento entre duas contas — depende de
             Emulator Suite ou projeto Firebase de homologação.
@@ -332,11 +359,12 @@ NutriPro/
 │   └── foods-version.json
 ├── scripts/
 │   ├── convert-foods.ts
+│   ├── generate-pwa-icons.ts
 │   └── migrate-meal-snapshots.ts
 ├── src/
-│   ├── components/foods/, components/meals/, components/theme/
+│   ├── components/foods/, components/meals/, components/theme/ e PwaInstallControl.tsx
 │   ├── data/meal-icons.ts
-│   ├── hooks/
+│   ├── hooks/ (inclui usePwaInstall.ts)
 │   ├── lib/
 │   ├── pages/Lists.tsx e demais páginas
 │   └── services/nutrition-service.ts
@@ -350,207 +378,225 @@ NutriPro/
 13. ÍNDICE FIXADO DO CÓDIGO-FONTE
 ---------------------------------
 
-Base funcional dos links: 51b6ff31a90149a52f06eb7bbfd2f8e845627474
+Base funcional dos links: 5023219de53205d2b20ea258d29f12aa69285fc3
 
 DOCUMENTAÇÃO E CONFIGURAÇÃO
 
 README.md
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/README.md
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/README.md
 
 .env.example
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/.env.example
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/.env.example
 
 .gitignore
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/.gitignore
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/.gitignore
 
 package.json
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/package.json
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/package.json
 
 vite.config.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/vite.config.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/vite.config.ts
 
 playwright.config.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/playwright.config.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/playwright.config.ts
 
 index.html
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/index.html
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/index.html
 
 firebase.json
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/firebase.json
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/firebase.json
 
 .firebaserc
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/.firebaserc
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/.firebaserc
 
 FIREBASE
 
 firestore.rules
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/firestore.rules
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/firestore.rules
 
 firestore.indexes.json
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/firestore.indexes.json
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/firestore.indexes.json
 
 CATÁLOGO E SCRIPTS
 
 public/data/foods.json
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/public/data/foods.json
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/public/data/foods.json
 
 public/data/foods-version.json
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/public/data/foods-version.json
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/public/data/foods-version.json
 
 scripts/convert-foods.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/scripts/convert-foods.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/scripts/convert-foods.ts
+
+scripts/generate-pwa-icons.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/scripts/generate-pwa-icons.ts
 
 scripts/migrate-meal-snapshots.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/scripts/migrate-meal-snapshots.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/scripts/migrate-meal-snapshots.ts
 
 ENTRADA E UI
 
 src/main.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/main.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/main.tsx
 
 src/App.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/App.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/App.tsx
 
 src/index.css
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/index.css
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/index.css
 
 src/components/Layout.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/Layout.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/Layout.tsx
 
 src/components/ConfirmDialog.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/ConfirmDialog.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/ConfirmDialog.tsx
 
 src/components/MetricCard.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/MetricCard.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/MetricCard.tsx
 
 src/components/OfflineStatus.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/OfflineStatus.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/OfflineStatus.tsx
+
+src/components/PwaInstallControl.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/PwaInstallControl.tsx
 
 COMPONENTES DE ALIMENTOS, REFEIÇÕES E TEMA
 
 src/components/foods/FoodForm.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/foods/FoodForm.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/foods/FoodForm.tsx
 
 src/components/meals/MealIconPicker.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/meals/MealIconPicker.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/meals/MealIconPicker.tsx
 
 src/components/meals/MealTypeForm.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/meals/MealTypeForm.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/meals/MealTypeForm.tsx
 
 src/components/theme/ThemeSelector.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/components/theme/ThemeSelector.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/components/theme/ThemeSelector.tsx
 
 PÁGINAS
 
 src/pages/Auth.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Auth.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/pages/Auth.tsx
 
 src/pages/Dashboard.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Dashboard.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/pages/Dashboard.tsx
 
 src/pages/Diary.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Diary.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/pages/Diary.tsx
 
 src/pages/Lists.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Lists.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/pages/Lists.tsx
 
 src/pages/AddFood.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/AddFood.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/pages/AddFood.tsx
 
 src/pages/Profile.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Profile.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/pages/Profile.tsx
 
 src/pages/Evolution.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/pages/Evolution.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/pages/Evolution.tsx
 
 DOMÍNIO, HOOKS E SERVIÇOS
 
 src/hooks/useAuth.tsx
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/hooks/useAuth.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/hooks/useAuth.tsx
 
 src/hooks/useTheme.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/hooks/useTheme.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/hooks/useTheme.ts
+
+src/hooks/usePwaInstall.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/hooks/usePwaInstall.ts
 
 src/lib/firebase.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/firebase.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/firebase.ts
 
 src/lib/types.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/types.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/types.ts
 
 src/lib/nutrition.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/nutrition.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/nutrition.ts
 
 src/lib/offline.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/offline.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/offline.ts
 
 src/lib/food-catalog.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-catalog.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/food-catalog.ts
 
 src/lib/food-search.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-search.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/food-search.ts
 
 src/lib/food-overrides.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-overrides.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/food-overrides.ts
 
 src/lib/meal-types.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/meal-types.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/meal-types.ts
 
 src/lib/theme.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/theme.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/theme.ts
+
+src/lib/pwa-install.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/pwa-install.ts
 
 src/data/meal-icons.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/data/meal-icons.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/data/meal-icons.ts
 
 src/services/nutrition-service.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/services/nutrition-service.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/services/nutrition-service.ts
 
 TESTES UNITÁRIOS
 
 src/lib/nutrition.test.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/nutrition.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/nutrition.test.ts
 
 src/lib/food-catalog.test.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-catalog.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/food-catalog.test.ts
 
 src/lib/food-search.test.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-search.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/food-search.test.ts
 
 src/lib/food-overrides.test.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/food-overrides.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/food-overrides.test.ts
 
 src/lib/meal-types.test.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/meal-types.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/meal-types.test.ts
 
 src/lib/theme.test.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/lib/theme.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/theme.test.ts
 
 src/data/meal-icons.test.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/src/data/meal-icons.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/data/meal-icons.test.ts
+
+src/lib/pwa-install.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/src/lib/pwa-install.test.ts
 
 TESTES E2E E RELATÓRIO
 
 tests/e2e/auth-and-theme.smoke.spec.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/tests/e2e/auth-and-theme.smoke.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/tests/e2e/auth-and-theme.smoke.spec.ts
 
 tests/e2e/accessibility.spec.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/tests/e2e/accessibility.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/tests/e2e/accessibility.spec.ts
 
 tests/e2e/private-routes.spec.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/tests/e2e/private-routes.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/tests/e2e/private-routes.spec.ts
 
 tests/e2e/responsive.spec.ts
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/tests/e2e/responsive.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/tests/e2e/responsive.spec.ts
+
+tests/e2e/pwa-install.spec.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/tests/e2e/pwa-install.spec.ts
 
 docs/TESTES-FUNCIONAIS.md
-https://raw.githubusercontent.com/gui130699/NutriPro/49bff405506f9a70f36838f57f176f02b298fc27/docs/TESTES-FUNCIONAIS.md
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/docs/TESTES-FUNCIONAIS.md
 
 ARQUIVOS HISTÓRICOS NÃO UTILIZADOS PELO FRONTEND FIREBASE
 
 supabase/migrations/202607300001_initial_schema.sql
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/supabase/migrations/202607300001_initial_schema.sql
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/supabase/migrations/202607300001_initial_schema.sql
 
 supabase/seed.sql
-https://raw.githubusercontent.com/gui130699/NutriPro/51b6ff31a90149a52f06eb7bbfd2f8e845627474/supabase/seed.sql
+https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/supabase/seed.sql
 
 
 14. PRÓXIMOS PASSOS

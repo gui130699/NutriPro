@@ -5,20 +5,20 @@
 | Campo | Valor |
 | --- | --- |
 | Data | 30/07/2026 |
-| Commit funcional testado | `51b6ff31a90149a52f06eb7bbfd2f8e845627474` |
+| Commit funcional testado | `5023219de53205d2b20ea258d29f12aa69285fc3` |
 | Ambiente | Vite local em `http://127.0.0.1:4173` |
 | Navegadores | Chromium do Playwright 1.62 e navegador integrado do Codex |
 | Firebase | Nenhuma escrita em produção; sem conta de homologação disponível |
-| Unitários | 25 aprovados em 8 arquivos |
-| E2E | 13 aprovados em Chromium |
+| Unitários | 28 aprovados em 9 arquivos |
+| E2E | 15 aprovados em Chromium |
 
 ## Comandos executados
 
 ```bash
-npm run test       # 25 aprovados
+npm run test       # 28 aprovados
 npm run build      # aprovado
 npm run lint       # aprovado
-npm run test:e2e   # 13 aprovados
+npm run test:e2e   # 15 aprovados
 ```
 
 O Playwright iniciou o Vite local automaticamente. Os cenários não autenticados foram executados sem credenciais Firebase e não criaram, alteraram ou removeram dados remotos.
@@ -41,6 +41,8 @@ O Playwright iniciou o Vite local automaticamente. Os cenários não autenticado
 | E2E-12 | Responsividade | 768 × 1024 | Abrir acesso | Sem rolagem horizontal; envio visível | Confirmado | Aprovado | `responsive.spec.ts` |
 | E2E-13 | Responsividade | 1366 × 768 | Abrir acesso | Sem rolagem horizontal; envio visível | Confirmado | Aprovado | `responsive.spec.ts` |
 | E2E-14 | Responsividade | 1920 × 1080 | Abrir acesso | Sem rolagem horizontal; envio visível | Confirmado | Aprovado | `responsive.spec.ts` |
+| E2E-15 | PWA | Prompt de instalação | Disparar `beforeinstallprompt` simulado e clicar no CTA | Prompt nativo chamado e CTA removido após escolha | Confirmado | Aprovado | `pwa-install.spec.ts` |
+| E2E-16 | PWA/iOS | 390 × 844 | Simular Safari iOS e abrir instruções | Passo a passo “Compartilhar → Adicionar à Tela de Início”, sem overflow | Confirmado | Aprovado | `pwa-install.spec.ts` |
 
 ## Testes unitários executados
 
@@ -53,6 +55,7 @@ O Playwright iniciou o Vite local automaticamente. Os cenários não autenticado
 | Refeições | defaults, aliases, snapshots e compatibilidade com `mealName` | Aprovado |
 | Ícones | 33 chaves persistíveis e busca sem acentos | Aprovado |
 | Tema | claro, escuro, sistema, cache e classe raiz | Aprovado |
+| Instalação PWA | identificação iOS/Safari e modo standalone | Aprovado |
 
 ## Verificação manual no navegador
 
@@ -65,6 +68,7 @@ Foi aberto o servidor local no navegador integrado e verificado diretamente:
 | Layout | Janela 1280 px | `scrollWidth` 1265 px; sem rolagem horizontal | Aprovado |
 | Rota privada | Abrir `/listas` sem sessão | Retorno para `/entrar` | Aprovado |
 | Console | Login e rota privada | Nenhum erro ou warning relevante | Aprovado |
+| PWA de produção | Preview local | Manifest, `apple-touch-icon`, título e tela de acesso carregados sem erros | Aprovado |
 
 ## Problemas encontrados e correções
 
@@ -88,6 +92,7 @@ Os cenários abaixo exigem Firebase Emulator Suite completo ou uma conta/projeto
 | Hidratação e exclusão reais | `/diario` | Sem Firestore de homologação | Não executado |
 | Persistência autenticada de tema | `/perfil` | Sem Firestore de homologação | Não executado |
 | PWA offline após primeiro catálogo | Produção/preview | Catálogo oficial ausente | Não executado |
+| Instalação real no sistema | Android/iOS físico | O Playwright simulou o evento; não havia dispositivo móvel disponível | Não executado |
 
 O Firebase Emulator Suite não foi iniciado nesta máquina porque o emulador Firestore requer Java e o runtime Java não está instalado. A próxima rodada deve anexar o CSV e usar Emulator Suite ou um projeto Firebase de homologação, então repetir os cenários autenticados campo a campo.
 
