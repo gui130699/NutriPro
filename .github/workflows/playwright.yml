@@ -22,6 +22,13 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+        env:
+          VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: nutripro-9115a.firebaseapp.com
+          VITE_FIREBASE_PROJECT_ID: nutripro-9115a
+          VITE_FIREBASE_STORAGE_BUCKET: nutripro-9115a.firebasestorage.app
+          VITE_FIREBASE_MESSAGING_SENDER_ID: '1067481785046'
+          VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
       - name: Publicar artefatos do Playwright
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
