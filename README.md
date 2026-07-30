@@ -1,18 +1,17 @@
 # NutriPro
 
-PWA em português para diário alimentar, metas nutricionais, água, peso e receitas. A aplicação usa Supabase Auth e PostgreSQL com isolamento por usuário via RLS; chaves administrativas nunca entram no frontend.
+PWA em português para diário alimentar, metas nutricionais, água, peso e receitas. A aplicação usa Firebase Authentication e Cloud Firestore com regras de isolamento por usuário; chaves administrativas nunca entram no frontend.
 
 ## Requisitos
 
 - Node.js 20+
-- Um projeto Supabase
+- Um projeto Firebase com Authentication (E-mail/senha), Cloud Firestore e Hosting habilitados
 
 ## Instalação
 
-1. Copie `.env.example` para `.env` e informe `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
-2. No SQL Editor do Supabase, execute `supabase/migrations/202607300001_initial_schema.sql` e, depois, `supabase/seed.sql`.
-3. Em **Authentication > URL Configuration**, adicione `http://localhost:5173` às Redirect URLs.
-4. Execute `npm install` e `npm run dev`.
+1. Copie `.env.example` para `.env` e informe a chave pública (`VITE_FIREBASE_API_KEY`) e o App ID (`VITE_FIREBASE_APP_ID`) do projeto Firebase.
+2. Em **Authentication > Sign-in method**, ative **E-mail/senha**.
+3. Execute `firebase login`, `firebase deploy --only firestore:rules,firestore:indexes` e `npm run dev`.
 
 ## Comandos
 
@@ -23,12 +22,13 @@ PWA em português para diário alimentar, metas nutricionais, água, peso e rece
 | `npm run lint` | Análise estática |
 | `npm run build` | Build de produção e service worker |
 | `npm run preview` | Visualiza o build local |
+| `firebase deploy` | Publica regras, índices e Hosting |
 
-## Banco e segurança
+## Firebase e segurança
 
-A migration inclui as tabelas de perfil, metas, alimentos, porções, favoritos, refeições, itens com snapshots, receitas, água, peso, medidas, notas, preferências e auditoria. Todas usam UUID e timestamps; os dados pessoais contam com RLS. Alimentos públicos são visíveis a todos, e somente administradores podem alterá-los.
+As coleções principais são `profiles`, `goals`, `foods`, `mealItems`, `waterLogs`, `weightLogs`, `recipes` e `dailyNotes`. `firestore.rules` protege qualquer registro que possua `userId`: o usuário só cria, lê, atualiza e exclui seus próprios documentos. Alimentos públicos devem ser criados pelo Console Firebase ou por uma futura função administrativa autenticada.
 
-O trigger de novos usuários cria automaticamente perfil, metas iniciais e preferências. Configure a confirmação de e-mail no painel Auth do Supabase conforme a política desejada.
+Configure a confirmação de e-mail no painel Authentication do Firebase conforme sua política. O perfil e as metas podem ser criados no onboarding do app.
 
 ## Offline e PWA
 
