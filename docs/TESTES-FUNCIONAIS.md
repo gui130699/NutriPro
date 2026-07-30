@@ -2,111 +2,114 @@
 
 ## Registro da rodada
 
-| Campo | Valor |
+| Campo | Resultado |
 | --- | --- |
 | Data | 30/07/2026 |
-| Commit funcional testado | `5023219de53205d2b20ea258d29f12aa69285fc3` |
-| Ambiente | Vite local em `http://127.0.0.1:4173` |
-| Navegadores | Chromium do Playwright 1.62 e navegador integrado do Codex |
-| Firebase | Nenhuma escrita em produção; sem conta de homologação disponível |
-| Unitários | 28 aprovados em 9 arquivos |
-| E2E | 15 aprovados em Chromium |
+| Commit funcional | `397fb2126b9cbfb3e8b7a6978e41232e41498c7a` |
+| Instalação limpa | `npm ci --force --no-audit --no-fund` concluído (777 pacotes) |
+| Ambiente | Windows, Node.js local, Vite e Chromium do Playwright |
+| Firebase | Nenhuma escrita de dados de produção durante os testes |
+| Unitários | 55 aprovados em 15 arquivos |
+| E2E | 15 aprovados no Chromium |
+| Build PWA | normal e com `GITHUB_ACTIONS=true` aprovados |
 
 ## Comandos executados
 
 ```bash
-npm run test       # 28 aprovados
-npm run build      # aprovado
-npm run lint       # aprovado
-npm run test:e2e   # 15 aprovados
+npm ci --force --no-audit --no-fund
+npm run lint
+npm run test
+npm run test:e2e
+npm run build
+GITHUB_ACTIONS=true npm run build
+firebase deploy --only firestore:rules,firestore:indexes --dry-run
 ```
 
-O Playwright iniciou o Vite local automaticamente. Os cenários não autenticados foram executados sem credenciais Firebase e não criaram, alteraram ou removeram dados remotos.
+Resultados observados:
 
-## Cenários automatizados executados
+- `npm run lint`: aprovado, sem avisos.
+- `npm run test`: 15 arquivos e 55 testes aprovados.
+- `npm run test:e2e`: 15 cenários aprovados.
+- `npm run build`: TypeScript e PWA aprovados.
+- Build para Pages: 39 entradas no precache depois da limpeza de `dist`; builds antigos não permaneceram no service worker.
+- Regras e índices Firestore: compilação aprovada no dry run para `nutripro-9115a`.
 
-| ID | Módulo | Tela/ação | Cenário | Resultado esperado | Resultado obtido | Estado | Evidência/observação |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| E2E-01 | Acesso | `/entrar` | Abrir tela de acesso | Título e formulário visíveis | Visíveis | Aprovado | `auth-and-theme.smoke.spec.ts` |
-| E2E-02 | Acesso | Login vazio | Enviar sem campos | Erros locais de e-mail e senha | Exibidos | Aprovado | Não enviou autenticação remota |
-| E2E-03 | Acesso | Login inválido | E-mail inválido e senha curta | Validação em PT-BR | Exibida | Aprovado | Não enviou autenticação remota |
-| E2E-04 | Acesso | Recuperação | Abrir recuperação e enviar vazio | Campo de senha some; e-mail continua validado | Confirmado | Aprovado | Fluxo de envio real requer Firebase de teste |
-| E2E-05 | Tema | Bootstrap | Preferência `dark` no carregamento | `html.dark` e `data-theme=dark` antes do React | Confirmado | Aprovado | Teste E2E com `addInitScript` |
-| E2E-06 | Acessibilidade | Acesso | Labels, botão e Tab | Controles acessíveis e foco navegável | Confirmado | Aprovado | `accessibility.spec.ts` |
-| E2E-07 | Rotas | `/listas` | Visitante abre rota privada | Redirecionamento para `/entrar` | Confirmado | Aprovado | Sem sessão |
-| E2E-08 | Rotas | `/diario` | Visitante abre rota privada | Redirecionamento para `/entrar` | Confirmado | Aprovado | Sem sessão |
-| E2E-09 | Rotas | `/perfil` | Visitante abre rota privada | Redirecionamento para `/entrar` | Confirmado | Aprovado | Sem sessão |
-| E2E-10 | Responsividade | 375 × 667 | Abrir acesso | Sem rolagem horizontal; envio visível | Confirmado | Aprovado | `responsive.spec.ts` |
-| E2E-11 | Responsividade | 390 × 844 | Abrir acesso | Sem rolagem horizontal; envio visível | Confirmado | Aprovado | `responsive.spec.ts` |
-| E2E-12 | Responsividade | 768 × 1024 | Abrir acesso | Sem rolagem horizontal; envio visível | Confirmado | Aprovado | `responsive.spec.ts` |
-| E2E-13 | Responsividade | 1366 × 768 | Abrir acesso | Sem rolagem horizontal; envio visível | Confirmado | Aprovado | `responsive.spec.ts` |
-| E2E-14 | Responsividade | 1920 × 1080 | Abrir acesso | Sem rolagem horizontal; envio visível | Confirmado | Aprovado | `responsive.spec.ts` |
-| E2E-15 | PWA | Prompt de instalação | Disparar `beforeinstallprompt` simulado e clicar no CTA | Prompt nativo chamado e CTA removido após escolha | Confirmado | Aprovado | `pwa-install.spec.ts` |
-| E2E-16 | PWA/iOS | 390 × 844 | Simular Safari iOS e abrir instruções | Passo a passo “Compartilhar → Adicionar à Tela de Início”, sem overflow | Confirmado | Aprovado | `pwa-install.spec.ts` |
+O aviso de chunk principal acima de 500 kB veio do Vite como recomendação de otimização; não é erro de compilação. Os bundles antigos passaram a ser removidos antes do build para impedir que esse precache cresça a cada publicação.
 
-## Testes unitários executados
+## Cobertura unitária
 
-| Módulo | Cobertura verificada | Estado |
+| Área | Verificações | Estado |
 | --- | --- | --- |
-| Nutrição | conversão de unidades, cálculos, soma e porção | Aprovado |
-| Catálogo | normalização, palavras-chave e deduplicação por `externalId` | Aprovado |
-| Pesquisa | acentos, termo parcial, categoria, favorito, ocultação e paginação | Aprovado |
-| Overrides | personalização individual, restauração e ocultar/restaurar | Aprovado |
-| Refeições | defaults, aliases, snapshots e compatibilidade com `mealName` | Aprovado |
-| Ícones | 33 chaves persistíveis e busca sem acentos | Aprovado |
-| Tema | claro, escuro, sistema, cache e classe raiz | Aprovado |
-| Instalação PWA | identificação iOS/Safari e modo standalone | Aprovado |
+| Catálogo estrito | cabeçalho, 7.083 linhas, duplicidade, numéricos, valores fixos, `S/N` e escrita atômica | Aprovado |
+| Datas locais | serialização e comparação de `YYYY-MM-DD` sem deslocamento UTC | Aprovado |
+| Evolução | validação de peso/medidas, médias, tendência, comparações e meta | Aprovado |
+| Avaliação física | IMC, relações corporais e protocolos com dados obrigatórios | Aprovado |
+| Rotas Pages | restauração de rota interna e rejeição de redirecionamento externo | Aprovado |
+| `foodUsage` | chave por origem, agregação e transações de inclusão/exclusão | Aprovado |
+| Recursos existentes | nutrição, catálogo, busca, overrides, refeições, ícones, tema e PWA | Aprovado |
+
+## Cobertura E2E (Chromium)
+
+| Área | Cenários aprovados |
+| --- | --- |
+| Acesso | validações locais de campos obrigatórios, e-mail inválido, senha curta e recuperação sem enviar dados remotos |
+| Tema | preferência escura aplicada antes do React |
+| Acessibilidade | nomes acessíveis e navegação por teclado na tela de acesso |
+| Proteção de rotas | visitante redirecionado de `/listas`, `/diario` e `/perfil` |
+| Responsividade | ausência de rolagem horizontal em 375 × 667, 390 × 844, 768 × 1024, 1366 × 768 e 1920 × 1080 |
+| PWA | prompt nativo simulado em navegador compatível e instruções Safari/iOS em 390 × 844 |
 
 ## Verificação manual no navegador
 
-Foi aberto o servidor local no navegador integrado e verificado diretamente:
+| Escopo | Resultado | Estado |
+| --- | --- | --- |
+| Publicação atual | tela de acesso do GitHub Pages renderizou após o carregamento inicial | Aprovado |
+| Artefato do GitHub Pages | abertura direta de `/NutriPro/evolucao` retornou ao app e, sem sessão, redirecionou para `/NutriPro/entrar` | Aprovado |
+| Mobile | rota protegida no artefato Pages em 375 × 667: `scrollWidth` igual à largura de conteúdo, sem overflow horizontal | Aprovado |
+| Console | artefato Pages validado sem erros ou warnings | Aprovado |
+| PWA | build final gerou manifest, service worker, ícones e fallback de navegação | Aprovado |
 
-| Área | Cenário | Resultado | Estado |
-| --- | --- | --- | --- |
-| Acesso | Tela carregada após o bundle final | Título “Seu bem-estar começa aqui.” visível | Aprovado |
-| Tema escuro | Preferência já ativa no contexto do navegador | Fundo `rgb(14, 24, 19)` e título claro com contraste | Aprovado |
-| Layout | Janela 1280 px | `scrollWidth` 1265 px; sem rolagem horizontal | Aprovado |
-| Rota privada | Abrir `/listas` sem sessão | Retorno para `/entrar` | Aprovado |
-| Console | Login e rota privada | Nenhum erro ou warning relevante | Aprovado |
-| PWA de produção | Preview local | Manifest, `apple-touch-icon`, título e tela de acesso carregados sem erros | Aprovado |
+O servidor de desenvolvimento do Vite exibiu um aviso de WebSocket no navegador integrado do Codex. Esse canal serve apenas ao HMR de desenvolvimento; a publicação estática e o build de produção foram testados separadamente, sem esse erro.
 
-## Problemas encontrados e correções
+## Catálogo oficial: validação de falha segura
 
-| Problema | Causa | Correção | Resultado |
-| --- | --- | --- | --- |
-| Teste de acessibilidade encontrava dois controles com “Senha” | O seletor genérico incluía o botão de exibir senha | Teste passou a selecionar o textbox e o botão separadamente | Suíte E2E aprovada |
-| Teste responsivo procurava `button[type=submit]` | O botão usa submissão implícita, válida em HTML | Teste passou a buscar o botão por nome acessível | Cinco dimensões aprovadas |
-| Não há CSV de 7.083 alimentos no workspace | Arquivo de origem não foi anexado | Mantido stub seguro, importador e cache prontos | Limitação declarada; nenhum dado inventado |
-| Cliente PWA podia recarregar o app shell anterior | A confirmação de atualização fazia apenas `reload()` | Registro imediato e `updateServiceWorker(true)` antes da recarga | Próximas atualizações ativam a versão aguardando com confirmação explícita |
+Foi executado:
 
-## Cenários que não foram executados
+```bash
+npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0
+```
 
-Os cenários abaixo exigem Firebase Emulator Suite completo ou uma conta/projeto de homologação. Não foram executados para não criar, editar ou excluir dados de produção.
+O arquivo não existia no workspace. O importador retornou erro controlado (exit code 1) e os hashes de `public/data/foods.json` e `public/data/foods-version.json` permaneceram idênticos antes e depois. Portanto:
 
-| Módulo | Tela/ação | Motivo | Estado |
-| --- | --- | --- | --- |
-| Cadastro/login válido | Authentication | Sem conta de teste/homologação | Não executado |
-| Onboarding persistido | Firestore | Sem ambiente de escrita seguro | Não executado |
-| Lista pública com 7.083 itens | `/listas` | CSV oficial ausente | Não executado |
-| Overrides, favoritos e alimento particular reais | `/listas` | Sem Firestore de homologação | Não executado |
-| Refeições reais e snapshots no diário | `/listas` e `/diario` | Sem Firestore de homologação | Não executado |
-| Hidratação e exclusão reais | `/diario` | Sem Firestore de homologação | Não executado |
-| Persistência autenticada de tema | `/perfil` | Sem Firestore de homologação | Não executado |
-| PWA offline após primeiro catálogo | Produção/preview | Catálogo oficial ausente | Não executado |
-| Instalação real no sistema | Android/iOS físico | O Playwright simulou o evento; não havia dispositivo móvel disponível | Não executado |
-| Atualização em cliente já controlado pelo service worker antigo | Navegador com cache de versão anterior | Exige uma recarga forçada/fechar e reabrir uma vez para migrar o cliente legado | Não executado |
+- não há catálogo fictício;
+- a lista pública real de 7.083 itens não foi declarada como aprovada;
+- a importação, pesquisa no fim da base e cache offline real devem ser repetidos quando o CSV original for fornecido.
 
-O Firebase Emulator Suite não foi iniciado nesta máquina porque o emulador Firestore requer Java e o runtime Java não está instalado. A próxima rodada deve anexar o CSV e usar Emulator Suite ou um projeto Firebase de homologação, então repetir os cenários autenticados campo a campo.
+## Cenários não executados
+
+| Fluxo | Motivo | Estado |
+| --- | --- | --- |
+| Cadastro/login com conta válida | não havia conta de teste/homologação | Não executado |
+| Onboarding persistido e guard autenticado | exigiria escrita Firestore segura | Não executado |
+| CRUD real de peso, medidas e avaliações | exigiria ambiente Firebase isolado | Não executado |
+| Dois usuários, regras e isolamento de dados | exigiria Emulator Suite ou homologação | Não executado |
+| Importação real dos 7.083 alimentos | CSV oficial ausente | Não executado |
+| Fotos de evolução | Firebase Storage privado/rules não configurados para este recurso | Não executado |
+| Instalação no sistema | requer Android/iOS/desktop físico; E2E simulou os fluxos de interface | Não executado |
+
+O Firestore Emulator não foi iniciado porque `java -version` não está disponível nesta máquina. A próxima rodada deve usar Firebase Emulator Suite completo ou projeto de homologação, uma conta de teste exclusiva e o CSV oficial, sem testar mutações contra a produção.
 
 ## Como repetir
 
 ```bash
-npm install
+npm ci
 npx playwright install chromium
-npm run test
-npm run build
 npm run lint
+npm run test
 npm run test:e2e
+npm run build
+GITHUB_ACTIONS=true npm run build
+firebase deploy --only firestore:rules,firestore:indexes --dry-run
 ```
 
-Para homologação segura, configure `VITE_FIREBASE_*` para o projeto de teste ou conecte a aplicação aos emuladores antes de executar mutações. Os resultados de falha do Playwright ficam em `test-results/` e `playwright-report/`, ambos fora do Git.
+Para validar dados autenticados, configure as variáveis `VITE_FIREBASE_*` para homologação ou conecte o app aos emuladores antes de executar qualquer mutação.

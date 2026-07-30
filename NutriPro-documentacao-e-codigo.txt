@@ -1,20 +1,23 @@
 NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E ÍNDICE DO CÓDIGO
 ==================================================
 
-Versão funcional documentada: 8fbdd1ff252104b19c50d6031e43e259561a1f94
-Mensagem do commit funcional: feat: add cross-platform PWA install
-Relatório documental de testes: b1cc3c94fb7960adbc962b4eb45b9c4607dabeb5
-Commit da atualização documental principal: b1cc3c9
+Versão base PWA documentada: 8fbdd1ff252104b19c50d6031e43e259561a1f94
+Versão funcional desta atualização: 397fb2126b9cbfb3e8b7a6978e41232e41498c7a
+Mensagem do commit funcional: feat: expand evolution and harden PWA data flows
+Relatório documental desta atualização: docs/TESTES-FUNCIONAIS.md (commit documental posterior)
+Commit da atualização documental principal: será registrado após a revisão deste dossiê
 Data da atualização: 30/07/2026
 Repositório: https://github.com/gui130699/NutriPro
 GitHub Pages: https://gui130699.github.io/NutriPro/
 Firebase Hosting: https://nutripro-9115a.web.app/
 
-Este é o dossiê técnico consolidado do NutriPro. Os links de código abaixo
-estão fixados no commit funcional 8fbdd1ff252104b19c50d6031e43e259561a1f94;
-o relatório de testes está fixado no commit documental b1cc3c94fb7960adbc962b4eb45b9c4607dabeb5.
-O dossiê em si é atualizado em um commit documental posterior para evitar uma
-referência Git autorreferencial. Não há links restantes para o commit antigo.
+Este é o dossiê técnico consolidado do NutriPro. As seções históricas mantêm a
+base PWA no commit 8fbdd1ff252104b19c50d6031e43e259561a1f94, que corresponde
+à correção do service worker — não ao primeiro commit de instalação. A seção
+15 registra, com links no commit funcional 397fb2126b9cbfb3e8b7a6978e41232e41498c7a,
+a evolução atual de catálogo, perfil, evolução corporal, segurança, CI e PWA.
+O dossiê em si recebe a referência do commit documental em uma atualização
+posterior para evitar uma referência Git autorreferencial.
 
 Itens intencionalmente excluídos deste índice:
 - node_modules/ e package-lock.json (dependências e arquivo gerado)
@@ -285,8 +288,8 @@ Versão funcional validada: 8fbdd1ff252104b19c50d6031e43e259561a1f94
   console sem erros verificados no navegador.
 - Instalação: evento nativo simulado em E2E e instruções Safari/iOS testadas
   em viewport 390 × 844, sem overflow horizontal.
-- Revisão textual: terminologia em PT-BR padronizada; nenhuma ocorrência de
-  “Teses” foi encontrada no projeto.
+- Revisão textual: terminologia em PT-BR padronizada; nenhum campo ou termo
+  indevido permaneceu no projeto.
 
 O relatório detalhado está em:
 https://raw.githubusercontent.com/gui130699/NutriPro/b1cc3c94fb7960adbc962b4eb45b9c4607dabeb5/docs/TESTES-FUNCIONAIS.md
@@ -345,7 +348,7 @@ Limitações não ocultadas:
 [APROVADO] Navegador local — acesso, redirecionamento privado, tema escuro,
             sem overflow e console sem erros.
 [APROVADO] Responsividade não autenticada nas cinco dimensões descritas.
-[APROVADO] Revisão ortográfica e ausência do campo/texto “Teses”.
+[APROVADO] Revisão ortográfica e ausência de campo/texto indevido.
 [APROVADO] Temas Claro, Escuro e Sistema por testes unitários; bootstrap dark
             também confirmado em E2E.
 [APROVADO] PWA — manifest e ícones PNG válidos, prompt nativo testado por E2E
@@ -618,4 +621,285 @@ https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e4
    docs/TESTES-FUNCIONAIS.md, sem modificar dados reais.
 4. Publicar regras/índices e Hosting apenas após essa rodada de homologação.
 
+
+15. ATUALIZAÇÃO FUNCIONAL — EVOLUÇÃO, CATÁLOGO E PWA
+----------------------------------------------------
+
+Commit funcional: 397fb2126b9cbfb3e8b7a6978e41232e41498c7a
+Mensagem: feat: expand evolution and harden PWA data flows
+Data: 30/07/2026
+
+Esta seção complementa o índice histórico. Ela documenta o código efetivamente
+acrescentado ou alterado neste commit funcional e deve ser lida junto das
+seções 1 a 14, que continuam descrevendo os módulos preservados da base PWA.
+
+
+15.1 CATÁLOGO DE 7.083 ALIMENTOS — IMPORTADOR E ESTADO REAL
+------------------------------------------------------------
+
+O importador deixou de aceitar inferências, deduplicação silenciosa ou um
+arquivo parcial. scripts/catalog-importer.ts exige o cabeçalho exato:
+
+codigo_usda,nome_alimento_en,categoria_en,proteinas_g_100g,
+carboidratos_g_100g,fibras_g_100g,gorduras_g_100g,
+calorias_estimadas_kcal_100g,quantidade_base,unidade_base,
+idioma_nome,ativo,fonte_url
+
+Regras implementadas:
+- Exatamente 7.083 registros, sem linhas ignoradas ou mescladas.
+- codigo_usda e nome_alimento_en obrigatórios; códigos únicos.
+- Nutrientes numéricos, finitos e não negativos.
+- quantidade_base = 100, unidade_base = g e idioma_nome = en-US.
+- ativo somente S ou N; S vira isActive: true, N vira false.
+- O JSON e seus metadados só são gravados após toda a validação passar.
+
+Comando previsto:
+
+  npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0
+
+Resultado desta rodada: o CSV original não existia no workspace. O comando
+falhou com exit code 1 e os hashes de public/data/foods.json e
+public/data/foods-version.json permaneceram inalterados. Portanto, estes
+arquivos continuam com o stub vazio; não há afirmação falsa de importação,
+busca, cache ou total de 7.083 alimentos aprovado. O CSV precisa ser anexado
+à raiz para concluir essa única etapa bloqueada.
+
+
+15.2 PERFIL, DATAS E ONBOARDING
+-------------------------------
+
+- src/lib/dates.ts centraliza localIsoDate(), validação e comparação de datas
+  civis. Campos de data atuais não usam mais UTC para decidir o dia local.
+- src/pages/Profile.tsx foi convertido para React Hook Form + Zod. Nome,
+  objetivo, altura, peso atual, meta de peso e metas nutricionais são validados;
+  vírgula e ponto são aceitos para peso. Alterar o peso atual registra um novo
+  weightLog com source: profile, sem substituir o histórico. A meta fica em
+  goals.weightGoalKg e pode ser nula.
+- src/App.tsx consulta profiles/{uid}; usuário sem onboardingCompleted: true é
+  conduzido para /onboarding antes de qualquer rota privada.
+- src/components/theme/ThemeProvider.tsx cria uma única instância de useTheme
+  e expõe useThemeContext para o perfil.
+
+
+15.3 EVOLUÇÃO, MEDIDAS E AVALIAÇÃO FÍSICA
+------------------------------------------
+
+Peso:
+- src/pages/Evolution.tsx lê weightLogs reais via TanStack Query, sem números
+  de exemplo. Mostra primeiro/último, mínimo/máximo, variação, percentual,
+  médias de 7 e 30 dias, tendência, meta, filtro de período e CRUD.
+
+Medidas corporais:
+- src/pages/BodyMeasurements.tsx cobre pescoço, ombros, peitoral, cintura,
+  abdômen, quadril, braços relaxados/contraídos, antebraços, coxas, panturrilhas,
+  peso e notas. Inclui gráfico, histórico, comparação, duplicação, edição e
+  exclusão. O peso pode ser lançado no histórico só por ação explícita.
+
+Avaliação física:
+- src/pages/PhysicalAssessment.tsx suporta avaliador/registro, data, objetivo,
+  peso, altura, bioimpedância, sinais vitais, circunferências, dobras,
+  observações, recomendações, relatório visualizável/imprimível e CRUD.
+- src/lib/evolution.ts calcula somente quando os dados do protocolo estão
+  completos: Manual, Bioimpedância, Marinha dos EUA, Jackson-Pollock 3/7,
+  Durnin-Womersley, Faulkner, Guedes e Outro. Também calcula IMC, relação
+  cintura/quadril, cintura/altura, massa gorda e massa magra.
+- Os resultados são sinalizados como estimativas informativas e não substituem
+  avaliação médica, nutricional ou presencial. Fotos não possuem simulação:
+  o upload está oculto até Firebase Storage privado e suas regras serem
+  configurados e validados.
+
+
+15.4 FIRESTORE, SEGURANÇA E ESCALABILIDADE
+------------------------------------------
+
+- src/services/evolution-service.ts implementa CRUD isolado por userId para
+  weightLogs, bodyMeasurements e physicalAssessments. createdAt é preservado;
+  updates usam updatedAt. O vínculo opcional de peso evita duplicidade da mesma
+  data/valor.
+- src/services/nutrition-service.ts passou a gravar foodUsage por transação ao
+  incluir ou excluir mealItems. As chaves separam public/private, e a leitura
+  de mais usados consulta somente o agregado, sem varrer todo o diário.
+- scripts/migrate-food-usage.ts faz backfill idempotente e resumível. O modo
+  padrão é simulação; --apply exige credencial administrativa e não é frontend.
+- firestore.rules recebeu validação de proprietário, tipos e faixas para goals,
+  foods, mealTypes, weightLogs, bodyMeasurements, physicalAssessments,
+  foodUsage e preferências. firestore.indexes.json inclui as consultas
+  descendentes por data e o índice de uso.
+- saveFoodOverride, setTheme e rotinas de perfil preservam createdAt quando um
+  documento já existe.
+
+
+15.5 PWA, PÁGINA EM BRANCO E GITHUB PAGES
+-----------------------------------------
+
+Foram tratados dois riscos de publicação estática:
+
+1. Uma URL direta como /NutriPro/evolucao recebia 404 do GitHub Pages, pois o
+   provedor não oferece rewrite de SPA. public/404.html preserva a rota, e
+   src/lib/pages-routing.ts + src/main.tsx a restauram antes de BrowserRouter.
+   Apenas caminhos internos iniciados por / são aceitos; URLs externas são
+   ignoradas.
+2. Builds interrompidos no diretório sincronizado podiam deixar hashes antigos
+   em dist e fazer o Workbox precache crescer. scripts/clean-build.mjs valida
+   que dist pertence ao workspace e o limpa antes de tsc/vite. vite.config.ts
+   também declara emptyOutDir. O build Pages final ficou com 39 entradas no
+   precache, em vez de centenas de assets históricos.
+
+Validação manual do artefato Pages: uma visita direta a
+/NutriPro/evolucao foi restaurada pelo app e, sem sessão, redirecionada para
+/NutriPro/entrar. Em viewport 375 x 667 não houve overflow horizontal nem erro
+de console. A publicação GitHub Pages anterior também renderizou a tela de
+acesso; a correção de rota está incluída no próximo push deste commit.
+
+
+15.6 CI, BUILD E TESTES
+----------------------
+
+- .github/workflows/deploy-pages.yml executa npm ci, lint, testes e build antes
+  do deploy do GitHub Pages.
+- .github/workflows/playwright.yml executa Chromium em push, pull request e
+  execução manual, publicando relatório como artefato.
+- npm run build agora executa scripts/clean-build.mjs, tsc -b e vite build.
+
+Resultados desta rodada:
+- npm ci --force --no-audit --no-fund: concluído, 777 pacotes.
+- npm run lint: aprovado.
+- npm run test: 55/55 em 15 arquivos aprovados.
+- npm run test:e2e: 15/15 Chromium aprovados.
+- npm run build e GITHUB_ACTIONS=true npm run build: aprovados.
+- firebase deploy --only firestore:rules,firestore:indexes --dry-run:
+  regras compiladas e índices lidos com sucesso no projeto nutripro-9115a.
+
+Limitações declaradas, sem mascaramento:
+- O CSV original de 7.083 alimentos está ausente.
+- Não houve escrita autenticada contra produção.
+- Não existe conta/projeto de homologação neste workspace.
+- java -version não está disponível, logo o Firestore Emulator não foi iniciado.
+- Instalação em Android/iOS físico e fotos com Storage privado continuam pendentes.
+
+
+15.7 ÍNDICE DO CÓDIGO DA ATUALIZAÇÃO (COMMIT 397fb21)
+------------------------------------------------------
+
+AUTOMAÇÃO, DEPLOY E PWA
+
+.github/workflows/deploy-pages.yml
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/.github/workflows/deploy-pages.yml
+
+.github/workflows/playwright.yml
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/.github/workflows/playwright.yml
+
+vite.config.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/vite.config.ts
+
+package.json
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/package.json
+
+public/404.html
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/public/404.html
+
+scripts/clean-build.mjs
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/scripts/clean-build.mjs
+
+CATÁLOGO E MIGRAÇÕES
+
+scripts/catalog-importer.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/scripts/catalog-importer.ts
+
+scripts/convert-foods.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/scripts/convert-foods.ts
+
+scripts/migrate-food-usage.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/scripts/migrate-food-usage.ts
+
+FIRESTORE
+
+firestore.rules
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/firestore.rules
+
+firestore.indexes.json
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/firestore.indexes.json
+
+ENTRADA, TEMA E DOMÍNIO
+
+src/main.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/main.tsx
+
+src/App.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/App.tsx
+
+src/components/theme/ThemeProvider.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/components/theme/ThemeProvider.tsx
+
+src/components/Layout.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/components/Layout.tsx
+
+src/index.css
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/index.css
+
+src/lib/types.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/types.ts
+
+src/lib/dates.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/dates.ts
+
+src/lib/evolution.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/evolution.ts
+
+src/lib/pages-routing.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/pages-routing.ts
+
+src/lib/food-catalog.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/food-catalog.ts
+
+PÁGINAS E SERVIÇOS
+
+src/pages/Auth.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/pages/Auth.tsx
+
+src/pages/Profile.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/pages/Profile.tsx
+
+src/pages/Dashboard.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/pages/Dashboard.tsx
+
+src/pages/Diary.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/pages/Diary.tsx
+
+src/pages/Evolution.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/pages/Evolution.tsx
+
+src/pages/BodyMeasurements.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/pages/BodyMeasurements.tsx
+
+src/pages/PhysicalAssessment.tsx
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/pages/PhysicalAssessment.tsx
+
+src/services/nutrition-service.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/services/nutrition-service.ts
+
+src/services/evolution-service.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/services/evolution-service.ts
+
+TESTES DO COMMIT FUNCIONAL
+
+src/lib/catalog-importer.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/catalog-importer.test.ts
+
+src/lib/dates.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/dates.test.ts
+
+src/lib/evolution.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/evolution.test.ts
+
+src/lib/pages-routing.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/lib/pages-routing.test.ts
+
+src/services/nutrition-service.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/services/nutrition-service.test.ts
+
+src/services/nutrition-service.transactions.test.ts
+https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/services/nutrition-service.transactions.test.ts
+
+FIM DO DOCUMENTO
 FIM DO DOCUMENTO

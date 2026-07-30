@@ -1,136 +1,122 @@
 # NutriPro
 
-PWA responsiva em português do Brasil para diário alimentar, hidratação, metas, peso e organização de alimentos. O NutriPro usa Firebase Authentication, Cloud Firestore, IndexedDB e um catálogo público local para manter a pesquisa rápida e disponível offline após o primeiro carregamento.
+PWA responsiva em português do Brasil para diário alimentar, hidratação, metas e acompanhamento de evolução corporal. A aplicação usa Firebase Authentication, Cloud Firestore, IndexedDB e um catálogo público local para preservar uma experiência rápida, inclusive após o primeiro carregamento.
 
 - Repositório: <https://github.com/gui130699/NutriPro>
 - GitHub Pages: <https://gui130699.github.io/NutriPro/>
 - Firebase Hosting: <https://nutripro-9115a.web.app/>
 
-## Recursos
+## Destaques da versão
 
-- Autenticação por e-mail e senha, recuperação de acesso e onboarding persistente.
-- Dashboard com calorias, macronutrientes, hidratação e atalhos.
-- Diário com pesquisa incremental de alimentos, medidas em g, kg, ml, l, unidade e porção, snapshots nutricionais e exclusão de lançamentos.
-- Hidratação por atalhos ou valor personalizado, inclusive em datas passadas, com remoção/undo manual do registro.
-- Rota `/listas` com **Lista pública**, **Minha lista** e **Refeições**.
-- Catálogo público pesquisável por nome, categoria ou marca, sem renderizar milhares de opções em um `<select>`.
-- Alimentos particulares, favoritos, personalização individual de itens públicos, ocultação e restauração sem alterar a base global.
-- Tipos de refeição editáveis, ordenáveis, ativáveis e com catálogo acessível de ícones Lucide.
-- Tema Claro, Escuro e Sistema com cache local, sincronização em `userPreferences` e aplicação sem flash de cor.
-- PWA com manifest, service worker, cache de catálogo no IndexedDB e instalação guiada em Android, iOS e desktop.
+- Evolução com registros reais de peso, médias de 7/30 dias, tendência, meta, edição e exclusão.
+- Medidas corporais completas, comparação entre registros, gráfico e vínculo opcional do peso ao histórico.
+- Avaliação física com relatório imprimível, IMC, relações cintura/quadril e cintura/altura, composição corporal e protocolos de percentual de gordura que só calculam quando todos os dados exigidos foram informados.
+- Perfil validado com React Hook Form e Zod; peso atual e meta de peso separados, sem substituir o histórico.
+- Onboarding protegido: contas sem `onboardingCompleted: true` são levadas à conclusão antes das rotas privadas.
+- Um único `ThemeProvider` para os modos Claro, Escuro e Sistema.
+- Contagem de uso de alimentos em `foodUsage`, atualizada em transação e sem varrer todo o diário.
+- PWA instalável em Android, desktop e iOS, com recuperação de rotas profundas do GitHub Pages e build que elimina bundles antigos antes de gerar o service worker.
 
-## Tecnologias
+## Recursos preservados
 
-React 19, TypeScript, Vite, Tailwind CSS, TanStack Query, React Hook Form, Zod, Firebase Authentication, Cloud Firestore, Dexie/IndexedDB, Lucide, Recharts, vite-plugin-pwa, Vitest e Playwright.
+- Autenticação por e-mail/senha, recuperação de acesso e onboarding persistente.
+- Dashboard, diário por data, hidratação, listas públicas e particulares, favoritos, overrides e refeições personalizadas.
+- Tema, cache offline, manifest, service worker e botão **Instalar app**.
+- Tipos de refeição existentes e snapshots nutricionais do diário continuam compatíveis com registros anteriores.
 
-## Configuração
+## Requisitos e configuração
 
-1. Instale o Node.js 20 ou superior e o Firebase CLI.
+1. Instale Node.js 20 ou superior e Firebase CLI.
 2. Copie `.env.example` para `.env`.
-3. Preencha todas as variáveis `VITE_FIREBASE_*` com a configuração pública do seu app Web Firebase.
-4. No Firebase Authentication, ative o provedor **E-mail/senha**.
-5. Instale as dependências e aplique regras/índices:
+3. Preencha as variáveis `VITE_FIREBASE_*` com a configuração Web do projeto Firebase.
+4. No Firebase Authentication, habilite **E-mail/senha**.
+5. Instale as dependências e rode o projeto:
 
 ```bash
-npm install
-firebase login
-firebase deploy --only firestore:rules,firestore:indexes
+npm ci
 npm run dev
 ```
 
-Não inclua conta de serviço, chave administrativa ou `.env` no Git. A configuração Web do Firebase é pública por natureza; a proteção dos dados depende das regras do Firestore em `firestore.rules`.
+A configuração Web do Firebase é pública por natureza. Não inclua conta de serviço, credencial administrativa ou `.env` no Git; a proteção dos dados é feita pelas regras em `firestore.rules`.
 
-## Catálogo de alimentos
+## Catálogo oficial de alimentos
 
-O catálogo público é independente do Firestore. Coloque o arquivo oficial `lista_7083_alimentos_nutrientes_100g.csv` na raiz do projeto e execute:
+O importador é deliberadamente estrito. Coloque o arquivo original `lista_7083_alimentos_nutrientes_100g.csv` na raiz e execute:
 
 ```bash
 npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0
 ```
 
-O conversor cria ou atualiza:
+Ele exige exatamente 7.083 linhas e este cabeçalho, nesta ordem:
 
 ```text
-public/data/foods.json
-public/data/foods-version.json
+codigo_usda,nome_alimento_en,categoria_en,proteinas_g_100g,carboidratos_g_100g,fibras_g_100g,gorduras_g_100g,calorias_estimadas_kcal_100g,quantidade_base,unidade_base,idioma_nome,ativo,fonte_url
 ```
 
-Ele detecta CSV com vírgula, ponto e vírgula ou tabulação, converte decimais brasileiros, normaliza nomes e deduplica pelo `externalId`. Reexecutá-lo não duplica alimentos. O cliente baixa `foods-version.json`, guarda o catálogo completo no IndexedDB e só faz novo download quando a versão muda. Se ainda não houver CSV, o projeto mantém um stub seguro vazio — nunca inventa os 7.083 registros.
+Cada linha precisa ter código e nome, nutrientes numéricos não negativos, `quantidade_base = 100`, `unidade_base = g`, `idioma_nome = en-US` e `ativo` igual a `S` ou `N`. Códigos duplicados, linhas inválidas, colunas inesperadas ou uma contagem diferente de 7.083 interrompem a operação antes de qualquer gravação. `S` é convertido para `isActive: true` e `N` para `false`.
 
-## Dados e segurança
+Nesta entrega o CSV original não estava no workspace. Por isso, `public/data/foods.json` e `public/data/foods-version.json` foram preservados como stubs vazios: nenhum alimento, nutriente ou total foi inventado. Assim que o arquivo for disponibilizado, rode o comando acima, confira `totalFoods: 7083` e repita a busca, paginação e cache offline antes de publicar.
 
-Coleções protegidas por usuário:
+## Evolução e avaliação física
 
-| Coleção | Finalidade |
+As rotas privadas são:
+
+| Rota | Finalidade |
 | --- | --- |
-| `profiles` | perfil e conclusão do onboarding |
-| `goals` | metas nutricionais e de hidratação |
-| `foods` | alimentos particulares; exclusão lógica com `isActive` |
-| `foodOverrides` | personalizações e ocultação de alimentos públicos |
-| `foodFavorites` | favoritos sem duplicidade por usuário/origem/alimento |
-| `mealTypes` | refeições, ícone, cor, horário, ordem e estado |
-| `mealItems` | diário com snapshots de alimento e refeição |
-| `waterLogs` | registros de hidratação |
-| `weightLogs`, `recipes`, `dailyNotes` | recursos pessoais existentes |
-| `userPreferences` | preferência visual |
+| `/evolucao` | peso, tendência, médias e meta |
+| `/evolucao/medidas` | medidas corporais, histórico, comparação e gráfico |
+| `/evolucao/avaliacao-fisica` | avaliações, protocolos, relatório e impressão |
+| `/perfil` | dados pessoais, metas nutricionais, peso atual e peso-meta |
 
-As regras não usam uma concessão genérica. Cada coleção verifica autenticação, propriedade por `userId` e bloqueia alteração do proprietário. O catálogo em JSON não depende do Firestore e alimentos públicos não podem ser alterados globalmente por usuários comuns.
+As datas civis usam `localIsoDate()` para não deslocar lançamentos no fuso local. Registros criados pelo perfil, pelas medidas e pelas avaliações podem alimentar o mesmo histórico de peso sem criar duplicidade para a mesma data e valor.
 
-Registros antigos do diário que possuem somente `mealName` continuam sendo exibidos com um ícone de fallback. Para migrá-los permanentemente, use uma conta de serviço apenas em ambiente controlado:
+Os resultados da avaliação física são estimativas informativas. Eles não substituem avaliação médica, nutricional ou presencial. A tela não simula upload de fotos: o recurso aparece como indisponível até que Firebase Storage privado e suas regras sejam configurados e verificados.
+
+## Dados, regras e agregação
+
+Coleções pessoais protegidas incluem `profiles`, `goals`, `foods`, `foodOverrides`, `foodFavorites`, `mealTypes`, `mealItems`, `waterLogs`, `weightLogs`, `bodyMeasurements`, `physicalAssessments`, `foodUsage` e `userPreferences`.
+
+As regras verificam autenticação, propriedade por `userId`, tipos, faixas e imutabilidade do proprietário em atualizações. Os índices incluem consultas por data descendente para peso, medidas e avaliações, além de `foodUsage` por quantidade de uso.
+
+Para registros antigos, a migração é administrativa, idempotente e começa em simulação:
 
 ```bash
-# primeiro execute em modo de simulação
-npm run migrate:meals
-
-# depois de conferir o resultado
-npm run migrate:meals -- --apply
+npm run migrate:food-usage
+npm run migrate:food-usage -- --apply
 ```
 
-Defina `GOOGLE_APPLICATION_CREDENTIALS` ou `FIREBASE_SERVICE_ACCOUNT_JSON` somente para esse script administrativo. Ele não é usado pelo frontend.
-
-## Comandos
-
-| Comando | Finalidade |
-| --- | --- |
-| `npm run dev` | inicia o Vite em desenvolvimento |
-| `npm run build` | valida TypeScript e gera a PWA de produção |
-| `npm run preview` | abre o build local |
-| `npm run lint` | executa o Oxlint |
-| `npm run test` | executa testes unitários com Vitest |
-| `npm run test:e2e` | executa Playwright/Chromium |
-| `npm run test:e2e:headed` | executa Playwright com navegador visível |
-| `npm run test:e2e:ui` | abre a interface do Playwright |
-| `npm run test:e2e:report` | abre o relatório HTML mais recente |
-| `npm run catalog:import -- arquivo.csv --version x.y.z` | converte a base oficial |
-| `npm run migrate:meals` | simula migração de snapshots legados |
-| `npm run pwa:icons` | regenera os ícones PNG do manifest e do iOS |
-
-Instale o navegador do Playwright uma vez quando necessário:
-
-```bash
-npx playwright install chromium
-```
+Ela exige `GOOGLE_APPLICATION_CREDENTIALS` ou `FIREBASE_SERVICE_ACCOUNT_JSON` e nunca é executada pelo frontend.
 
 ## Instalar como aplicativo
 
-- **Android, Windows, macOS e Linux:** no Chrome ou Edge, use o botão **Instalar app** quando ele aparecer. O navegador exibirá a confirmação nativa.
-- **iPhone e iPad:** use o botão **Instalar app** para ver o passo a passo. No Safari, toque em **Compartilhar → Adicionar à Tela de Início**. A Apple exige essa ação manual.
-- O botão não é mostrado quando o NutriPro já está aberto como aplicativo. A instalação requer uma URL HTTPS publicada, como o Firebase Hosting ou GitHub Pages.
-- Quando uma atualização do NutriPro estiver disponível, confirme a recarga: o novo service worker é ativado antes de abrir a versão atualizada.
+- **Android, Windows, macOS e Linux:** em Chrome ou Edge, use **Instalar app** quando o botão aparecer e confirme o diálogo nativo.
+- **iPhone e iPad:** use o mesmo botão para ver o guia. No Safari, escolha **Compartilhar → Adicionar à Tela de Início**; a Apple exige essa ação manual.
+- O botão desaparece em modo standalone. A instalação real requer HTTPS, como GitHub Pages ou Firebase Hosting.
+
+## Qualidade e CI
+
+```bash
+npm run lint
+npm run test
+npm run test:e2e
+npm run build
+```
+
+`npm run build` limpa somente o diretório gerado `dist` após validar que ele pertence ao workspace. Isso impede que hashes de bundles antigos entrem no precache do Workbox. O GitHub Pages executa `npm ci`, lint, testes unitários e build antes de publicar; o workflow Playwright é separado e roda em pushes e pull requests.
 
 ## Publicação
 
-Para o Firebase Hosting:
+Para Firebase Hosting e regras do Firestore:
 
 ```bash
 npm run build
-firebase deploy
+firebase deploy --only firestore:rules,firestore:indexes,hosting
 ```
 
-O GitHub Pages é publicado pela ação `.github/workflows/deploy-pages.yml`. Configure as variáveis `VITE_FIREBASE_*` em **Settings → Secrets and variables → Actions → Variables** do repositório para que o build do Pages tenha acesso à configuração Web pública correta.
+O GitHub Pages é publicado no push para `main`. O arquivo `public/404.html` devolve links diretos para o app shell, e `src/main.tsx` restaura apenas rotas internas válidas; assim, recarregar ou abrir `/NutriPro/evolucao` não cai mais em uma página estática 404.
 
-## Testes e limites conhecidos
+## Testes e limitações conhecidas
 
-O roteiro e os resultados executados ficam em [docs/TESTES-FUNCIONAIS.md](docs/TESTES-FUNCIONAIS.md). Os smoke tests E2E não usam nem modificam dados de produção. Fluxos autenticados com gravação devem ser repetidos contra Firebase Emulator Suite ou uma conta/projeto de homologação antes de uma operação destrutiva; nunca em dados reais.
+O registro detalhado fica em [docs/TESTES-FUNCIONAIS.md](docs/TESTES-FUNCIONAIS.md). A rodada atual aprovou 55 testes unitários em 15 arquivos e 15 cenários Playwright/Chromium, além do build normal e do build com base do GitHub Pages.
 
-Nesta versão, `public/data/foods.json` está vazio porque o CSV oficial não foi fornecido no workspace. O código de importação, cache, paginação e pesquisa já está pronto; assim que o arquivo for adicionado, gere a versão e valide a contagem esperada de 7.083 alimentos antes do deploy.
+Não foram feitas escritas autenticadas em produção: não havia conta/projeto de homologação e o Firestore Emulator requer Java, que não está instalado nesta máquina. Os fluxos autenticados, o catálogo com 7.083 itens e a instalação em aparelho físico continuam pendentes desses recursos, e são documentados sem resultados fictícios.
