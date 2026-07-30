@@ -4,8 +4,8 @@ NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E ÍNDICE DO CÓDIGO
 Versão base PWA documentada: 8fbdd1ff252104b19c50d6031e43e259561a1f94
 Versão funcional desta atualização: 397fb2126b9cbfb3e8b7a6978e41232e41498c7a
 Mensagem do commit funcional: feat: expand evolution and harden PWA data flows
-Relatório documental desta atualização: docs/TESTES-FUNCIONAIS.md (commit documental posterior)
-Commit da atualização documental principal: será registrado após a revisão deste dossiê
+Relatório documental desta atualização: 069fad9b93dd862f8daf3bc8c8abfc98ced02f70
+Commit da atualização documental principal: 069fad9 (docs: document evolution release and validation)
 Data da atualização: 30/07/2026
 Repositório: https://github.com/gui130699/NutriPro
 GitHub Pages: https://gui130699.github.io/NutriPro/
@@ -16,8 +16,8 @@ base PWA no commit 8fbdd1ff252104b19c50d6031e43e259561a1f94, que corresponde
 à correção do service worker — não ao primeiro commit de instalação. A seção
 15 registra, com links no commit funcional 397fb2126b9cbfb3e8b7a6978e41232e41498c7a,
 a evolução atual de catálogo, perfil, evolução corporal, segurança, CI e PWA.
-O dossiê em si recebe a referência do commit documental em uma atualização
-posterior para evitar uma referência Git autorreferencial.
+O dossiê em si recebe esta referência em uma atualização documental posterior,
+evitando uma referência Git autorreferencial no mesmo commit do relatório.
 
 Itens intencionalmente excluídos deste índice:
 - node_modules/ e package-lock.json (dependências e arquivo gerado)
