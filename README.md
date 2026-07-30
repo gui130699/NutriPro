@@ -24,6 +24,8 @@ PWA em português para diário alimentar, metas nutricionais, água, peso e rece
 | `npm run preview` | Visualiza o build local |
 | `firebase deploy` | Publica regras, índices e Hosting |
 
+O GitHub Pages é publicado automaticamente pela ação `.github/workflows/deploy-pages.yml`. Para autenticação no Pages, adicione as variáveis `VITE_FIREBASE_API_KEY` e `VITE_FIREBASE_APP_ID` em **Settings → Secrets and variables → Actions → Variables** do repositório.
+
 ## Firebase e segurança
 
 As coleções principais são `profiles`, `goals`, `foods`, `mealItems`, `waterLogs`, `weightLogs`, `recipes` e `dailyNotes`. `firestore.rules` protege qualquer registro que possua `userId`: o usuário só cria, lê, atualiza e exclui seus próprios documentos. Alimentos públicos devem ser criados pelo Console Firebase ou por uma futura função administrativa autenticada.
