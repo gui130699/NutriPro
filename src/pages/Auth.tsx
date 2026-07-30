@@ -651,11 +651,11 @@ export function Onboarding() {
         "weightLogs",
         `${currentUser.uid}_initial`,
       );
-      const [existingProfile, existingGoals, existingInitialWeight] = await Promise.all([
-        getDoc(profileRef),
-        getDoc(goalsRef),
-        getDoc(initialWeightRef),
-      ]);
+      // The canonical profile path can be read by its owner even before it
+      // exists. Goals and weight logs are intentionally readable only after
+      // ownership exists, so pre-reading those new documents would be denied
+      // for every first-time user before this atomic batch could create them.
+      const existingProfile = await getDoc(profileRef);
       if (existingProfile.data()?.onboardingCompleted === true) {
         nav("/", { replace: true });
         return;
@@ -664,6 +664,7 @@ export function Onboarding() {
       const batch = writeBatch(db);
       const now = serverTimestamp();
       const today = localIsoDate();
+      const creatingInitialRecords = !existingProfile.exists();
 
       batch.set(
         profileRef,
@@ -695,9 +696,7 @@ export function Onboarding() {
           fiber: values.fiber,
           waterMl: values.waterMl,
           updatedAt: now,
-          ...(!existingGoals.exists() || existingGoals.data().createdAt === undefined
-            ? { createdAt: now }
-            : {}),
+          ...(creatingInitialRecords ? { createdAt: now } : {}),
         },
         { merge: true },
       );
@@ -710,9 +709,7 @@ export function Onboarding() {
           date: today,
           source: "onboarding",
           updatedAt: now,
-          ...(!existingInitialWeight.exists() || existingInitialWeight.data().createdAt === undefined
-            ? { createdAt: now }
-            : {}),
+          ...(creatingInitialRecords ? { createdAt: now } : {}),
         },
         { merge: true },
       );
