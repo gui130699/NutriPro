@@ -77,6 +77,7 @@ Foi aberto o servidor local no navegador integrado e verificado diretamente:
 | Teste de acessibilidade encontrava dois controles com “Senha” | O seletor genérico incluía o botão de exibir senha | Teste passou a selecionar o textbox e o botão separadamente | Suíte E2E aprovada |
 | Teste responsivo procurava `button[type=submit]` | O botão usa submissão implícita, válida em HTML | Teste passou a buscar o botão por nome acessível | Cinco dimensões aprovadas |
 | Não há CSV de 7.083 alimentos no workspace | Arquivo de origem não foi anexado | Mantido stub seguro, importador e cache prontos | Limitação declarada; nenhum dado inventado |
+| Cliente PWA podia recarregar o app shell anterior | A confirmação de atualização fazia apenas `reload()` | Registro imediato e `updateServiceWorker(true)` antes da recarga | Próximas atualizações ativam a versão aguardando com confirmação explícita |
 
 ## Cenários que não foram executados
 
@@ -93,6 +94,7 @@ Os cenários abaixo exigem Firebase Emulator Suite completo ou uma conta/projeto
 | Persistência autenticada de tema | `/perfil` | Sem Firestore de homologação | Não executado |
 | PWA offline após primeiro catálogo | Produção/preview | Catálogo oficial ausente | Não executado |
 | Instalação real no sistema | Android/iOS físico | O Playwright simulou o evento; não havia dispositivo móvel disponível | Não executado |
+| Atualização em cliente já controlado pelo service worker antigo | Navegador com cache de versão anterior | Exige uma recarga forçada/fechar e reabrir uma vez para migrar o cliente legado | Não executado |
 
 O Firebase Emulator Suite não foi iniciado nesta máquina porque o emulador Firestore requer Java e o runtime Java não está instalado. A próxima rodada deve anexar o CSV e usar Emulator Suite ou um projeto Firebase de homologação, então repetir os cenários autenticados campo a campo.
 
