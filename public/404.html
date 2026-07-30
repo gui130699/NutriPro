@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NutriPro</title>
+    <script>
+      ;(() => {
+        // GitHub Pages does not provide SPA rewrites. Preserve a direct route
+        // so `src/main.tsx` can restore it after returning to the app shell.
+        const base = '/NutriPro'
+        const path = window.location.pathname
+        const route = path.startsWith(`${base}/`) ? path.slice(base.length) : '/'
+        const target = `${base}/?p=${encodeURIComponent(`${route}${window.location.search}${window.location.hash}`)}`
+        window.location.replace(target)
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>

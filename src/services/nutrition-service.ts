@@ -8,6 +8,7 @@ import {
   limit,
   orderBy,
   query,
+  runTransaction,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -16,6 +17,7 @@ import {
   type DocumentData,
 } from 'firebase/firestore'
 import { calculateNutrients } from '../lib/nutrition'
+import { localIsoDate } from '../lib/dates'
 import { createDefaultMealTypes, resolveMealIconKey } from '../lib/meal-types'
 import type { Food, FoodFavorite, FoodOverride, Goal, MealItem, MealType, ThemePreference, Unit, UserPreferences } from '../lib/types'
 import { db } from '../lib/firebase'
@@ -105,6 +107,42 @@ const toMealType = (id: string, data: DocumentData): MealType => ({
 const overrideId = (userId: string, publicFoodId: string) => `${userId}_${publicFoodId}`
 const favoriteId = (userId: string, source: 'public' | 'private', foodId: string) => `${userId}_${source}_${foodId}`
 
+export type FoodUsageSource = 'public' | 'private'
+
+/**
+ * A source-qualified key keeps a private food from being conflated with a
+ * public catalog item that happens to have the same id.
+ */
+export const foodUsageKey = (foodSource: FoodUsageSource, foodId: string) => `${foodSource}:${foodId}`
+
+export const foodUsageDocumentId = (userId: string, foodSource: FoodUsageSource, foodId: string) =>
+  `usage_${encodeURIComponent(userId)}_${foodSource}_${encodeURIComponent(foodId)}`
+
+const asFoodUsageSource = (value: unknown): FoodUsageSource => value === 'public' ? 'public' : 'private'
+
+const nonNegativeCount = (value: unknown) => {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 0
+}
+
+/** Pure mapper used by the aggregate query and focused unit tests. */
+export const foodUsageCountsFromRecords = (records: readonly Record<string, unknown>[]) => records.reduce<Record<string, number>>((counts, record) => {
+  const foodId = record.foodId
+  if (typeof foodId !== 'string' || !foodId) return counts
+
+  const count = nonNegativeCount(record.usageCount)
+  if (!count) return counts
+
+  const source = asFoodUsageSource(record.foodSource)
+  const qualifiedKey = foodUsageKey(source, foodId)
+  counts[qualifiedKey] = (counts[qualifiedKey] ?? 0) + count
+
+  // Compatibility with the current list page while callers migrate to the
+  // source-qualified key. The persisted aggregate never loses this distinction.
+  counts[foodId] = (counts[foodId] ?? 0) + count
+  return counts
+}, {})
+
 export const nutritionService = {
   async initializeUser(userId: string) {
     const database = firestore()
@@ -159,8 +197,22 @@ export const nutritionService = {
   },
 
   async saveFoodOverride(userId: string, publicFoodId: string, changes: Partial<Omit<FoodOverride, 'id' | 'userId' | 'publicFoodId' | 'createdAt' | 'updatedAt'>>) {
-    const ref = doc(firestore(), 'foodOverrides', overrideId(userId, publicFoodId))
-    await setDoc(ref, { userId, publicFoodId, ...changes, updatedAt: serverTimestamp(), createdAt: serverTimestamp() }, { merge: true })
+    const database = firestore()
+    const ref = doc(database, 'foodOverrides', overrideId(userId, publicFoodId))
+    await runTransaction(database, async (transaction) => {
+      const existing = await transaction.get(ref)
+      if (existing.exists() && existing.data().userId !== userId) throw new Error('Você não pode alterar esta personalização.')
+
+      transaction.set(ref, {
+        userId,
+        publicFoodId,
+        ...changes,
+        updatedAt: serverTimestamp(),
+        ...(!existing.exists() || existing.data().createdAt === undefined
+          ? { createdAt: serverTimestamp() }
+          : {}),
+      }, { merge: true })
+    })
   },
 
   async restorePublicFood(userId: string, publicFoodId: string) {
@@ -214,10 +266,22 @@ export const nutritionService = {
   },
 
   async goals(userId: string): Promise<Goal | null> {
-    const snapshot = await getDocs(query(collection(firestore(), 'goals'), where('userId', '==', userId), limit(1)))
-    const data = snapshot.docs[0]?.data()
+    const database = firestore()
+    const snapshot = await getDocs(query(collection(database, 'goals'), where('userId', '==', userId), limit(10)))
+    const canonical = snapshot.docs.find((item) => item.id === userId)
+    const data = canonical?.data() ?? snapshot.docs[0]?.data()
     if (!data) return null
-    return { calories: toNumber(data.calories), protein: toNumber(data.protein), carbs: toNumber(data.carbs), fat: toNumber(data.fat), fiber: toNumber(data.fiber), waterMl: toNumber(data.waterMl ?? data.water_ml) }
+    return {
+      calories: toNumber(data.calories),
+      protein: toNumber(data.protein),
+      carbs: toNumber(data.carbs),
+      fat: toNumber(data.fat),
+      fiber: toNumber(data.fiber),
+      waterMl: toNumber(data.waterMl ?? data.water_ml),
+      weightGoalKg: data.weightGoalKg ?? data.weight_goal_kg
+        ? toNumber(data.weightGoalKg ?? data.weight_goal_kg)
+        : null,
+    }
   },
 
   async dayItems(userId: string, date: string) {
@@ -226,12 +290,8 @@ export const nutritionService = {
   },
 
   async foodUsageCounts(userId: string) {
-    const snapshot = await getDocs(query(collection(firestore(), 'mealItems'), where('userId', '==', userId)))
-    return snapshot.docs.reduce<Record<string, number>>((counts, item) => {
-      const foodId = item.data().foodId ?? item.data().food_id
-      if (typeof foodId === 'string' && foodId) counts[foodId] = (counts[foodId] ?? 0) + 1
-      return counts
-    }, {})
+    const snapshot = await getDocs(query(collection(firestore(), 'foodUsage'), where('userId', '==', userId)))
+    return foodUsageCountsFromRecords(snapshot.docs.map((item) => item.data()))
   },
 
   async addMealItem(userId: string, date: string, mealType: MealType, food: Food, quantity: number, unit: Unit) {
@@ -239,32 +299,58 @@ export const nutritionService = {
     if (unit === 'unidade' && !(Number(food.unitWeightG) > 0)) throw new Error('Este alimento não possui peso médio por unidade.')
     if (unit === 'porção' && !(Number(food.portionWeightG) > 0)) throw new Error('Este alimento não possui peso por porção.')
     const nutrients = calculateNutrients(food, quantity, unit)
-    await addDoc(collection(firestore(), 'mealItems'), {
-      userId,
-      date,
-      mealTypeId: mealType.id,
-      mealNameSnapshot: mealType.name,
-      mealIconSnapshot: mealType.icon,
-      foodId: food.id,
-      foodSource: food.isPublic ? 'public' : 'private',
-      foodNameSnapshot: food.name,
-      calories: nutrients.calories,
-      protein: nutrients.protein,
-      carbs: nutrients.carbs,
-      fat: nutrients.fat,
-      fiber: nutrients.fiber,
-      saturatedFat: nutrients.saturatedFat ?? 0,
-      sugar: nutrients.sugar ?? 0,
-      sodium: nutrients.sodium ?? 0,
-      unitWeightGSnapshot: food.unitWeightG ?? null,
-      quantity,
-      unit,
-      consumedGrams: nutrients.grams,
-      createdAt: serverTimestamp(),
+    const database = firestore()
+    const foodSource: FoodUsageSource = food.isPublic ? 'public' : 'private'
+    const mealItemRef = doc(collection(database, 'mealItems'))
+    const usageRef = doc(database, 'foodUsage', foodUsageDocumentId(userId, foodSource, food.id))
+
+    await runTransaction(database, async (transaction) => {
+      const usage = await transaction.get(usageRef)
+      const usageCount = usage.exists() ? nonNegativeCount(usage.data().usageCount) : 0
+      const now = serverTimestamp()
+
+      transaction.set(mealItemRef, {
+        userId,
+        date,
+        mealTypeId: mealType.id,
+        mealNameSnapshot: mealType.name,
+        mealIconSnapshot: mealType.icon,
+        foodId: food.id,
+        foodSource,
+        foodNameSnapshot: food.name,
+        calories: nutrients.calories,
+        protein: nutrients.protein,
+        carbs: nutrients.carbs,
+        fat: nutrients.fat,
+        fiber: nutrients.fiber,
+        saturatedFat: nutrients.saturatedFat ?? 0,
+        sugar: nutrients.sugar ?? 0,
+        sodium: nutrients.sodium ?? 0,
+        unitWeightGSnapshot: food.unitWeightG ?? null,
+        quantity,
+        unit,
+        consumedGrams: nutrients.grams,
+        usageAggregated: true,
+        createdAt: now,
+        updatedAt: now,
+      })
+      transaction.set(usageRef, {
+        userId,
+        foodId: food.id,
+        foodSource,
+        usageCount: usageCount + 1,
+        lastUsedAt: now,
+        updatedAt: now,
+        ...(!usage.exists() || usage.data().createdAt === undefined
+          ? { createdAt: now }
+          : {}),
+      }, { merge: true })
     })
+
+    return mealItemRef.id
   },
 
-  async addWater(userId: string, amountMl: number, date = new Date().toISOString().slice(0, 10)) {
+  async addWater(userId: string, amountMl: number, date = localIsoDate()) {
     if (!Number.isFinite(amountMl) || amountMl <= 0) throw new Error('Informe uma quantidade de água maior que zero.')
     const now = new Date()
     await addDoc(collection(firestore(), 'waterLogs'), { userId, date, amountMl, amount_ml: amountMl, loggedAt: now.toISOString(), logged_at: now.toISOString(), createdAt: serverTimestamp() })
@@ -283,10 +369,28 @@ export const nutritionService = {
   },
 
   async deleteMealItem(userId: string, mealItemId: string) {
-    const ref = doc(firestore(), 'mealItems', mealItemId)
-    const current = await getDoc(ref)
-    if (!current.exists() || current.data().userId !== userId) throw new Error('Você não pode excluir este lançamento.')
-    await deleteDoc(ref)
+    const database = firestore()
+    const ref = doc(database, 'mealItems', mealItemId)
+    await runTransaction(database, async (transaction) => {
+      const current = await transaction.get(ref)
+      if (!current.exists() || current.data().userId !== userId) throw new Error('Você não pode excluir este lançamento.')
+
+      const data = current.data()
+      const foodId = data.foodId ?? data.food_id
+      const foodSource = asFoodUsageSource(data.foodSource)
+      const usageRef = typeof foodId === 'string' && foodId
+        ? doc(database, 'foodUsage', foodUsageDocumentId(userId, foodSource, foodId))
+        : null
+      const usage = usageRef ? await transaction.get(usageRef) : null
+
+      transaction.delete(ref)
+      if (usageRef && usage?.exists()) {
+        transaction.update(usageRef, {
+          usageCount: Math.max(0, nonNegativeCount(usage.data().usageCount) - 1),
+          updatedAt: serverTimestamp(),
+        })
+      }
+    })
   },
 
   async preferences(userId: string): Promise<UserPreferences | null> {
@@ -297,6 +401,19 @@ export const nutritionService = {
   },
 
   async setTheme(userId: string, theme: ThemePreference) {
-    await setDoc(doc(firestore(), 'userPreferences', userId), { userId, theme, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }, { merge: true })
+    const database = firestore()
+    const ref = doc(database, 'userPreferences', userId)
+    await runTransaction(database, async (transaction) => {
+      const existing = await transaction.get(ref)
+      if (existing.exists() && existing.data().userId !== userId) throw new Error('Você não pode alterar esta preferência.')
+      transaction.set(ref, {
+        userId,
+        theme,
+        updatedAt: serverTimestamp(),
+        ...(!existing.exists() || existing.data().createdAt === undefined
+          ? { createdAt: serverTimestamp() }
+          : {}),
+      }, { merge: true })
+    })
   },
 }

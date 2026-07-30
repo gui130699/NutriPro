@@ -24,6 +24,7 @@ export type CatalogFood = {
   saturatedFat?: number
   sugar?: number
   sodium?: number
+  baseQuantity: number
   baseUnit: 'g' | 'ml'
   unitWeightG: number | null
   portionWeightG: number | null
@@ -168,6 +169,7 @@ export function normalizeCatalogFood<T extends object>(raw: T): CatalogFood {
     saturatedFat: toOptionalNumber(pickValue(record, ['saturatedFat', 'saturated_fat', 'gorduraSaturada', 'gordurasSaturadas'])),
     sugar: toOptionalNumber(pickValue(record, ['sugar', 'sugars', 'acucar', 'açúcar', 'acucares', 'açúcares'])),
     sodium: toOptionalNumber(pickValue(record, ['sodium', 'sodio', 'sódio'])),
+    baseQuantity: toNonNegativeNumber(pickValue(record, ['baseQuantity', 'base_quantity', 'quantidadeBase', 'quantidade_base']), 100),
     baseUnit: normalizeBaseUnit(pickValue(record, ['baseUnit', 'base_unit', 'unidadeBase', 'unidade_base', 'unit'])),
     unitWeightG: toOptionalNumber(pickValue(record, ['unitWeightG', 'unit_weight_g', 'pesoUnidade', 'peso_unidade'])) ?? null,
     portionWeightG: toOptionalNumber(pickValue(record, ['portionWeightG', 'portion_weight_g', 'pesoPorcao', 'peso_porção', 'pesoPorção'])) ?? null,

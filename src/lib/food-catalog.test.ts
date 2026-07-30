@@ -19,6 +19,7 @@ describe('catálogo público de alimentos', () => {
     expect(food.nameNormalized).toBe('pao de queijo')
     expect(food.searchKeywords).toEqual(expect.arrayContaining(['pao de queijo', 'pao', 'queijo', 'padaria']))
     expect(food.protein).toBe(5.4)
+    expect(food.baseQuantity).toBe(100)
   })
 
   it('cria palavras-chave pesquisáveis a partir do nome, categoria e marca', () => {

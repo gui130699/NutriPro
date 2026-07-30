@@ -11,8 +11,10 @@ const links = [
 
 export function Layout() {
   const location = useLocation()
-  const pageName = links.find((link) => link.to === location.pathname)?.label
-    ?? (location.pathname === '/adicionar' ? 'Novo alimento' : 'NutriPro')
+  const pageName = location.pathname.startsWith('/evolucao')
+    ? 'Evolução'
+    : links.find((link) => link.to === location.pathname)?.label
+      ?? (location.pathname === '/adicionar' ? 'Novo alimento' : 'NutriPro')
   return <div className="app-shell">
     <aside className="desktop-sidebar">
       <NavLink to="/" className="brand-lockup"><span className="brand-mark"><Droplets size={22} strokeWidth={2.8} /></span><span>nutri<span>pro</span></span></NavLink>

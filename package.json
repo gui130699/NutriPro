@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "node scripts/clean-build.mjs && tsc -b && vite build",
     "lint": "oxlint",
     "test": "vitest run",
     "test:e2e": "playwright test",
@@ -14,6 +14,7 @@
     "test:e2e:report": "playwright show-report",
     "catalog:import": "tsx scripts/convert-foods.ts",
     "migrate:meals": "tsx scripts/migrate-meal-snapshots.ts",
+    "migrate:food-usage": "tsx scripts/migrate-food-usage.ts",
     "pwa:icons": "tsx scripts/generate-pwa-icons.ts",
     "preview": "vite preview"
   },

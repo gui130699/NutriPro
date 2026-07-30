@@ -19,6 +19,276 @@ service cloud.firestore {
         && request.resource.data.userId == resource.data.userId;
     }
 
+    function hasField(data, key) {
+      return data.keys().hasAll([key]);
+    }
+
+    function validDate(value) {
+      return value is string
+        && value.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+    }
+
+    function validNonEmptyString(value, maxLength) {
+      return value is string && value.size() > 0 && value.size() <= maxLength;
+    }
+
+    function optionalString(data, key, maxLength) {
+      return !hasField(data, key)
+        || data[key] == null
+        || (data[key] is string && data[key].size() <= maxLength);
+    }
+
+    function optionalNumber(data, key, minValue, maxValue) {
+      return !hasField(data, key)
+        || data[key] == null
+        || (data[key] is number && data[key] >= minValue && data[key] <= maxValue);
+    }
+
+    function validWeight(value) {
+      return value is number && value >= 25 && value <= 500;
+    }
+
+    function optionalWeight(data, key) {
+      return !hasField(data, key) || data[key] == null || validWeight(data[key]);
+    }
+
+    function optionalDate(data, key) {
+      return !hasField(data, key) || validDate(data[key]);
+    }
+
+    function validWeightSource(value) {
+      return value in [
+        'onboarding',
+        'profile',
+        'evolution',
+        'assessment',
+        'measurement'
+      ];
+    }
+
+    function optionalWeightSource(data) {
+      return !hasField(data, 'source') || validWeightSource(data.source);
+    }
+
+    function validNutrition(data) {
+      return optionalNumber(data, 'calories', 0, 100000)
+        && optionalNumber(data, 'protein', 0, 100000)
+        && optionalNumber(data, 'carbs', 0, 100000)
+        && optionalNumber(data, 'fat', 0, 100000)
+        && optionalNumber(data, 'fiber', 0, 100000)
+        && optionalNumber(data, 'saturatedFat', 0, 100000)
+        && optionalNumber(data, 'sugar', 0, 100000)
+        && optionalNumber(data, 'sodium', 0, 10000000);
+    }
+
+    function validFoodCreate(data) {
+      return validNonEmptyString(data.name, 300)
+        && data.isPublic == false
+        && validNutrition(data)
+        && optionalNumber(data, 'unitWeightG', 0, 100000)
+        && optionalNumber(data, 'portionWeightG', 0, 100000)
+        && (!hasField(data, 'baseUnit') || data.baseUnit in ['g', 'ml'])
+        && (!hasField(data, 'isActive') || data.isActive is bool)
+        && optionalString(data, 'brand', 300)
+        && optionalString(data, 'category', 300)
+        && optionalString(data, 'source', 2000)
+        && optionalString(data, 'notes', 5000);
+    }
+
+    function validFoodUpdate(data) {
+      return (!hasField(data, 'name') || validNonEmptyString(data.name, 300))
+        && validNutrition(data)
+        && optionalNumber(data, 'unitWeightG', 0, 100000)
+        && optionalNumber(data, 'portionWeightG', 0, 100000)
+        && (!hasField(data, 'baseUnit') || data.baseUnit in ['g', 'ml'])
+        && (!hasField(data, 'isActive') || data.isActive is bool)
+        && optionalString(data, 'brand', 300)
+        && optionalString(data, 'category', 300)
+        && optionalString(data, 'source', 2000)
+        && optionalString(data, 'notes', 5000);
+    }
+
+    function validGoalsCreate(data) {
+      return data.calories is number && data.calories >= 0 && data.calories <= 20000
+        && data.protein is number && data.protein >= 0 && data.protein <= 2000
+        && data.carbs is number && data.carbs >= 0 && data.carbs <= 3000
+        && data.fat is number && data.fat >= 0 && data.fat <= 2000
+        && data.fiber is number && data.fiber >= 0 && data.fiber <= 1000
+        && data.waterMl is number && data.waterMl >= 0 && data.waterMl <= 20000
+        && optionalWeight(data, 'weightGoalKg');
+    }
+
+    function validGoalsUpdate(data) {
+      return optionalNumber(data, 'calories', 0, 20000)
+        && optionalNumber(data, 'protein', 0, 2000)
+        && optionalNumber(data, 'carbs', 0, 3000)
+        && optionalNumber(data, 'fat', 0, 2000)
+        && optionalNumber(data, 'fiber', 0, 1000)
+        && optionalNumber(data, 'waterMl', 0, 20000)
+        && optionalNumber(data, 'water_ml', 0, 20000)
+        && optionalWeight(data, 'weightGoalKg');
+    }
+
+    function validMealTypeCreate(data) {
+      return validNonEmptyString(data.name, 100)
+        && validNonEmptyString(data.icon, 100)
+        && data.order is number && data.order >= 0 && data.order <= 1000
+        && data.isActive is bool
+        && data.isDefault is bool
+        && optionalString(data, 'color', 30)
+        && optionalString(data, 'suggestedTime', 20)
+        && optionalString(data, 'deletedAt', 100);
+    }
+
+    function validMealTypeUpdate(data) {
+      return (!hasField(data, 'name') || validNonEmptyString(data.name, 100))
+        && (!hasField(data, 'icon') || validNonEmptyString(data.icon, 100))
+        && optionalNumber(data, 'order', 0, 1000)
+        && (!hasField(data, 'isActive') || data.isActive is bool)
+        && (!hasField(data, 'isDefault') || data.isDefault is bool)
+        && optionalString(data, 'color', 30)
+        && optionalString(data, 'suggestedTime', 20)
+        && optionalString(data, 'deletedAt', 100);
+    }
+
+    function validWeightLogCreate(data) {
+      return validDate(data.date)
+        && validWeight(data.weightKg)
+        && validWeightSource(data.source)
+        && optionalString(data, 'notes', 5000)
+        && optionalString(data, 'time', 20)
+        && (!hasField(data, 'fasted') || data.fasted == null || data.fasted is bool)
+        && (!hasField(data, 'fasting') || data.fasting == null || data.fasting is bool);
+    }
+
+    // Existing onboarding records may have the legacy `weight` alias and no
+    // newer optional fields. Keep them writable while validating every field
+    // that is present in the updated document.
+    function validWeightLogUpdate(data) {
+      return optionalDate(data, 'date')
+        && optionalWeight(data, 'weightKg')
+        && optionalWeight(data, 'weight')
+        && optionalWeightSource(data)
+        && optionalString(data, 'notes', 5000)
+        && optionalString(data, 'time', 20)
+        && (!hasField(data, 'fasted') || data.fasted == null || data.fasted is bool)
+        && (!hasField(data, 'fasting') || data.fasting == null || data.fasting is bool);
+    }
+
+    function hasBodyMeasurement(data, key) {
+      return hasField(data, key)
+        && data[key] is number
+        && data[key] >= 0
+        && data[key] <= 500;
+    }
+
+    function validBodyMeasurement(data) {
+      return validDate(data.date)
+        && optionalWeight(data, 'weightKg')
+        && optionalNumber(data, 'neckCm', 0, 500)
+        && optionalNumber(data, 'shouldersCm', 0, 500)
+        && optionalNumber(data, 'chestCm', 0, 500)
+        && optionalNumber(data, 'waistCm', 0, 500)
+        && optionalNumber(data, 'abdomenCm', 0, 500)
+        && optionalNumber(data, 'hipCm', 0, 500)
+        && optionalNumber(data, 'leftArmRelaxedCm', 0, 500)
+        && optionalNumber(data, 'rightArmRelaxedCm', 0, 500)
+        && optionalNumber(data, 'leftArmContractedCm', 0, 500)
+        && optionalNumber(data, 'rightArmContractedCm', 0, 500)
+        && optionalNumber(data, 'leftForearmCm', 0, 500)
+        && optionalNumber(data, 'rightForearmCm', 0, 500)
+        && optionalNumber(data, 'leftThighCm', 0, 500)
+        && optionalNumber(data, 'rightThighCm', 0, 500)
+        && optionalNumber(data, 'leftCalfCm', 0, 500)
+        && optionalNumber(data, 'rightCalfCm', 0, 500)
+        && optionalString(data, 'notes', 5000)
+        && (
+          hasField(data, 'weightKg') && validWeight(data.weightKg)
+          || hasBodyMeasurement(data, 'neckCm')
+          || hasBodyMeasurement(data, 'shouldersCm')
+          || hasBodyMeasurement(data, 'chestCm')
+          || hasBodyMeasurement(data, 'waistCm')
+          || hasBodyMeasurement(data, 'abdomenCm')
+          || hasBodyMeasurement(data, 'hipCm')
+          || hasBodyMeasurement(data, 'leftArmRelaxedCm')
+          || hasBodyMeasurement(data, 'rightArmRelaxedCm')
+          || hasBodyMeasurement(data, 'leftArmContractedCm')
+          || hasBodyMeasurement(data, 'rightArmContractedCm')
+          || hasBodyMeasurement(data, 'leftForearmCm')
+          || hasBodyMeasurement(data, 'rightForearmCm')
+          || hasBodyMeasurement(data, 'leftThighCm')
+          || hasBodyMeasurement(data, 'rightThighCm')
+          || hasBodyMeasurement(data, 'leftCalfCm')
+          || hasBodyMeasurement(data, 'rightCalfCm')
+        );
+    }
+
+    function validBodyFatMethod(value) {
+      return value in [
+        'manual',
+        'bioimpedance',
+        'navy',
+        'jackson-pollock-3',
+        'jackson-pollock-7',
+        'durnin-womersley',
+        'faulkner',
+        'guedes',
+        'other'
+      ];
+    }
+
+    function validPhysicalAssessment(data) {
+      return validDate(data.assessmentDate)
+        && validWeight(data.weightKg)
+        && data.heightCm is number && data.heightCm >= 80 && data.heightCm <= 260
+        && validBodyFatMethod(data.bodyFatMethod)
+        && (!hasField(data, 'biologicalSex') || data.biologicalSex == null || data.biologicalSex in ['female', 'male'])
+        && optionalNumber(data, 'ageYears', 0, 130)
+        && optionalNumber(data, 'reportedBodyFatPercent', 0, 100)
+        && optionalNumber(data, 'calculatedBodyFatPercent', 0, 100)
+        && optionalNumber(data, 'fatMassKg', 0, 500)
+        && optionalNumber(data, 'leanMassKg', 0, 500)
+        && optionalNumber(data, 'muscleMassKg', 0, 500)
+        && optionalNumber(data, 'boneMassKg', 0, 100)
+        && optionalNumber(data, 'bodyWaterPercent', 0, 100)
+        && optionalNumber(data, 'visceralFatLevel', 0, 100)
+        && optionalNumber(data, 'metabolicAge', 0, 150)
+        && optionalNumber(data, 'basalMetabolicRateKcal', 0, 20000)
+        && optionalNumber(data, 'bmi', 0, 150)
+        && optionalNumber(data, 'waistHipRatio', 0, 5)
+        && optionalNumber(data, 'waistHeightRatio', 0, 5)
+        && optionalNumber(data, 'neckCm', 0, 500)
+        && optionalNumber(data, 'chestCm', 0, 500)
+        && optionalNumber(data, 'waistCm', 0, 500)
+        && optionalNumber(data, 'abdomenCm', 0, 500)
+        && optionalNumber(data, 'hipCm', 0, 500)
+        && optionalNumber(data, 'tricepsSkinfoldMm', 0, 150)
+        && optionalNumber(data, 'bicepsSkinfoldMm', 0, 150)
+        && optionalNumber(data, 'subscapularSkinfoldMm', 0, 150)
+        && optionalNumber(data, 'suprailiacSkinfoldMm', 0, 150)
+        && optionalNumber(data, 'abdominalSkinfoldMm', 0, 150)
+        && optionalNumber(data, 'chestSkinfoldMm', 0, 150)
+        && optionalNumber(data, 'midaxillarySkinfoldMm', 0, 150)
+        && optionalNumber(data, 'thighSkinfoldMm', 0, 150)
+        && optionalNumber(data, 'calfSkinfoldMm', 0, 150)
+        && optionalNumber(data, 'restingHeartRate', 0, 300)
+        && optionalNumber(data, 'systolicBloodPressure', 0, 300)
+        && optionalNumber(data, 'diastolicBloodPressure', 0, 300)
+        && optionalString(data, 'evaluatorName', 300)
+        && optionalString(data, 'evaluatorRegistration', 100)
+        && optionalString(data, 'goals', 5000)
+        && optionalString(data, 'observations', 10000)
+        && optionalString(data, 'recommendations', 10000);
+    }
+
+    function validFoodUsage(data) {
+      return validNonEmptyString(data.foodId, 1000)
+        && data.foodSource in ['public', 'private']
+        && data.usageCount is number
+        && data.usageCount >= 0
+        && data.usageCount <= 1000000;
+    }
+
     match /profiles/{userId} {
       allow read: if signedIn() && userId == request.auth.uid;
       allow create: if signedIn()
@@ -34,28 +304,33 @@ service cloud.firestore {
       allow read: if signedIn() && userId == request.auth.uid;
       allow create: if signedIn()
         && userId == request.auth.uid
-        && request.resource.data.userId == request.auth.uid;
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.theme in ['light', 'dark', 'system'];
       allow update: if signedIn()
         && userId == request.auth.uid
-        && request.resource.data.userId == resource.data.userId;
+        && request.resource.data.userId == resource.data.userId
+        && request.resource.data.theme in ['light', 'dark', 'system'];
       allow delete: if signedIn() && userId == request.auth.uid;
     }
 
     match /goals/{goalId} {
       allow read: if ownsExisting();
-      allow create: if createsOwn();
-      allow update: if updatesOwnWithoutChangingOwner();
+      allow create: if createsOwn() && validGoalsCreate(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner() && validGoalsUpdate(request.resource.data);
       allow delete: if ownsExisting();
     }
 
     match /foods/{foodId} {
       allow read: if signedIn()
         && (resource.data.isPublic == true || resource.data.userId == request.auth.uid);
-      allow create: if createsOwn() && request.resource.data.isPublic == false;
+      allow create: if createsOwn()
+        && request.resource.data.isPublic == false
+        && validFoodCreate(request.resource.data);
       allow update: if ownsExisting()
         && resource.data.isPublic == false
         && request.resource.data.userId == resource.data.userId
-        && request.resource.data.isPublic == false;
+        && request.resource.data.isPublic == false
+        && validFoodUpdate(request.resource.data);
       allow delete: if ownsExisting() && resource.data.isPublic == false;
     }
 
@@ -73,10 +348,17 @@ service cloud.firestore {
       allow delete: if ownsExisting();
     }
 
+    match /foodUsage/{usageId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn() && validFoodUsage(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner() && validFoodUsage(request.resource.data);
+      allow delete: if ownsExisting();
+    }
+
     match /mealTypes/{mealTypeId} {
       allow read: if ownsExisting();
-      allow create: if createsOwn();
-      allow update: if updatesOwnWithoutChangingOwner();
+      allow create: if createsOwn() && validMealTypeCreate(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner() && validMealTypeUpdate(request.resource.data);
       allow delete: if ownsExisting();
     }
 
@@ -96,8 +378,22 @@ service cloud.firestore {
 
     match /weightLogs/{weightLogId} {
       allow read: if ownsExisting();
-      allow create: if createsOwn();
-      allow update: if updatesOwnWithoutChangingOwner();
+      allow create: if createsOwn() && validWeightLogCreate(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner() && validWeightLogUpdate(request.resource.data);
+      allow delete: if ownsExisting();
+    }
+
+    match /bodyMeasurements/{measurementId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn() && validBodyMeasurement(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner() && validBodyMeasurement(request.resource.data);
+      allow delete: if ownsExisting();
+    }
+
+    match /physicalAssessments/{assessmentId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn() && validPhysicalAssessment(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner() && validPhysicalAssessment(request.resource.data);
       allow delete: if ownsExisting();
     }
 

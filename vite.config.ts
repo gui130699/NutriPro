@@ -7,6 +7,11 @@ const base = process.env.GITHUB_ACTIONS ? '/NutriPro/' : '/'
 
 export default defineConfig({
   base,
+  build: {
+    // Keep stale hashed bundles out of the service-worker precache, especially
+    // when a previous build was interrupted on a synced Windows workspace.
+    emptyOutDir: true,
+  },
   test: {
     include: ['src/**/*.test.ts'],
   },

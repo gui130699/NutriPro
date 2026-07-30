@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { ConfirmDialog } from '../components/ConfirmDialog'
 import { mealIcons } from '../data/meal-icons'
 import { useAuth } from '../hooks/useAuth'
+import { localIsoDate } from '../lib/dates'
 import { loadFoodCatalog, normalizeFoodName } from '../lib/food-catalog'
 import { searchCatalogFoods } from '../lib/food-search'
 import { mergePublicFoodWithOverride } from '../lib/food-overrides'
@@ -14,11 +15,6 @@ import { nutritionService } from '../services/nutrition-service'
 
 type DeleteAction = { kind: 'item'; id: string } | { kind: 'water'; id: string } | null
 type MealGroup = { key: string; id: string | null; name: string; icon: string; color: string | null; items: MealItem[]; isActive: boolean }
-
-const localIsoDate = (date: Date) => {
-  const offset = date.getTimezoneOffset() * 60_000
-  return new Date(date.getTime() - offset).toISOString().slice(0, 10)
-}
 
 function matchesFood(food: Food, query: string) {
   const terms = normalizeFoodName(query).split(' ').filter(Boolean)

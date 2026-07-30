@@ -22,9 +22,10 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, serverTimestamp, writeBatch } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, writeBatch } from "firebase/firestore";
 import { useAuth } from "../hooks/useAuth";
 import { auth, db } from "../lib/firebase";
+import { localIsoDate } from "../lib/dates";
 
 type AuthMode = "login" | "signup" | "recover";
 type Notice = { type: "success" | "error"; text: string };
@@ -46,7 +47,7 @@ const isValidBirthDate = (value: string) => {
   return (
     /^\d{4}-\d{2}-\d{2}$/.test(value) &&
     !Number.isNaN(date.getTime()) &&
-    date.toISOString().slice(0, 10) === value &&
+    localIsoDate(date) === value &&
     date <= today &&
     date.getFullYear() >= 1900
   );
@@ -62,7 +63,7 @@ const onboardingSchema = z.object({
     .string()
     .trim()
     .refine(isValidBirthDate, "Informe uma data de nascimento válida."),
-  goal: z.enum(["Emagrecimento", "Manutenção", "Ganho de peso"], {
+  goal: z.enum(["Emagrecimento", "Manutenção", "Ganho de peso", "Saúde e bem-estar"], {
     errorMap: () => ({ message: "Escolha o seu objetivo principal." }),
   }),
   heightCm: z.coerce
@@ -565,6 +566,7 @@ export function Onboarding() {
   const nav = useNavigate();
   const { user, loading } = useAuth();
   const [notice, setNotice] = useState<Notice | null>(null);
+  const [checkingCompletion, setCheckingCompletion] = useState(true);
   const {
     register,
     handleSubmit,
@@ -587,7 +589,32 @@ export function Onboarding() {
   });
 
   useEffect(() => {
-    if (!loading && !user) nav("/entrar", { replace: true });
+    let active = true;
+    if (loading) return () => { active = false; };
+    if (!user) {
+      nav("/entrar", { replace: true });
+      return () => { active = false; };
+    }
+    if (!db) {
+      setCheckingCompletion(false);
+      return () => { active = false; };
+    }
+
+    setCheckingCompletion(true);
+    void getDoc(doc(db, "profiles", user.uid))
+      .then((snapshot) => {
+        if (!active) return;
+        if (snapshot.data()?.onboardingCompleted === true) {
+          nav("/", { replace: true });
+          return;
+        }
+        setCheckingCompletion(false);
+      })
+      .catch(() => {
+        if (active) setCheckingCompletion(false);
+      });
+
+    return () => { active = false; };
   }, [loading, nav, user]);
 
   async function submit(values: OnboardingForm) {
@@ -604,9 +631,6 @@ export function Onboarding() {
     setNotice(null);
 
     try {
-      const batch = writeBatch(db);
-      const now = serverTimestamp();
-      const today = new Date().toISOString().slice(0, 10);
       const profileRef = doc(db, "profiles", currentUser.uid);
       const goalsRef = doc(db, "goals", currentUser.uid);
       const initialWeightRef = doc(
@@ -614,6 +638,19 @@ export function Onboarding() {
         "weightLogs",
         `${currentUser.uid}_initial`,
       );
+      const [existingProfile, existingGoals, existingInitialWeight] = await Promise.all([
+        getDoc(profileRef),
+        getDoc(goalsRef),
+        getDoc(initialWeightRef),
+      ]);
+      if (existingProfile.data()?.onboardingCompleted === true) {
+        nav("/", { replace: true });
+        return;
+      }
+
+      const batch = writeBatch(db);
+      const now = serverTimestamp();
+      const today = localIsoDate();
 
       batch.set(
         profileRef,
@@ -628,6 +665,9 @@ export function Onboarding() {
           onboardingCompleted: true,
           onboardingCompletedAt: now,
           updatedAt: now,
+          ...(!existingProfile.exists() || existingProfile.data().createdAt === undefined
+            ? { createdAt: now }
+            : {}),
         },
         { merge: true },
       );
@@ -642,6 +682,9 @@ export function Onboarding() {
           fiber: values.fiber,
           waterMl: values.waterMl,
           updatedAt: now,
+          ...(!existingGoals.exists() || existingGoals.data().createdAt === undefined
+            ? { createdAt: now }
+            : {}),
         },
         { merge: true },
       );
@@ -654,6 +697,9 @@ export function Onboarding() {
           date: today,
           source: "onboarding",
           updatedAt: now,
+          ...(!existingInitialWeight.exists() || existingInitialWeight.data().createdAt === undefined
+            ? { createdAt: now }
+            : {}),
         },
         { merge: true },
       );
@@ -667,6 +713,10 @@ export function Onboarding() {
         text: "Não foi possível salvar seu perfil agora. Verifique a conexão e tente novamente.",
       });
     }
+  }
+
+  if (loading || checkingCompletion) {
+    return <main className="grid min-h-[100dvh] place-items-center bg-[#f3f7f2] text-sm font-semibold text-[#294b41]">Carregando seu perfil…</main>;
   }
 
   return (
@@ -763,7 +813,7 @@ export function Onboarding() {
                 </span>
                 <input
                   type="date"
-                  max={new Date().toISOString().slice(0, 10)}
+                  max={localIsoDate()}
                   aria-invalid={!!errors.birthDate}
                   className="w-full rounded-2xl border border-[#d9e5dc] bg-white px-4 py-3.5 text-[15px] text-[#143c35] outline-none transition focus:border-[#278361] focus:ring-4 focus:ring-[#dff4e5]"
                   {...register("birthDate")}
@@ -782,6 +832,7 @@ export function Onboarding() {
                   <option>Emagrecimento</option>
                   <option>Manutenção</option>
                   <option>Ganho de peso</option>
+                  <option>Saúde e bem-estar</option>
                 </select>
                 <FieldError>{errors.goal?.message}</FieldError>
               </label>

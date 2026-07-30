@@ -5,15 +5,12 @@ import { Link } from 'react-router-dom'
 import { MetricCard } from '../components/MetricCard'
 import { OfflineStatus } from '../components/OfflineStatus'
 import { useAuth } from '../hooks/useAuth'
+import { localIsoDate } from '../lib/dates'
 import { br, sumNutrients } from '../lib/nutrition'
+import { evolutionService } from '../services/evolution-service'
 import { nutritionService } from '../services/nutrition-service'
 
 const fallbackGoal = { calories: 2000, protein: 120, carbs: 250, fat: 65, fiber: 30, waterMl: 2500 }
-
-const localIsoDate = (date = new Date()) => {
-  const offset = date.getTimezoneOffset() * 60_000
-  return new Date(date.getTime() - offset).toISOString().slice(0, 10)
-}
 
 const getGreeting = () => {
   const hour = new Date().getHours()
@@ -27,6 +24,7 @@ export function Dashboard() {
   const goals = useQuery({ queryKey: ['goals', userId], queryFn: () => nutritionService.goals(userId!), enabled: Boolean(userId) })
   const items = useQuery({ queryKey: ['items', userId, date], queryFn: () => nutritionService.dayItems(userId!, date), enabled: Boolean(userId) })
   const water = useQuery({ queryKey: ['water', userId, date], queryFn: () => nutritionService.water(userId!, date), enabled: Boolean(userId) })
+  const latestWeight = useQuery({ queryKey: ['weight-latest', userId], queryFn: () => evolutionService.latestWeight(userId!), enabled: Boolean(userId) })
   const total = sumNutrients(items.data ?? [])
   const goal = goals.data ?? fallbackGoal
   const waterTotal = (water.data ?? []).reduce((sum, log) => sum + log.amountMl, 0)
@@ -50,7 +48,7 @@ export function Dashboard() {
         <div className="hero-copy">
           <div className="hero-kicker"><Sparkles size={14} /> Seu ritmo de hoje</div>
           <h2>Pequenas escolhas<br /><em>criam grandes mudanças.</em></h2>
-          <p>{items.data?.length ?? 0} alimento(s) registrado(s) até agora.</p>
+          <p>{items.data?.length ?? 0} alimento(s) registrado(s) até agora.{latestWeight.data ? ` Peso atual: ${br(latestWeight.data.weightKg)} kg.` : ''}</p>
           <Link to="/diario" className="hero-link">Ver meu diário <ArrowRight size={16} /></Link>
         </div>
         <div className="calorie-orbit" style={{ '--orbit-progress': `${caloriesPct * 3.6}deg` } as CSSProperties}>
