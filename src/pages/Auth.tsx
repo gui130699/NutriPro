@@ -894,13 +894,17 @@ export function Onboarding() {
                 </div>
                 <FieldError>{errors.calories?.message}</FieldError>
               </label>
-              <fieldset className="grid gap-4 rounded-[1.4rem] border border-[#e2ece5] bg-[#fbfdfb] p-4 sm:col-span-2 sm:grid-cols-2">
-                <legend className="px-1 text-sm font-bold text-[#294b41]">
-                  Metas nutricionais diárias
-                </legend>
-                <p className="-mt-2 text-xs leading-5 text-[#81928c] sm:col-span-2">
-                  Comece com estas referências e ajuste quando quiser.
-                </p>
+              <fieldset className="onboarding-goals rounded-[1.4rem] border border-[#e2ece5] bg-[#fbfdfb] p-4 sm:col-span-2">
+                <legend className="sr-only">Metas nutricionais diárias</legend>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="sm:col-span-2">
+                    <h3 aria-hidden="true" className="text-sm font-bold text-[#294b41]">
+                      Metas nutricionais diárias
+                    </h3>
+                    <p className="mt-1 text-xs leading-5 text-[#81928c]">
+                      Comece com estas referências e ajuste quando quiser.
+                    </p>
+                  </div>
                 <label className="block">
                   <span className="mb-2 block text-sm font-bold text-[#294b41]">
                     Proteínas <small className="font-medium text-[#81928c]">(g)</small>
@@ -981,6 +985,7 @@ export function Onboarding() {
                   />
                   <FieldError>{errors.waterMl?.message}</FieldError>
                 </label>
+                </div>
               </fieldset>
               {notice && (
                 <div
