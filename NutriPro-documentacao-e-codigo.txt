@@ -1,0 +1,378 @@
+NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E CATÁLOGO COMPLETO DO CÓDIGO
+===============================================================
+
+Versão documentada: dce7bd8 (feat: redesign NutriPro experience)
+Repositório: https://github.com/gui130699/NutriPro
+GitHub Pages: https://gui130699.github.io/NutriPro/
+Firebase Hosting: https://nutripro-9115a.web.app
+
+Este arquivo é o dossiê técnico consolidado do NutriPro. Ele reúne a
+documentação de arquitetura, instalação, segurança, deploy, estrutura e um
+índice completo e fixado do código-fonte. Cada item do índice aponta para a
+versão exata do arquivo no commit documentado; assim, o conteúdo pode ser
+consultado integralmente sem incluir dependências, arquivos binários ou builds
+gerados neste documento.
+
+O que foi intencionalmente excluído:
+- node_modules/ (dependências instaladas)
+- dist/ (build gerado)
+- package-lock.json (arquivo gerado pelo npm)
+- src/assets/hero.png (arquivo binário)
+- .env (contém configuração local e não deve ser versionado)
+
+
+1. VISÃO GERAL
+--------------
+
+NutriPro é uma PWA responsiva para registro alimentar, hidratação, metas
+nutricionais, evolução de peso e perfil de usuário. A interface está em
+português do Brasil, possui autenticação por e-mail/senha e utiliza Firebase
+Authentication, Cloud Firestore e Firebase Hosting.
+
+Principais módulos da interface:
+- Tela de acesso, cadastro e recuperação de senha.
+- Onboarding inicial.
+- Dashboard com progresso calórico, macronutrientes e hidratação.
+- Diário alimentar por data com registro de alimento e água.
+- Cadastro de alimentos e medidas de porção.
+- Evolução de peso e gráfico de tendência.
+- Perfil, metas, privacidade e logout.
+- PWA instalável, cache e aviso de atualização.
+
+
+2. TECNOLOGIAS
+--------------
+
+- React 19 + TypeScript
+- Vite 8
+- Tailwind CSS 4 via @tailwindcss/vite
+- React Router
+- React Hook Form + Zod
+- TanStack Query
+- Recharts
+- Lucide React
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Hosting
+- Dexie / IndexedDB para fila offline
+- vite-plugin-pwa
+- Vitest
+
+
+3. ARQUITETURA
+--------------
+
+Frontend
+  src/main.tsx
+    -> QueryClient + BrowserRouter + registro do service worker.
+  src/App.tsx
+    -> Rotas públicas, privadas e verificação de configuração Firebase.
+  src/hooks/useAuth.tsx
+    -> Estado do usuário autenticado via onAuthStateChanged.
+  src/services/nutrition-service.ts
+    -> Operações de leitura e escrita do Firestore.
+  src/lib/nutrition.ts
+    -> Cálculos nutricionais puros e formatadores brasileiros.
+
+Firebase
+  Authentication
+    -> Login, cadastro, logout e recuperação de senha.
+  Firestore
+    -> Collections profiles, goals, foods, mealItems, waterLogs,
+       weightLogs, recipes e dailyNotes.
+  Hosting
+    -> Publicação do build Vite em nutripro-9115a.web.app.
+
+GitHub Pages
+  .github/workflows/deploy-pages.yml
+    -> Gera dist/ a cada push para main e publica em /NutriPro/.
+
+
+4. MODELO DE DADOS FIRESTORE
+----------------------------
+
+Coleções usadas pelo aplicativo:
+
+profiles
+  userId, dados de perfil, preferências e timestamps.
+
+goals
+  userId, calories, protein, carbs, fat, fiber, water_ml.
+
+foods
+  userId, nome, categoria, nutrientes por 100 g/ml, porções, visibilidade.
+
+mealItems
+  userId, date, mealName, snapshots nutricionais, quantidade e unidade.
+
+waterLogs
+  userId, date, amount_ml, logged_at e created_at.
+
+weightLogs
+  userId, logged_on, weight_kg, percentual de gordura e observações.
+
+As regras de segurança exigem userId igual a request.auth.uid para operações
+sobre dados particulares. Alimentos públicos somente são lidos por usuários
+autenticados e devem ser administrados pelo Console Firebase ou por uma futura
+função administrativa protegida.
+
+
+5. INSTALAÇÃO LOCAL
+-------------------
+
+1. Instale Node.js 22 ou superior.
+2. Clone o repositório.
+3. Execute: npm install
+4. Copie .env.example para .env.
+5. Preencha VITE_FIREBASE_API_KEY e VITE_FIREBASE_APP_ID.
+6. No Firebase Console, ative Authentication > E-mail/senha.
+7. Execute: firebase login
+8. Execute: firebase deploy --only firestore:rules,firestore:indexes
+9. Execute: npm run dev
+
+Comandos úteis:
+- npm run dev       inicia o ambiente local
+- npm run test      executa os testes unitários
+- npm run build     gera o build de produção e o service worker
+- npm run preview   abre o build local
+- firebase deploy   publica Firestore e Hosting
+
+
+6. DEPLOY
+---------
+
+Firebase Hosting
+  1. npm run build
+  2. firebase deploy --only hosting
+
+GitHub Pages
+  O workflow deploy-pages.yml é disparado automaticamente em pushes para main.
+  As variáveis VITE_FIREBASE_API_KEY e VITE_FIREBASE_APP_ID devem existir em:
+  Settings > Secrets and variables > Actions > Variables do repositório.
+
+O Vite utiliza base /NutriPro/ no GitHub Actions e / nos demais ambientes.
+Isso garante que scripts, CSS, manifest e rotas sejam encontrados nas duas
+plataformas de hosting.
+
+
+7. PWA E OFFLINE
+----------------
+
+- O manifest e o service worker são gerados pelo vite-plugin-pwa.
+- A aplicação solicita atualização quando uma nova versão está disponível.
+- src/lib/offline.ts fornece uma fila Dexie/IndexedDB com UUIDs de cliente.
+- A implementação pode usar enqueueOffline e syncPending em mutações que
+  precisarem sobreviver a indisponibilidade de rede.
+
+
+8. QUALIDADE E TESTES
+---------------------
+
+Testes unitários atuais:
+- Conversão de quilogramas, unidades e porções para gramas.
+- Cálculo nutricional sem arredondamento indevido.
+- Soma diária de nutrientes e meta restante.
+- Nutrientes de receita por porção.
+
+Última validação desta versão:
+- npm run test: 4 testes aprovados.
+- npm run build: aprovado.
+- GitHub Actions de GitHub Pages: aprovado.
+- Firebase Hosting: deploy concluído.
+
+
+9. DIRETRIZES DE SEGURANÇA
+--------------------------
+
+- Nunca versione o arquivo .env.
+- Nunca exponha chave administrativa do Firebase no frontend.
+- A API key web do Firebase é pública por natureza, mas deve ser restringida
+  no Google Cloud Console para domínios e APIs necessários.
+- Mantenha as regras firestore.rules publicadas antes de liberar o app.
+- Revise as regras ao adicionar novas coleções ou papéis administrativos.
+
+
+10. ÍNDICE COMPLETO DO CÓDIGO-FONTE
+-----------------------------------
+
+DOCUMENTAÇÃO, METADADOS E CONFIGURAÇÃO
+
+===== README.md =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/README.md
+
+===== .env.example =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.env.example
+
+===== .gitignore =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.gitignore
+
+===== package.json =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/package.json
+
+===== vite.config.ts =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/vite.config.ts
+
+===== tsconfig.json =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/tsconfig.json
+
+===== tsconfig.app.json =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/tsconfig.app.json
+
+===== tsconfig.node.json =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/tsconfig.node.json
+
+===== .oxlintrc.json =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.oxlintrc.json
+
+===== index.html =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/index.html
+
+===== .firebaserc =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.firebaserc
+
+===== firebase.json =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/firebase.json
+
+===== .github/workflows/deploy-pages.yml =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/.github/workflows/deploy-pages.yml
+
+FIREBASE
+
+===== firestore.rules =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/firestore.rules
+
+===== firestore.indexes.json =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/firestore.indexes.json
+
+ENTRADA, ROTAS E ESTILOS
+
+===== src/main.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/main.tsx
+
+===== src/App.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/App.tsx
+
+===== src/index.css =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/index.css
+
+===== src/App.css (legado do template Vite; não importado) =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/App.css
+
+===== src/vite-env.d.ts =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/vite-env.d.ts
+
+COMPONENTES
+
+===== src/components/Layout.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/components/Layout.tsx
+
+===== src/components/MetricCard.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/components/MetricCard.tsx
+
+===== src/components/OfflineStatus.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/components/OfflineStatus.tsx
+
+AUTENTICAÇÃO
+
+===== src/hooks/useAuth.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/hooks/useAuth.tsx
+
+===== src/lib/firebase.ts =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/firebase.ts
+
+===== src/pages/Auth.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Auth.tsx
+
+PÁGINAS
+
+===== src/pages/Dashboard.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Dashboard.tsx
+
+===== src/pages/Diary.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Diary.tsx
+
+===== src/pages/AddFood.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/AddFood.tsx
+
+===== src/pages/Evolution.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Evolution.tsx
+
+===== src/pages/Profile.tsx =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/pages/Profile.tsx
+
+DOMÍNIO, SERVIÇOS E TESTES
+
+===== src/lib/types.ts =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/types.ts
+
+===== src/lib/nutrition.ts =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/nutrition.ts
+
+===== src/lib/nutrition.test.ts =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/nutrition.test.ts
+
+===== src/lib/offline.ts =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/lib/offline.ts
+
+===== src/services/nutrition-service.ts =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/services/nutrition-service.ts
+
+ARQUIVOS SQL HISTÓRICOS / ALTERNATIVOS
+
+O app atual está configurado para Firebase. Os arquivos abaixo foram mantidos
+no repositório como referência da arquitetura original em Supabase/PostgreSQL.
+
+===== supabase/migrations/202607300001_initial_schema.sql =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/supabase/migrations/202607300001_initial_schema.sql
+
+===== supabase/seed.sql =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/supabase/seed.sql
+
+ASSETS TEXTUAIS
+
+===== public/favicon.svg =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/public/favicon.svg
+
+===== public/pwa-192.svg =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/public/pwa-192.svg
+
+===== public/pwa-512.svg =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/public/pwa-512.svg
+
+===== public/icons.svg (legado / não referenciado) =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/public/icons.svg
+
+===== src/assets/react.svg (legado / não referenciado) =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/assets/react.svg
+
+===== src/assets/vite.svg (legado / não referenciado) =====
+https://raw.githubusercontent.com/gui130699/NutriPro/dce7bd8/src/assets/vite.svg
+
+
+11. ESTRUTURA DE PASTAS
+------------------------
+
+NutriPro/
+├── .github/workflows/deploy-pages.yml
+├── public/
+├── src/
+│   ├── components/
+│   ├── hooks/
+│   ├── lib/
+│   ├── pages/
+│   ├── services/
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── supabase/
+│   ├── migrations/
+│   └── seed.sql
+├── firebase.json
+├── firestore.indexes.json
+├── firestore.rules
+├── package.json
+├── README.md
+└── vite.config.ts
+
+
+FIM DO DOCUMENTO
