@@ -3,8 +3,8 @@ NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E ÍNDICE DO CÓDIGO
 
 Versão funcional documentada: 5023219de53205d2b20ea258d29f12aa69285fc3
 Mensagem do commit funcional: feat: add cross-platform PWA install
-Relatório documental de testes: 5023219de53205d2b20ea258d29f12aa69285fc3
-Commit da atualização documental principal: aa77492
+Relatório documental de testes: 8e3fbb53b02dca78dc330e78e4f4b2f5e4d3e52b
+Commit da atualização documental principal: 8e3fbb5
 Data da atualização: 30/07/2026
 Repositório: https://github.com/gui130699/NutriPro
 GitHub Pages: https://gui130699.github.io/NutriPro/
@@ -12,7 +12,7 @@ Firebase Hosting: https://nutripro-9115a.web.app/
 
 Este é o dossiê técnico consolidado do NutriPro. Os links de código abaixo
 estão fixados no commit funcional 5023219de53205d2b20ea258d29f12aa69285fc3;
-o relatório de testes está fixado no commit documental 5023219de53205d2b20ea258d29f12aa69285fc3.
+o relatório de testes está fixado no commit documental 8e3fbb53b02dca78dc330e78e4f4b2f5e4d3e52b.
 O dossiê em si é atualizado em um commit documental posterior para evitar uma
 referência Git autorreferencial. Não há links restantes para o commit antigo.
 
@@ -286,7 +286,7 @@ Versão funcional validada: 5023219de53205d2b20ea258d29f12aa69285fc3
   “Teses” foi encontrada no projeto.
 
 O relatório detalhado está em:
-https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/docs/TESTES-FUNCIONAIS.md
+https://raw.githubusercontent.com/gui130699/NutriPro/8e3fbb53b02dca78dc330e78e4f4b2f5e4d3e52b/docs/TESTES-FUNCIONAIS.md
 
 Limitações não ocultadas:
 - O CSV oficial de 7.083 alimentos ainda não foi fornecido; não foi possível
@@ -588,7 +588,7 @@ tests/e2e/pwa-install.spec.ts
 https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/tests/e2e/pwa-install.spec.ts
 
 docs/TESTES-FUNCIONAIS.md
-https://raw.githubusercontent.com/gui130699/NutriPro/5023219de53205d2b20ea258d29f12aa69285fc3/docs/TESTES-FUNCIONAIS.md
+https://raw.githubusercontent.com/gui130699/NutriPro/8e3fbb53b02dca78dc330e78e4f4b2f5e4d3e52b/docs/TESTES-FUNCIONAIS.md
 
 ARQUIVOS HISTÓRICOS NÃO UTILIZADOS PELO FRONTEND FIREBASE
 
