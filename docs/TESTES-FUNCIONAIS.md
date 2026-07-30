@@ -6,7 +6,7 @@
 | --- | --- |
 | Data | 30/07/2026 |
 | Commit funcional | `397fb2126b9cbfb3e8b7a6978e41232e41498c7a` |
-| Instalação limpa | `npm ci --force --no-audit --no-fund` concluído (777 pacotes) |
+| Instalação limpa | `npm ci --no-audit --no-fund` concluído (775 pacotes) |
 | Ambiente | Windows, Node.js local, Vite e Chromium do Playwright |
 | Firebase | Nenhuma escrita de dados de produção durante os testes |
 | Unitários | 55 aprovados em 15 arquivos |
@@ -16,7 +16,7 @@
 ## Comandos executados
 
 ```bash
-npm ci --force --no-audit --no-fund
+npm ci --no-audit --no-fund
 npm run lint
 npm run test
 npm run test:e2e
@@ -33,6 +33,7 @@ Resultados observados:
 - `npm run build`: TypeScript e PWA aprovados.
 - Build para Pages: 39 entradas no precache depois da limpeza de `dist`; builds antigos não permaneceram no service worker.
 - Regras e índices Firestore: compilação aprovada no dry run para `nutripro-9115a`.
+- Após sincronizar o lockfile, `npm ci --no-audit --no-fund` concluiu normalmente; o erro de CI por dependência ausente foi removido antes do novo push.
 
 O aviso de chunk principal acima de 500 kB veio do Vite como recomendação de otimização; não é erro de compilação. Os bundles antigos passaram a ser removidos antes do build para impedir que esse precache cresça a cada publicação.
 
