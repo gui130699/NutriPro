@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { calculateNutrients, perServing, remaining, sumNutrients, toGrams } from './nutrition'
+import { availableFoodUnits, calculateNutrients, perServing, remaining, sumNutrients, toGrams } from './nutrition'
 import type { Food } from './types'
 
 const food: Food = {
@@ -24,6 +24,15 @@ describe('cálculos nutricionais', () => {
 
   it('calcula nutrientes sem arredondar', () => {
     expect(calculateNutrients(food, 50, 'g').calories).toBe(50)
+  })
+
+  it('oferece somente medidas compatíveis com a base do alimento', () => {
+    const milk: Food = { ...food, id: 'milk', name: 'Leite integral', baseUnit: 'ml', unitWeightG: null, portionWeightG: 200 }
+    const egg: Food = { ...food, id: 'egg', name: 'Ovo de galinha', baseUnit: 'g', unitWeightG: 50, portionWeightG: 50 }
+
+    expect(availableFoodUnits(milk)).toEqual(['ml', 'l', 'porção'])
+    expect(availableFoodUnits(egg)).toEqual(['g', 'kg', 'unidade', 'porção'])
+    expect(calculateNutrients(milk, 200, 'ml').calories).toBe(200)
   })
 
   it('soma e calcula meta restante', () => {

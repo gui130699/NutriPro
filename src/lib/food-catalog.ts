@@ -239,6 +239,28 @@ export async function fetchFoodCatalog(fetcher: typeof fetch = fetch): Promise<C
   return mergeCatalogFoods([], extractFoods(payload) as CatalogRecord[])
 }
 
+/**
+ * Refuses a partially published catalogue before it can replace the last
+ * known-good IndexedDB cache. The version document is the release contract,
+ * so its declared total must match the downloaded catalogue exactly.
+ */
+export function validateFoodCatalogRelease(foods: readonly CatalogFood[], version: FoodCatalogVersion): void {
+  if (!Number.isInteger(version.totalFoods) || version.totalFoods < 0) {
+    throw new Error('A versão do catálogo informa um total de alimentos inválido.')
+  }
+  if (foods.length !== version.totalFoods) {
+    throw new Error(`O catálogo baixado está incompleto: esperados ${version.totalFoods} alimentos, recebidos ${foods.length}.`)
+  }
+
+  const ids = new Set<string>()
+  for (const food of foods) {
+    if (!food.externalId || ids.has(food.externalId)) {
+      throw new Error('O catálogo baixado contém códigos duplicados ou inválidos.')
+    }
+    ids.add(food.externalId)
+  }
+}
+
 /** Returns the last successfully cached public catalogue without making a network request. */
 export async function getCachedFoodCatalog(): Promise<CatalogFood[]> {
   return getCachedCatalogFoods()
@@ -282,6 +304,7 @@ export async function loadFoodCatalog(options: LoadFoodCatalogOptions = {}): Pro
 
   try {
     const foods = await fetchFoodCatalog(fetcher)
+    validateFoodCatalogRelease(foods, remoteVersion)
     await replaceCachedCatalogFoods(foods, {
       key: CATALOG_METADATA_KEY,
       ...remoteVersion,

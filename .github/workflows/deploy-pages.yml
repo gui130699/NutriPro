@@ -29,6 +29,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test
+      - run: npm run catalog:validate
       - run: npm run build
         env:
           NUTRIPRO_GITHUB_PAGES: 'true'

@@ -108,3 +108,9 @@ html.dark #root > main { background:#0e1813!important; } html.dark #root > main 
 html.dark #root > main .onboarding-goals { border-color:#294737; background:#102019; }
 html.dark #root > main .auth-signup-cta { border-color:#355a45; color:#d4f6df; background:#1d3b2a; }
 html.dark #root > main .auth-signup-cta:hover { background:#294d37; }
+
+/* Extra catalogue metadata stays scannable without crowding the cards. */
+.food-list-card .food-measurement { min-height:15px; color:#527566; font-weight:760; }
+.food-details-dialog .food-detail-warning { margin:12px 0 0!important; padding:10px 11px; border:1px solid #efd6a5; border-radius:10px; color:#805b23!important; background:#fff7e8; font-size:11px!important; font-weight:700; line-height:1.45; }
+html.dark .food-list-card .food-measurement { color:#b4d6c0; }
+html.dark .food-details-dialog .food-detail-warning { border-color:#66532c; color:#e0c987!important; background:#2c2618; }

@@ -13,6 +13,7 @@
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:report": "playwright show-report",
     "catalog:import": "tsx scripts/convert-foods.ts",
+    "catalog:validate": "tsx scripts/validate-food-catalog.ts",
     "migrate:meals": "tsx scripts/migrate-meal-snapshots.ts",
     "migrate:food-usage": "tsx scripts/migrate-food-usage.ts",
     "pwa:icons": "tsx scripts/generate-pwa-icons.ts",

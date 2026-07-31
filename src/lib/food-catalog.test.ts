@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildSearchKeywords, mergeCatalogFoods, normalizeCatalogFood, normalizeFoodName } from './food-catalog'
+import { buildSearchKeywords, mergeCatalogFoods, normalizeCatalogFood, normalizeFoodName, validateFoodCatalogRelease } from './food-catalog'
 
 describe('catálogo público de alimentos', () => {
   it('normaliza nomes sem acentos, pontuação ou espaços duplicados', () => {
@@ -44,5 +44,26 @@ describe('catálogo público de alimentos', () => {
     expect(firstImport).toHaveLength(2)
     expect(firstImport.find((food) => food.externalId === '42')?.name).toBe('Banana-prata')
     expect(repeatedImport).toEqual(firstImport)
+  })
+
+  it('recusa uma versão cuja contagem não coincide com o catálogo baixado', () => {
+    const foods = mergeCatalogFoods([], [
+      { externalId: 'BR0001', name: 'Arroz integral', calories: 124, protein: 2.6, carbs: 25.8, fat: 1, fiber: 2.7 },
+    ])
+
+    expect(() => validateFoodCatalogRelease(foods, {
+      version: '1.0.0-br',
+      updatedAt: '2026-07-31',
+      totalFoods: 126,
+    })).toThrow('catálogo baixado está incompleto')
+  })
+
+  it('recusa códigos duplicados antes de gravar a versão no cache', () => {
+    const food = normalizeCatalogFood({ externalId: 'BR0001', name: 'Arroz', calories: 1 })
+    expect(() => validateFoodCatalogRelease([food, food], {
+      version: '1.0.0-br',
+      updatedAt: '2026-07-31',
+      totalFoods: 2,
+    })).toThrow('códigos duplicados')
   })
 })

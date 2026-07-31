@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * Imports the official 7,083-food CSV only after the entire source has passed
- * validation. This ordering guarantees that a missing or malformed CSV never
- * replaces a previously generated catalogue.
+ * Imports a validated food CSV only after the complete source passes strict
+ * checks. This ordering ensures a malformed source never replaces the last
+ * generated public catalogue.
  *
  * Usage:
- *   npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0
+ *   npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
  */
 import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { basename, dirname, extname, resolve } from 'node:path'
-import { EXPECTED_CATALOG_TOTAL, importCatalogCsv } from './catalog-importer'
+import { assertExpectedTotal, importCatalogCsv } from './catalog-importer'
 
 const workspace = process.cwd()
-const defaultSource = resolve(workspace, 'lista_7083_alimentos_nutrientes_100g.csv')
+const defaultSource = resolve(workspace, 'lista_alimentos_brasileiros_nutripro.csv')
 const defaultOutput = resolve(workspace, 'public/data/foods.json')
 const defaultVersionOutput = resolve(workspace, 'public/data/foods-version.json')
 
@@ -23,10 +23,18 @@ type ImportOptions = {
   versionOutput: string
   version: string
   updatedAt: string
+  expectedTotal: number
+}
+
+function parseExpectedTotal(value: string): number {
+  if (!/^\d+$/.test(value)) throw new Error('Informe um inteiro positivo após --expected-total.')
+  const expectedTotal = Number(value)
+  assertExpectedTotal(expectedTotal)
+  return expectedTotal
 }
 
 function parseArguments(argumentsList: string[]): ImportOptions {
-  const options: ImportOptions = {
+  const options: Omit<ImportOptions, 'expectedTotal'> & { expectedTotal?: number } = {
     source: defaultSource,
     output: defaultOutput,
     versionOutput: defaultVersionOutput,
@@ -58,14 +66,22 @@ function parseArguments(argumentsList: string[]): ImportOptions {
       if (!value || value.startsWith('--')) throw new Error('Informe a data após --updated-at.')
       options.updatedAt = value
       index += 1
+    } else if (argument === '--expected-total') {
+      if (!value || value.startsWith('--')) throw new Error('Informe o total esperado após --expected-total.')
+      options.expectedTotal = parseExpectedTotal(value)
+      index += 1
     } else if (argument === '--help' || argument === '-h') {
-      console.log('Uso: npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0')
+      console.log('Uso: npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126')
       process.exit(0)
     } else {
       throw new Error(`Opção desconhecida: ${argument}.`)
     }
   }
-  return options
+
+  if (options.expectedTotal === undefined) {
+    throw new Error('O parâmetro --expected-total é obrigatório para importar um catálogo.')
+  }
+  return options as ImportOptions
 }
 
 async function readSource(source: string): Promise<string> {
@@ -106,11 +122,11 @@ async function writeOutputs(options: ImportOptions, foodsJson: string, versionJs
 
 async function convert(options: ImportOptions): Promise<void> {
   if (extname(options.source).toLocaleLowerCase('pt-BR') !== '.csv') {
-    throw new Error('Use o arquivo CSV oficial lista_7083_alimentos_nutrientes_100g.csv.')
+    throw new Error('Use um arquivo CSV como fonte do catálogo.')
   }
 
   const source = await readSource(options.source)
-  const result = importCatalogCsv(source)
+  const result = importCatalogCsv(source, { expectedTotal: options.expectedTotal })
   const foodsJson = `${JSON.stringify(result.foods)}\n`
   const versionJson = `${JSON.stringify({
     version: options.version,
@@ -118,7 +134,6 @@ async function convert(options: ImportOptions): Promise<void> {
     totalFoods: result.foods.length,
   }, null, 2)}\n`
 
-  // The source and generated data are complete at this point; no write occurs before it.
   await writeOutputs(options, foodsJson, versionJson)
 
   console.log(`Alimentos importados: ${result.summary.importedFoods.toLocaleString('pt-BR')}`)
@@ -126,7 +141,7 @@ async function convert(options: ImportOptions): Promise<void> {
   console.log(`Registros ignorados: ${result.summary.ignoredRecords}`)
   console.log(`Registros inválidos: ${result.summary.invalidRecords}`)
   console.log('Catálogo gerado com sucesso')
-  console.log(`Fonte: ${basename(options.source)} | versão: ${options.version} | esperado: ${EXPECTED_CATALOG_TOTAL}`)
+  console.log(`Fonte: ${basename(options.source)} | versão: ${options.version} | esperado: ${options.expectedTotal}`)
 }
 
 convert(parseArguments(process.argv.slice(2))).catch((error) => {

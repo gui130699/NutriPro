@@ -16,7 +16,7 @@ import {
   writeBatch,
   type DocumentData,
 } from 'firebase/firestore'
-import { calculateNutrients } from '../lib/nutrition'
+import { availableFoodUnits, calculateNutrients } from '../lib/nutrition'
 import { localIsoDate } from '../lib/dates'
 import { createDefaultMealTypes, resolveMealIconKey } from '../lib/meal-types'
 import type { Food, FoodFavorite, FoodOverride, Goal, MealItem, MealType, ThemePreference, Unit, UserPreferences } from '../lib/types'
@@ -298,6 +298,9 @@ export const nutritionService = {
     if (!Number.isFinite(quantity) || quantity <= 0) throw new Error('Informe uma quantidade maior que zero.')
     if (unit === 'unidade' && !(Number(food.unitWeightG) > 0)) throw new Error('Este alimento não possui peso médio por unidade.')
     if (unit === 'porção' && !(Number(food.portionWeightG) > 0)) throw new Error('Este alimento não possui peso por porção.')
+    if (!availableFoodUnits(food).includes(unit)) {
+      throw new Error(`A unidade ${unit} não é compatível com a base ${food.baseUnit} deste alimento.`)
+    }
     const nutrients = calculateNutrients(food, quantity, unit)
     const database = firestore()
     const foodSource: FoodUsageSource = food.isPublic ? 'public' : 'private'

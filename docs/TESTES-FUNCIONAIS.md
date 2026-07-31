@@ -1,117 +1,99 @@
 # Testes funcionais — NutriPro
 
-## Registro da rodada
+Este documento é o roteiro de validação da integração do catálogo brasileiro `1.0.0-br`. Ele separa verificações automatizadas de cenários que exigem uma conta de homologação, para não confundir teste de interface isolado com escrita real em Firebase.
 
-| Campo | Resultado |
+## Escopo da versão
+
+| Item | Referência esperada |
 | --- | --- |
-| Data | 30/07/2026 |
-| Commit funcional | `397fb2126b9cbfb3e8b7a6978e41232e41498c7a` |
-| Instalação limpa | `npm ci --no-audit --no-fund` concluído (775 pacotes) |
-| Ambiente | Windows, Node.js local, Vite e Chromium do Playwright |
-| Firebase | Nenhuma escrita de dados de produção durante os testes |
-| Unitários | 55 aprovados em 15 arquivos |
-| E2E | 15 aprovados no Chromium, em modo isolado `VITE_E2E=true` |
-| Build PWA | normal e com `NUTRIPRO_GITHUB_PAGES=true` aprovados |
+| Fonte editável | `lista_alimentos_brasileiros_nutripro.csv` |
+| Catálogo público | `public/data/foods.json` |
+| Metadados | `public/data/foods-version.json` |
+| Versão | `1.0.0-br` |
+| Data de atualização | `2026-07-31` |
+| Total de alimentos | 126 |
+| Idioma da fonte | `pt-BR` |
+| Base nutricional | 100 `g` ou 100 `ml`, conforme o item |
 
-## Comandos executados
+O catálogo público não deve criar, alterar ou excluir documentos pessoais no Firestore. Favoritos, overrides, alimentos privados e lançamentos do diário continuam a depender de uma sessão autenticada e de regras por `userId`.
 
-```bash
-npm ci --no-audit --no-fund
-npm run lint
-npm run test
-npm run test:e2e
-npm run build
-NUTRIPRO_GITHUB_PAGES=true npm run build
-firebase deploy --only firestore:rules,firestore:indexes --dry-run
-```
-
-Resultados observados:
-
-- `npm run lint`: aprovado, sem avisos.
-- `npm run test`: 15 arquivos e 55 testes aprovados.
-- `npm run test:e2e`: 15 cenários aprovados com `VITE_E2E=true`; esse modo não inicializa Auth ou Firestore e impede chamadas e escritas no Firebase de produção durante os smoke tests.
-- `npm run build`: TypeScript e PWA aprovados.
-- Build para Pages: 39 entradas no precache depois da limpeza de `dist`; builds antigos não permaneceram no service worker.
-- Regras e índices Firestore: compilação aprovada no dry run para `nutripro-9115a`.
-- Após sincronizar o lockfile, `npm ci --no-audit --no-fund` concluiu normalmente; o erro de CI por dependência ausente foi removido antes do novo push.
-- O mesmo lockfile foi validado com `npx --yes npm@10.9.4 ci --dry-run --ignore-scripts --no-audit --no-fund`, correspondente ao npm do runner Node 22 do Pages.
-
-O aviso de chunk principal acima de 500 kB veio do Vite como recomendação de otimização; não é erro de compilação. Os bundles antigos passaram a ser removidos antes do build para impedir que esse precache cresça a cada publicação.
-
-## Cobertura unitária
-
-| Área | Verificações | Estado |
-| --- | --- | --- |
-| Catálogo estrito | cabeçalho, 7.083 linhas, duplicidade, numéricos, valores fixos, `S/N` e escrita atômica | Aprovado |
-| Datas locais | serialização e comparação de `YYYY-MM-DD` sem deslocamento UTC | Aprovado |
-| Evolução | validação de peso/medidas, médias, tendência, comparações e meta | Aprovado |
-| Avaliação física | IMC, relações corporais e protocolos com dados obrigatórios | Aprovado |
-| Rotas Pages | restauração de rota interna e rejeição de redirecionamento externo | Aprovado |
-| `foodUsage` | chave por origem, agregação e transações de inclusão/exclusão | Aprovado |
-| Recursos existentes | nutrição, catálogo, busca, overrides, refeições, ícones, tema e PWA | Aprovado |
-
-## Cobertura E2E (Chromium)
-
-| Área | Cenários aprovados |
-| --- | --- |
-| Acesso | validações locais de campos obrigatórios, e-mail inválido, senha curta e recuperação sem enviar dados remotos |
-| Tema | preferência escura aplicada antes do React |
-| Acessibilidade | nomes acessíveis e navegação por teclado na tela de acesso |
-| Proteção de rotas | visitante redirecionado de `/listas`, `/diario` e `/perfil` |
-| Responsividade | ausência de rolagem horizontal em 375 × 667, 390 × 844, 768 × 1024, 1366 × 768 e 1920 × 1080 |
-| PWA | prompt nativo simulado em navegador compatível e instruções Safari/iOS em 390 × 844 |
-
-## Verificação manual no navegador
-
-| Escopo | Resultado | Estado |
-| --- | --- | --- |
-| Publicação atual | tela de acesso do GitHub Pages renderizou após o carregamento inicial | Aprovado |
-| Artefato do GitHub Pages | abertura direta de `/NutriPro/evolucao` retornou ao app e, sem sessão, redirecionou para `/NutriPro/entrar` | Aprovado |
-| Mobile | rota protegida no artefato Pages em 375 × 667: `scrollWidth` igual à largura de conteúdo, sem overflow horizontal | Aprovado |
-| Console | artefato Pages validado sem erros ou warnings | Aprovado |
-| PWA | build final gerou manifest, service worker, ícones e fallback de navegação | Aprovado |
-
-O servidor de desenvolvimento do Vite exibiu um aviso de WebSocket no navegador integrado do Codex. Esse canal serve apenas ao HMR de desenvolvimento; a publicação estática e o build de produção foram testados separadamente, sem esse erro.
-
-## Catálogo oficial: validação de falha segura
-
-Foi executado:
-
-```bash
-npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0
-```
-
-O arquivo não existia no workspace. O importador retornou erro controlado (exit code 1) e os hashes de `public/data/foods.json` e `public/data/foods-version.json` permaneceram idênticos antes e depois. Portanto:
-
-- não há catálogo fictício;
-- a lista pública real de 7.083 itens não foi declarada como aprovada;
-- a importação, pesquisa no fim da base e cache offline real devem ser repetidos quando o CSV original for fornecido.
-
-## Cenários não executados
-
-| Fluxo | Motivo | Estado |
-| --- | --- | --- |
-| Cadastro/login com conta válida | não havia conta de teste/homologação | Não executado |
-| Onboarding persistido e guard autenticado | exigiria escrita Firestore segura | Não executado |
-| CRUD real de peso, medidas e avaliações | exigiria ambiente Firebase isolado | Não executado |
-| Dois usuários, regras e isolamento de dados | exigiria Emulator Suite ou homologação | Não executado |
-| Importação real dos 7.083 alimentos | CSV oficial ausente | Não executado |
-| Fotos de evolução | Firebase Storage privado/rules não configurados para este recurso | Não executado |
-| Instalação no sistema | requer Android/iOS/desktop físico; E2E simulou os fluxos de interface | Não executado |
-
-O Firestore Emulator não foi iniciado porque `java -version` não está disponível nesta máquina. A próxima rodada deve usar Firebase Emulator Suite completo ou projeto de homologação, uma conta de teste exclusiva e o CSV oficial, sem testar mutações contra a produção.
-
-## Como repetir
+## Preparação
 
 ```bash
 npm ci
 npx playwright install chromium
+```
+
+Configure `.env` somente se for necessário testar uma instância Firebase de homologação. Não use uma conta de produção para cenários destrutivos.
+
+## Validação automatizada
+
+Execute na ordem abaixo:
+
+```bash
+npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+npm run catalog:validate
 npm run lint
 npm run test
 npm run test:e2e
 npm run build
 NUTRIPRO_GITHUB_PAGES=true npm run build
-firebase deploy --only firestore:rules,firestore:indexes --dry-run
 ```
 
-Para validar dados autenticados, configure as variáveis `VITE_FIREBASE_*` para homologação ou conecte o app aos emuladores antes de executar qualquer mutação.
+O importador deve finalizar com 126 itens e `0` códigos duplicados, registros ignorados e registros inválidos. `catalog:validate` deve confirmar, sem modificar os arquivos, que o CSV e os artefatos públicos correspondem à versão e à quantidade esperadas.
+
+Se qualquer etapa falhar, não publique. Uma fonte com total incorreto, código duplicado, nutriente negativo, base inválida, unidade diferente de `g`/`ml`, idioma inválido ou cabeçalho incompatível deve ser rejeitada sem substituir o último catálogo válido.
+
+### Cobertura exigida do catálogo
+
+| Área | Verificação |
+| --- | --- |
+| Contrato CSV | Cabeçalho brasileiro, 126 registros, códigos únicos, `pt-BR`, `S/N`, nutrientes finitos e não negativos. |
+| Artefatos | `foods.json` contém 126 itens e `foods-version.json` informa `1.0.0-br`, `2026-07-31` e `totalFoods: 126`. |
+| Busca | Nome, categoria e marca; acentos, pontuação e hífens não devem impedir a localização. |
+| Filtros e paginação | Categoria, favoritos/ocultos, debounce e carregamento progressivo continuam funcionando. |
+| Medidas | Itens de massa oferecem `g`/`kg`; itens líquidos oferecem `ml`/`l`; `unidade` e `porção` só aparecem quando o peso respectivo existe. |
+| Integridade de cache | Uma resposta cuja contagem diverge de `totalFoods` não substitui o IndexedDB; a troca de versão é atômica. |
+| Offline | Depois de um carregamento válido, desligar a rede mantém a última versão íntegra disponível. |
+| Dados variáveis | Item com fonte que indique valor médio ou conferência de rótulo exibe o aviso no detalhe. |
+
+## Smoke tests em Chromium
+
+`npm run test:e2e` usa `VITE_E2E=true`. Nesse modo, Auth e Firestore não são inicializados: os testes são seguros para CI, mas não provam fluxos autenticados reais. Valide pelo menos:
+
+- abertura da tela de acesso, validação local e redirecionamento de rota privada para visitantes;
+- ausência de rolagem horizontal em 375 × 667, 390 × 844, 768 × 1024, 1366 × 768 e 1920 × 1080;
+- instalação PWA simulada em navegador compatível e instruções Safari/iOS;
+- build normal e build com `NUTRIPRO_GITHUB_PAGES=true`.
+
+O teste em Chromium da lista pública, do diário, de favorito, de override e de persistência do onboarding **não deve ser marcado como aprovado neste documento sem uma execução autenticada registrada**.
+
+## Roteiro manual autenticado (homologação)
+
+Use duas contas exclusivas de teste ou Firebase Emulator Suite. Registre no pull request/data da rodada o ambiente, a conta mascarada e o resultado de cada item.
+
+1. Crie uma conta, entre e conclua o onboarding; recarregue a página e confirme que as rotas privadas continuam acessíveis.
+2. Abra **Listas > Pública**, pesquise por nome sem acento e por categoria; percorra mais de uma página de resultados.
+3. Abra um alimento, confira categoria, macros, fonte, unidade-base e porção sugerida; confirme o aviso se a fonte indicar valor médio/conferir rótulo.
+4. Favorite um alimento, crie uma personalização, oculte-o e restaure os valores originais. Entre com a segunda conta e confirme que essas ações não vazaram.
+5. No diário, escolha um item em `g` e outro em `ml`; confirme que a lista de unidades não oferece conversões incompatíveis. Teste `unidade`/`porção` apenas quando houver peso configurado.
+6. Adicione um item à refeição, recarregue e confira quantidade, unidade, gramas/ml convertidos e snapshot nutricional.
+7. Com o catálogo carregado, desligue a rede, abra a lista e pesquise novamente. Em seguida, publique uma versão de teste com total coerente e confirme a atualização atômica do cache.
+
+## Limitações conhecidas e critérios de comunicação
+
+- Valores nutricionais são referências por 100 `g`/`ml`; não são prescrição nem substituem rótulo, nutricionista ou avaliação médica.
+- Itens cuja fonte informa valor médio ou necessidade de conferir o rótulo precisam de revisão para o produto específico.
+- A instalação real em Android, iOS ou desktop só pode ser declarada como concluída depois de teste no sistema operacional correspondente; o prompt simulado não equivale à instalação física.
+- Não declare cadastro, onboarding, favorito, override, diário, cache autenticado ou regras Firestore como aprovados apenas porque a suíte `VITE_E2E=true` passou.
+
+## Publicação
+
+Após a validação, publique o build e as regras necessárias:
+
+```bash
+npm run build
+firebase deploy --only firestore:rules,firestore:indexes,hosting
+```
+
+O GitHub Pages é publicado pelo push para `main`. Após o deploy, abra a URL publicada, faça uma recarga em uma rota interna e verifique a tela de acesso/roteamento antes de registrar o resultado da rodada.

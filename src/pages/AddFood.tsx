@@ -5,14 +5,32 @@ import { FoodForm, type FoodFormValues } from '../components/foods/FoodForm'
 import { useAuth } from '../hooks/useAuth'
 import { nutritionService } from '../services/nutrition-service'
 
+type FoodWriter = Pick<typeof nutritionService, 'createFood' | 'setFavorite'>
+
+/**
+ * Private-food favorites live in the user-scoped foodFavorites collection.
+ * Keeping this write alongside creation prevents the form checkbox from
+ * becoming an orphaned isFavorite field on the food document.
+ */
+// oxlint-disable-next-line react/only-export-components -- this write workflow is covered without rendering the route.
+export async function createPrivateFoodWithFavorite(userId: string, values: FoodFormValues, writer: FoodWriter = nutritionService) {
+  const { isFavorite, ...foodInput } = values
+  const foodId = await writer.createFood(userId, foodInput)
+
+  if (isFavorite) await writer.setFavorite(userId, foodId, 'private', true)
+
+  return foodId
+}
+
 export function AddFood() {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const save = useMutation({
-    mutationFn: (values: FoodFormValues) => nutritionService.createFood(user!.uid, values),
+    mutationFn: (values: FoodFormValues) => createPrivateFoodWithFavorite(user!.uid, values),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['private-foods', user?.uid] })
+      void queryClient.invalidateQueries({ queryKey: ['food-favorites', user?.uid] })
       void queryClient.invalidateQueries({ queryKey: ['foods'] })
     },
   })

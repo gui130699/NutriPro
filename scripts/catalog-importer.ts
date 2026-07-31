@@ -1,7 +1,7 @@
 import type { CatalogFood } from '../src/lib/food-catalog'
 
-/** The public source contract is deliberately fixed to make data releases auditable. */
-export const REQUIRED_CSV_HEADERS = [
+/** Contracts are explicit so every imported catalogue remains auditable. */
+export const INTERNATIONAL_CSV_HEADERS = [
   'codigo_usda',
   'nome_alimento_en',
   'categoria_en',
@@ -17,9 +17,28 @@ export const REQUIRED_CSV_HEADERS = [
   'fonte_url',
 ] as const
 
-export const EXPECTED_CATALOG_TOTAL = 7083
+export const BRAZILIAN_CSV_HEADERS = [
+  'codigo_alimento',
+  'nome_alimento_pt_br',
+  'categoria_pt_br',
+  'marca',
+  'calorias_kcal_100',
+  'proteinas_g_100',
+  'carboidratos_g_100',
+  'gorduras_g_100',
+  'fibras_g_100',
+  'quantidade_base',
+  'unidade_base',
+  'peso_medio_unidade_g',
+  'peso_porcao_g',
+  'idioma_nome',
+  'ativo',
+  'fonte',
+] as const
 
-export type CsvFoodRow = Record<(typeof REQUIRED_CSV_HEADERS)[number], string>
+export type CatalogImportOptions = {
+  expectedTotal: number
+}
 
 export type CatalogImportSummary = {
   importedFoods: number
@@ -33,13 +52,70 @@ export type CatalogImportResult = {
   summary: CatalogImportSummary
 }
 
-const nutritionalColumns = [
-  'proteinas_g_100g',
-  'carboidratos_g_100g',
-  'fibras_g_100g',
-  'gorduras_g_100g',
-  'calorias_estimadas_kcal_100g',
-] as const
+type CsvRow = Record<string, string>
+type CsvSchema = {
+  id: 'international' | 'brazilian'
+  headers: readonly string[]
+  externalId: string
+  name: string
+  category: string
+  brand?: string
+  calories: string
+  protein: string
+  carbs: string
+  fat: string
+  fiber: string
+  baseQuantity: string
+  baseUnit: string
+  unitWeightG?: string
+  portionWeightG?: string
+  language: string
+  active: string
+  source: string
+  expectedLanguage: 'pt-BR' | 'en-US'
+}
+
+const schemas: readonly CsvSchema[] = [
+  {
+    id: 'international',
+    headers: INTERNATIONAL_CSV_HEADERS,
+    externalId: 'codigo_usda',
+    name: 'nome_alimento_en',
+    category: 'categoria_en',
+    calories: 'calorias_estimadas_kcal_100g',
+    protein: 'proteinas_g_100g',
+    carbs: 'carboidratos_g_100g',
+    fat: 'gorduras_g_100g',
+    fiber: 'fibras_g_100g',
+    baseQuantity: 'quantidade_base',
+    baseUnit: 'unidade_base',
+    language: 'idioma_nome',
+    active: 'ativo',
+    source: 'fonte_url',
+    expectedLanguage: 'en-US',
+  },
+  {
+    id: 'brazilian',
+    headers: BRAZILIAN_CSV_HEADERS,
+    externalId: 'codigo_alimento',
+    name: 'nome_alimento_pt_br',
+    category: 'categoria_pt_br',
+    brand: 'marca',
+    calories: 'calorias_kcal_100',
+    protein: 'proteinas_g_100',
+    carbs: 'carboidratos_g_100',
+    fat: 'gorduras_g_100',
+    fiber: 'fibras_g_100',
+    baseQuantity: 'quantidade_base',
+    baseUnit: 'unidade_base',
+    unitWeightG: 'peso_medio_unidade_g',
+    portionWeightG: 'peso_porcao_g',
+    language: 'idioma_nome',
+    active: 'ativo',
+    source: 'fonte',
+    expectedLanguage: 'pt-BR',
+  },
+]
 
 const normalizeText = (value: string) => value
   .normalize('NFD')
@@ -51,12 +127,18 @@ const normalizeText = (value: string) => value
 
 const cleanText = (value: string) => value.trim().replace(/\s+/g, ' ')
 
-const searchKeywords = (name: string, category: string | null) => {
-  const phrases = [name, category ?? ''].map(normalizeText).filter(Boolean)
+const searchKeywords = (name: string, category: string | null, brand: string | null) => {
+  const phrases = [name, category ?? '', brand ?? ''].map(normalizeText).filter(Boolean)
   return [...new Set([...phrases, ...phrases.flatMap((phrase) => phrase.split(' ').filter(Boolean))])]
 }
 
 const describeRow = (line: number, field: string, detail: string) => `Linha ${line}, campo "${field}": ${detail}`
+
+export function assertExpectedTotal(expectedTotal: number): void {
+  if (!Number.isInteger(expectedTotal) || expectedTotal <= 0) {
+    throw new Error('O total esperado deve ser um número inteiro maior que zero.')
+  }
+}
 
 /**
  * Parses semicolon, comma, or tab CSV without accepting malformed quoted fields.
@@ -122,75 +204,94 @@ export function detectCsvDelimiter(text: string): ',' | ';' | '\t' {
   }, ';' as ',' | ';' | '\t')
 }
 
-function assertExactHeaders(headers: readonly string[]): asserts headers is readonly (typeof REQUIRED_CSV_HEADERS)[number][] {
-  const matches = headers.length === REQUIRED_CSV_HEADERS.length
-    && headers.every((header, index) => header === REQUIRED_CSV_HEADERS[index])
-  if (!matches) {
-    throw new Error(`Cabeçalho CSV inválido. Esperado exatamente: ${REQUIRED_CSV_HEADERS.join(', ')}.`)
+function resolveSchema(headers: readonly string[]): CsvSchema {
+  const schema = schemas.find((candidate) => candidate.headers.length === headers.length
+    && candidate.headers.every((header, index) => header === headers[index]))
+  if (!schema) {
+    const expected = schemas.map((candidate) => candidate.headers.join(', ')).join(' | ')
+    throw new Error(`Cabeçalho CSV inválido. Esperado exatamente um dos contratos: ${expected}.`)
   }
+  return schema
+}
+
+function normalizeRowWidth(values: readonly string[], schema: CsvSchema, line: number): string[] {
+  if (values.length !== schema.headers.length) {
+    throw new Error(`Linha ${line}: esperado ${schema.headers.length} colunas, recebido ${values.length}.`)
+  }
+  return [...values]
+}
+
+function csvRow(values: readonly string[], schema: CsvSchema): CsvRow {
+  return Object.fromEntries(schema.headers.map((header, index) => [header, values[index] ?? '']))
 }
 
 function parseNonNegativeNumber(value: string, field: string, line: number): number {
   const normalized = value.trim()
   if (!normalized) throw new Error(describeRow(line, field, 'valor numérico obrigatório não informado.'))
   if (!/^[+-]?\d+(?:[,.]\d+)?$/.test(normalized)) {
-    throw new Error(describeRow(line, field, `valor nutricional inválido "${value}".`))
+    throw new Error(describeRow(line, field, `valor numérico inválido "${value}".`))
   }
 
   const number = Number(normalized.replace(',', '.'))
-  if (!Number.isFinite(number)) throw new Error(describeRow(line, field, `valor nutricional inválido "${value}".`))
+  if (!Number.isFinite(number)) throw new Error(describeRow(line, field, `valor numérico inválido "${value}".`))
   if (number < 0) throw new Error(describeRow(line, field, 'valores negativos não são permitidos.'))
   return number
 }
 
-function csvRow(values: readonly string[]): CsvFoodRow {
-  return Object.fromEntries(REQUIRED_CSV_HEADERS.map((header, index) => [header, values[index]])) as CsvFoodRow
+function parseOptionalWeight(value: string, field: string, line: number): number | null {
+  if (!value.trim()) return null
+  const weight = parseNonNegativeNumber(value, field, line)
+  return weight > 0 ? weight : null
 }
 
-function toCatalogFood(row: CsvFoodRow, line: number): CatalogFood {
-  const externalId = cleanText(row.codigo_usda)
-  if (!externalId) throw new Error(describeRow(line, 'codigo_usda', 'código do alimento obrigatório não informado.'))
+function toCatalogFood(row: CsvRow, schema: CsvSchema, line: number): CatalogFood {
+  const externalId = cleanText(row[schema.externalId] ?? '')
+  if (!externalId) throw new Error(describeRow(line, schema.externalId, 'código do alimento obrigatório não informado.'))
 
-  const name = cleanText(row.nome_alimento_en)
-  if (!name) throw new Error(describeRow(line, 'nome_alimento_en', 'nome do alimento obrigatório não informado.'))
+  const name = cleanText(row[schema.name] ?? '')
+  if (!name) throw new Error(describeRow(line, schema.name, 'nome do alimento obrigatório não informado.'))
 
-  const baseQuantity = parseNonNegativeNumber(row.quantidade_base, 'quantidade_base', line)
-  if (baseQuantity !== 100) throw new Error(describeRow(line, 'quantidade_base', 'deve ser igual a 100.'))
+  const baseQuantity = parseNonNegativeNumber(row[schema.baseQuantity] ?? '', schema.baseQuantity, line)
+  if (baseQuantity !== 100) throw new Error(describeRow(line, schema.baseQuantity, 'deve ser igual a 100.'))
 
-  const baseUnit = row.unidade_base.trim()
-  if (baseUnit !== 'g') throw new Error(describeRow(line, 'unidade_base', 'deve ser igual a "g".'))
-
-  const language = row.idioma_nome.trim()
-  if (language !== 'en-US') throw new Error(describeRow(line, 'idioma_nome', 'deve ser igual a "en-US".'))
-
-  const activeValue = row.ativo.trim()
-  if (activeValue !== 'S' && activeValue !== 'N') {
-    throw new Error(describeRow(line, 'ativo', 'deve ser "S" ou "N".'))
+  const baseUnit = cleanText(row[schema.baseUnit] ?? '')
+  if (baseUnit !== 'g' && baseUnit !== 'ml') {
+    throw new Error(describeRow(line, schema.baseUnit, 'deve ser igual a "g" ou "ml".'))
   }
 
-  const nutrients = Object.fromEntries(nutritionalColumns.map((column) => [
-    column,
-    parseNonNegativeNumber(row[column], column, line),
-  ])) as Record<(typeof nutritionalColumns)[number], number>
-  const category = cleanText(row.categoria_en) || null
-  const source = cleanText(row.fonte_url) || null
+  const language = cleanText(row[schema.language] ?? '')
+  if (language !== 'pt-BR' && language !== 'en-US') {
+    throw new Error(describeRow(line, schema.language, 'deve ser igual a "pt-BR" ou "en-US".'))
+  }
+  if (language !== schema.expectedLanguage) {
+    throw new Error(describeRow(line, schema.language, `deve ser igual a "${schema.expectedLanguage}" para este contrato.`))
+  }
+
+  const activeValue = cleanText(row[schema.active] ?? '').toUpperCase()
+  if (activeValue !== 'S' && activeValue !== 'N') {
+    throw new Error(describeRow(line, schema.active, 'deve ser "S" ou "N".'))
+  }
+
+  const category = cleanText(row[schema.category] ?? '') || null
+  const brand = schema.brand ? cleanText(row[schema.brand] ?? '') || null : null
+  const source = cleanText(row[schema.source] ?? '') || null
 
   return {
     externalId,
     name,
     nameNormalized: normalizeText(name),
-    searchKeywords: searchKeywords(name, category),
+    searchKeywords: searchKeywords(name, category, brand),
     category,
-    brand: null,
-    calories: nutrients.calorias_estimadas_kcal_100g,
-    protein: nutrients.proteinas_g_100g,
-    carbs: nutrients.carboidratos_g_100g,
-    fat: nutrients.gorduras_g_100g,
-    fiber: nutrients.fibras_g_100g,
+    brand,
+    calories: parseNonNegativeNumber(row[schema.calories] ?? '', schema.calories, line),
+    protein: parseNonNegativeNumber(row[schema.protein] ?? '', schema.protein, line),
+    carbs: parseNonNegativeNumber(row[schema.carbs] ?? '', schema.carbs, line),
+    fat: parseNonNegativeNumber(row[schema.fat] ?? '', schema.fat, line),
+    fiber: parseNonNegativeNumber(row[schema.fiber] ?? '', schema.fiber, line),
     baseQuantity,
     baseUnit,
-    unitWeightG: null,
-    portionWeightG: null,
+    unitWeightG: schema.unitWeightG ? parseOptionalWeight(row[schema.unitWeightG] ?? '', schema.unitWeightG, line) : null,
+    portionWeightG: schema.portionWeightG ? parseOptionalWeight(row[schema.portionWeightG] ?? '', schema.portionWeightG, line) : null,
     source,
     language,
     isActive: activeValue === 'S',
@@ -198,9 +299,10 @@ function toCatalogFood(row: CsvFoodRow, line: number): CatalogFood {
 }
 
 /** Revalidates the generated runtime schema before files are written. */
-export function validateCatalogFoods(foods: readonly CatalogFood[]): void {
-  if (foods.length !== EXPECTED_CATALOG_TOTAL) {
-    throw new Error(`Total final inválido: esperado ${EXPECTED_CATALOG_TOTAL} alimentos, recebido ${foods.length}.`)
+export function validateCatalogFoods(foods: readonly CatalogFood[], expectedTotal: number): void {
+  assertExpectedTotal(expectedTotal)
+  if (foods.length !== expectedTotal) {
+    throw new Error(`Total final inválido: esperado ${expectedTotal} alimentos, recebido ${foods.length}.`)
   }
 
   const ids = new Set<string>()
@@ -210,14 +312,18 @@ export function validateCatalogFoods(foods: readonly CatalogFood[]): void {
     if (ids.has(food.externalId)) throw new Error(`Catálogo inválido: externalId duplicado "${food.externalId}".`)
     ids.add(food.externalId)
     if (!food.name.trim()) throw new Error(`Catálogo inválido: nome ausente para "${food.externalId}".`)
+    if (!food.nameNormalized) throw new Error(`Catálogo inválido: nameNormalized ausente para "${food.externalId}".`)
+    if (!food.searchKeywords.length) throw new Error(`Catálogo inválido: searchKeywords ausente para "${food.externalId}".`)
 
     const nutrients = [food.calories, food.protein, food.carbs, food.fat, food.fiber]
     if (nutrients.some((value) => !Number.isFinite(value) || value < 0)) {
       throw new Error(`Catálogo inválido: valor nutricional inválido para "${food.externalId}".`)
     }
     if (food.baseQuantity !== 100) throw new Error(`Catálogo inválido: baseQuantity deve ser 100 para "${food.externalId}".`)
-    if (food.baseUnit !== 'g') throw new Error(`Catálogo inválido: baseUnit deve ser g para "${food.externalId}".`)
-    if (food.language !== 'en-US') throw new Error(`Catálogo inválido: language deve ser en-US para "${food.externalId}".`)
+    if (food.baseUnit !== 'g' && food.baseUnit !== 'ml') throw new Error(`Catálogo inválido: baseUnit deve ser g ou ml para "${food.externalId}".`)
+    if (food.language !== 'pt-BR' && food.language !== 'en-US') throw new Error(`Catálogo inválido: language inválido para "${food.externalId}".`)
+    if (food.unitWeightG != null && (!(food.unitWeightG > 0) || !Number.isFinite(food.unitWeightG))) throw new Error(`Catálogo inválido: unitWeightG inválido para "${food.externalId}".`)
+    if (food.portionWeightG != null && (!(food.portionWeightG > 0) || !Number.isFinite(food.portionWeightG))) throw new Error(`Catálogo inválido: portionWeightG inválido para "${food.externalId}".`)
     if (typeof food.isActive !== 'boolean') throw new Error(`Catálogo inválido: isActive inválido para "${food.externalId}".`)
   })
 }
@@ -227,31 +333,29 @@ export function validateCatalogFoods(foods: readonly CatalogFood[]): void {
  * result after this function resolves, preserving the last known-good output
  * when a source is missing or malformed.
  */
-export function importCatalogCsv(text: string): CatalogImportResult {
+export function importCatalogCsv(text: string, options: CatalogImportOptions): CatalogImportResult {
+  assertExpectedTotal(options.expectedTotal)
   const rows = parseCsv(text.replace(/^\uFEFF/, ''), detectCsvDelimiter(text))
   if (rows.length === 0) throw new Error('CSV inválido: o arquivo está vazio.')
 
   const [headers, ...records] = rows
-  assertExactHeaders(headers)
+  const schema = resolveSchema(headers)
   if (records.length === 0) throw new Error('CSV inválido: não há registros de alimentos.')
 
   const foods: CatalogFood[] = []
   const externalIds = new Set<string>()
-  records.forEach((values, index) => {
+  records.forEach((rawValues, index) => {
     const line = index + 2
-    if (values.length !== REQUIRED_CSV_HEADERS.length) {
-      throw new Error(`Linha ${line}: esperado ${REQUIRED_CSV_HEADERS.length} colunas, recebido ${values.length}.`)
-    }
-
-    const food = toCatalogFood(csvRow(values), line)
+    const values = normalizeRowWidth(rawValues, schema, line)
+    const food = toCatalogFood(csvRow(values, schema), schema, line)
     if (externalIds.has(food.externalId)) {
-      throw new Error(describeRow(line, 'codigo_usda', `código duplicado "${food.externalId}".`))
+      throw new Error(describeRow(line, schema.externalId, `código duplicado "${food.externalId}".`))
     }
     externalIds.add(food.externalId)
     foods.push(food)
   })
 
-  validateCatalogFoods(foods)
+  validateCatalogFoods(foods, options.expectedTotal)
   return {
     foods,
     summary: {

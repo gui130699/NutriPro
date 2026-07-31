@@ -11,6 +11,12 @@ Repositório: https://github.com/gui130699/NutriPro
 GitHub Pages: https://gui130699.github.io/NutriPro/
 Firebase Hosting: https://nutripro-9115a.web.app/
 
+Atualização de catálogo vigente: 31/07/2026 — catálogo brasileiro `1.0.0-br`
+com 126 alimentos. Esta atualização substitui as referências operacionais
+anteriores ao catálogo vazio de 7.083 itens. Registros de testes e commits de
+30/07/2026 permanecem como histórico, não como evidência de validação do novo
+catálogo.
+
 Este é o dossiê técnico consolidado do NutriPro. As seções históricas mantêm a
 base PWA no commit 8fbdd1ff252104b19c50d6031e43e259561a1f94, que corresponde
 à correção do service worker — não ao primeiro commit de instalação. A seção
@@ -83,36 +89,50 @@ Firebase e visualização.
 3. CATÁLOGO PÚBLICO DE ALIMENTOS
 --------------------------------
 
-Estratégia:
-1. O script scripts/convert-foods.ts recebe o CSV oficial.
-2. Ele identifica colunas comuns, aceita vírgula/ponto e vírgula/tabulação,
-   converte decimais brasileiros e normaliza campos.
-3. O código original do alimento vira externalId e elimina duplicatas de forma
-   idempotente.
-4. O resultado vai para public/data/foods.json e a versão para
-   public/data/foods-version.json.
-5. O app verifica a versão, armazena o catálogo completo no IndexedDB e apenas
-   atualiza o cache quando a versão ou a contagem mudam.
-6. A pesquisa local aplica normalização sem acento, filtro por categoria/marca,
-   favoritos/ocultos e paginação; nunca renderiza milhares de itens de uma vez.
+Versão pública vigente: `1.0.0-br`, atualizada em `2026-07-31`, com
+exatamente 126 alimentos brasileiros. A fonte editável é
+`lista_alimentos_brasileiros_nutripro.csv`; os artefatos de runtime são
+`public/data/foods.json` e `public/data/foods-version.json`.
 
-Campos normalizados:
-- externalId, name, nameNormalized, searchKeywords.
-- category, brand, calories, protein, carbs, fat, fiber.
-- saturatedFat, sugar, sodium quando presentes.
-- baseUnit, unitWeightG, portionWeightG, source, language, isActive.
+Contrato brasileiro do CSV (separado por ponto e vírgula):
 
-Comando de importação:
+  codigo_alimento;nome_alimento_pt_br;categoria_pt_br;marca;calorias_kcal_100;proteinas_g_100;carboidratos_g_100;gorduras_g_100;fibras_g_100;quantidade_base;unidade_base;peso_medio_unidade_g;peso_porcao_g;idioma_nome;ativo;fonte
 
-  npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0
+Fluxo controlado:
+1. `scripts/catalog-importer.ts` reconhece contratos explícitos de catálogo:
+   o brasileiro (`pt-BR`) e o internacional (`en-US`) mantido para uma futura
+   fonte USDA. As colunas de um contrato não são inferidas nem misturadas.
+2. Cada registro recebe `externalId`, nome normalizado e palavras de pesquisa;
+   categoria, marca, fonte, macros, base, pesos opcionais, idioma e estado
+   ativo são preservados.
+3. O importador exige total informado na linha de comando, códigos únicos,
+   nutrientes finitos e não negativos, `quantidade_base = 100`, unidade-base
+   `g` ou `ml`, idioma compatível e `ativo` igual a `S` ou `N`.
+4. Só após a validação completa, `scripts/convert-foods.ts` substitui os dois
+   JSONs por arquivos temporários/atômicos. Uma fonte inválida mantém o último
+   catálogo íntegro.
+5. `npm run catalog:validate` verifica a correspondência entre o CSV e os
+   artefatos gerados, incluindo versão e total.
+6. O app consulta os metadados, confere `totalFoods` antes de trocar o
+   IndexedDB, troca o cache de forma atômica e conserva a última versão válida
+   quando a rede estiver indisponível.
 
-Estado atual importante:
-O arquivo oficial lista_7083_alimentos_nutrientes_100g.csv não foi fornecido
-no workspace. Portanto, foods.json contém um stub seguro vazio e
-foods-version.json informa totalFoods: 0. A aplicação, o conversor, o cache e
-os testes estão prontos, mas esta versão não afirma falsamente que 7.083
-alimentos foram importados. Ao receber o CSV, deve-se executar a importação,
-conferir totalFoods: 7083 e repetir os testes de busca antes do deploy.
+Comandos da versão atual:
+
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:validate
+
+Na rota `/listas`, a pesquisa local ignora acentos, pontuação e hífens e busca
+por nome, categoria ou marca. Filtros de categoria, favoritos/ocultos,
+debounce, paginação e carregamento progressivo evitam renderização excessiva.
+O catálogo público continua separado de `foods` privados, `foodOverrides` e
+`foodFavorites` no Firestore. Isso preserva personalizações por pessoa e
+permite adicionar novos catálogos públicos futuramente sem perder origem,
+idioma ou isolamento de dados.
+
+Os valores são referências por 100 `g`/`ml`. A fonte de cada item deve ser
+consultada: itens identificados como valor médio ou que pedem conferência no
+rótulo não devem ser tratados como medição clínica ou prescrição alimentar.
 
 
 4. LISTAS, PERSONALIZAÇÕES E FAVORITOS
@@ -160,9 +180,11 @@ migração administrativa opcional, primeiro em modo de simulação e depois com
 --apply. O script exige GOOGLE_APPLICATION_CREDENTIALS ou
 FIREBASE_SERVICE_ACCOUNT_JSON e jamais é executado no navegador.
 
-No diário, unidade e porção são bloqueadas quando o alimento não possui peso
-médio/peso de porção maior que zero. Hidratação aceita atalhos e valor
-personalizado, respeita a data selecionada e permite excluir registros.
+No diário, as unidades são derivadas do próprio alimento: a base `g` libera
+`g`/`kg`, a base `ml` libera `ml`/`l`, e `unidade` ou `porção` só ficam
+disponíveis quando há peso médio ou peso de porção maior que zero. Hidratação
+aceita atalhos e valor personalizado, respeita a data selecionada e permite
+excluir registros.
 
 
 6. TEMA, PWA E OFFLINE
@@ -194,6 +216,8 @@ PWA/offline e instalação:
   a confirmação chama updateServiceWorker(true), ativa a versão aguardando e
   só então recarrega a página, evitando permanecer no app shell anterior.
 - O catálogo usa IndexedDB com metadados de versão e troca atômica de cache.
+  Antes da troca, a quantidade baixada precisa coincidir com `totalFoods` do
+  metadado remoto; uma resposta parcial não substitui a versão íntegra.
 - Quando a atualização remota falha e existe cache, a lista continua disponível
   em modo offline/stale.
 - A fila pending do Dexie foi preservada para operações offline futuras.
@@ -265,9 +289,11 @@ usuário comum. O catálogo oficial em JSON é separado do Firestore.
 
 Comandos de qualidade:
 
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:validate
+  npm run lint
   npm run test
   npm run build
-  npm run lint
   npx playwright install chromium
   npm run test:e2e
   npm run pwa:icons
@@ -276,39 +302,31 @@ Comandos de qualidade:
 9. TESTES EXECUTADOS E LIMITAÇÕES
 ---------------------------------
 
-Versão funcional validada: 8fbdd1ff252104b19c50d6031e43e259561a1f94
+As contagens e os resultados registrados nas seções históricas referem-se às
+rodadas anteriores a `1.0.0-br`; não certificam o catálogo brasileiro atual.
+O roteiro vigente está em `docs/TESTES-FUNCIONAIS.md` e deve começar por:
 
-- npm run test: 28 testes aprovados em 9 arquivos.
-- npm run build: aprovado com PWA e TypeScript sem erros.
-- npm run lint: aprovado sem warnings.
-- npm run test:e2e: 15 testes Playwright/Chromium aprovados.
-- Navegador real local: tela de acesso, rota privada, tema escuro, contraste,
-  ausência de overflow horizontal e console sem erros relevantes verificados.
-- Responsividade automatizada: 375 × 667, 390 × 844, 768 × 1024,
-  1366 × 768 e 1920 × 1080 aprovadas na tela sem autenticação.
-- Preview de produção PWA: manifest, apple-touch-icon, tela de acesso e
-  console sem erros verificados no navegador.
-- Instalação: evento nativo simulado em E2E e instruções Safari/iOS testadas
-  em viewport 390 × 844, sem overflow horizontal.
-- Revisão textual: terminologia em PT-BR padronizada; nenhum campo ou termo
-  indevido permaneceu no projeto.
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:validate
+  npm run lint
+  npm run test
+  npm run test:e2e
+  npm run build
 
-O relatório detalhado está em:
-https://raw.githubusercontent.com/gui130699/NutriPro/b1cc3c94fb7960adbc962b4eb45b9c4607dabeb5/docs/TESTES-FUNCIONAIS.md
+A aprovação do catálogo requer a conferência de 126 itens, metadados
+`1.0.0-br`/`2026-07-31`, pesquisa sem acento/pontuação/hífen, categoria,
+paginação, unidades compatíveis, alerta de fonte variável e cache offline
+atualizado somente quando a contagem estiver íntegra.
 
-Limitações não ocultadas:
-- O CSV oficial de 7.083 alimentos ainda não foi fornecido; não foi possível
-  validar a contagem, uma busca de item no fim da base ou cache offline real
-  dessa base.
-- Não foram executadas mutações autenticadas contra produção. Não havia conta
-  de homologação nem Firebase Emulator Suite completo; o Firestore Emulator
-  requer Java, que não está instalado neste ambiente.
-- Cadastro real, onboarding persistido, overrides reais entre dois usuários,
-  refeições persistidas, diário, hidratação e tema sincronizado devem ser
-  repetidos campo a campo em Firebase de teste antes de qualquer teste destrutivo.
-- A instalação real pelo sistema operacional não foi executada em um aparelho
-  Android/iOS físico; Playwright validou os fluxos de interface e o build
-  validou manifest, service worker e ícones.
+Limitações declaradas, sem mascaramento:
+- Esta documentação não afirma execução autenticada de cadastro, onboarding,
+  favoritos, overrides, diário, regras Firestore ou cache por conta.
+- Esses cenários exigem Firebase Emulator Suite ou um projeto de homologação e
+  conta(s) exclusiva(s), jamais uma conta de produção.
+- A instalação real em Android, iOS ou desktop precisa ser confirmada no
+  aparelho/sistema correspondente; o prompt PWA simulado não substitui isso.
+- Valores nutricionais marcados como médios ou dependentes de rótulo exigem
+  conferência do produto específico e não são orientação clínica.
 
 
 10. HISTÓRICO DE ALTERAÇÕES
@@ -343,23 +361,19 @@ Limitações não ocultadas:
 11. VALIDAÇÃO DA VERSÃO
 -----------------------
 
-[APROVADO] npm run test — 28/28 testes unitários.
-[APROVADO] npm run build — build PWA concluído sem erro.
-[APROVADO] npm run lint — análise estática sem warning.
-[APROVADO] npm run test:e2e — 15/15 cenários Chromium.
-[APROVADO] Navegador local — acesso, redirecionamento privado, tema escuro,
-            sem overflow e console sem erros.
-[APROVADO] Responsividade não autenticada nas cinco dimensões descritas.
-[APROVADO] Revisão ortográfica e ausência de campo/texto indevido.
-[APROVADO] Temas Claro, Escuro e Sistema por testes unitários; bootstrap dark
-            também confirmado em E2E.
-[APROVADO] PWA — manifest e ícones PNG válidos, prompt nativo testado por E2E
-            e guia iOS testado em viewport de iPhone sem overflow.
-[APROVADO] Atualização PWA — registro imediato e ativação explícita da versão
-            aguardando compilados e verificados sem regressão na suíte E2E.
-[PENDENTE] Pesquisa sobre 7.083 alimentos — depende do CSV oficial ausente.
-[PENDENTE] Escritas autenticadas/isolamento entre duas contas — depende de
-            Emulator Suite ou projeto Firebase de homologação.
+[CONFIGURADO] Catálogo público `1.0.0-br`: fonte CSV editável, metadados com
+             data `2026-07-31` e total esperado de 126 alimentos.
+[OBRIGATÓRIO] npm run catalog:import ... --expected-total 126 e
+              npm run catalog:validate antes de cada publicação de catálogo.
+[OBRIGATÓRIO] npm run lint, npm run test, npm run test:e2e, npm run build e
+              NUTRIPRO_GITHUB_PAGES=true npm run build para registrar uma nova
+              rodada de validação.
+[OBRIGATÓRIO] Pesquisa por nome/categoria/marca sem acento, pontuação ou hífen;
+              unidades compatíveis; detalhe com fonte/aviso e cache offline.
+[NÃO DECLARADO] Fluxos autenticados, isolamento entre duas contas e cache de
+                uma sessão real até que sejam executados em homologação.
+[NÃO DECLARADO] Instalação física em Android, iOS e desktop até a confirmação
+                no respectivo sistema operacional.
 
 
 12. ESTRUTURA DE PASTAS
@@ -368,13 +382,16 @@ Limitações não ocultadas:
 NutriPro/
 ├── docs/
 │   └── TESTES-FUNCIONAIS.md
+├── lista_alimentos_brasileiros_nutripro.csv
 ├── public/data/
 │   ├── foods.json
 │   └── foods-version.json
 ├── scripts/
+│   ├── catalog-importer.ts
 │   ├── convert-foods.ts
 │   ├── generate-pwa-icons.ts
-│   └── migrate-meal-snapshots.ts
+│   ├── migrate-meal-snapshots.ts
+│   └── validate-food-catalog.ts
 ├── src/
 │   ├── components/foods/, components/meals/, components/theme/ e PwaInstallControl.tsx
 │   ├── data/meal-icons.ts
@@ -433,6 +450,10 @@ https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e4
 
 CATÁLOGO E SCRIPTS
 
+lista_alimentos_brasileiros_nutripro.csv
+Fonte editável do catálogo brasileiro `1.0.0-br`; deve permanecer alinhada
+com os artefatos gerados abaixo.
+
 public/data/foods.json
 https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e43e259561a1f94/public/data/foods.json
 
@@ -441,6 +462,14 @@ https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e4
 
 scripts/convert-foods.ts
 https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e43e259561a1f94/scripts/convert-foods.ts
+
+scripts/catalog-importer.ts
+Valida os contratos brasileiro e internacional, normaliza a pesquisa e rejeita
+uma fonte incompleta/ambígua antes da escrita atômica.
+
+scripts/validate-food-catalog.ts
+Validação reprodutível do CSV e dos artefatos de `1.0.0-br` executada por
+`npm run catalog:validate`.
 
 scripts/generate-pwa-icons.ts
 https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e43e259561a1f94/scripts/generate-pwa-icons.ts
@@ -616,12 +645,15 @@ https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e4
 14. PRÓXIMOS PASSOS
 -------------------
 
-1. Anexar o CSV oficial, executar a importação e validar exatamente 7.083 itens.
+1. Em qualquer alteração de catálogo, atualizar o CSV, versionar a mudança e
+   executar a importação com `--expected-total`, seguida de
+   `npm run catalog:validate`.
 2. Configurar Firebase Emulator Suite ou um projeto de homologação com conta
    de teste exclusiva.
 3. Executar em homologação os fluxos autenticados descritos em
    docs/TESTES-FUNCIONAIS.md, sem modificar dados reais.
-4. Publicar regras/índices e Hosting apenas após essa rodada de homologação.
+4. Publicar regras/índices e Hosting apenas após a rodada técnica e a
+   validação de versão/cache do catálogo.
 
 
 15. ATUALIZAÇÃO FUNCIONAL — EVOLUÇÃO, CATÁLOGO E PWA
@@ -636,35 +668,44 @@ acrescentado ou alterado neste commit funcional e deve ser lida junto das
 seções 1 a 14, que continuam descrevendo os módulos preservados da base PWA.
 
 
-15.1 CATÁLOGO DE 7.083 ALIMENTOS — IMPORTADOR E ESTADO REAL
-------------------------------------------------------------
+15.1 CATÁLOGO BRASILEIRO `1.0.0-br` — IMPORTADOR E ESTADO ATUAL
+----------------------------------------------------------------
 
-O importador deixou de aceitar inferências, deduplicação silenciosa ou um
-arquivo parcial. scripts/catalog-importer.ts exige o cabeçalho exato:
+Esta subseção substitui o estado histórico de catálogo vazio. O repositório
+mantém `lista_alimentos_brasileiros_nutripro.csv` como fonte editável e gera
+`public/data/foods.json` e `public/data/foods-version.json` para o catálogo
+brasileiro de 126 alimentos, datado de `2026-07-31`.
 
-codigo_usda,nome_alimento_en,categoria_en,proteinas_g_100g,
-carboidratos_g_100g,fibras_g_100g,gorduras_g_100g,
-calorias_estimadas_kcal_100g,quantidade_base,unidade_base,
-idioma_nome,ativo,fonte_url
+Contrato brasileiro exigido:
+
+codigo_alimento;nome_alimento_pt_br;categoria_pt_br;marca;calorias_kcal_100;
+proteinas_g_100;carboidratos_g_100;gorduras_g_100;fibras_g_100;
+quantidade_base;unidade_base;peso_medio_unidade_g;peso_porcao_g;idioma_nome;
+ativo;fonte
 
 Regras implementadas:
-- Exatamente 7.083 registros, sem linhas ignoradas ou mescladas.
-- codigo_usda e nome_alimento_en obrigatórios; códigos únicos.
-- Nutrientes numéricos, finitos e não negativos.
-- quantidade_base = 100, unidade_base = g e idioma_nome = en-US.
-- ativo somente S ou N; S vira isActive: true, N vira false.
-- O JSON e seus metadados só são gravados após toda a validação passar.
+- O total esperado é argumento obrigatório, não uma constante escondida no
+  código. Para esta versão, ele é 126.
+- `codigo_alimento` e `nome_alimento_pt_br` são obrigatórios; códigos são
+  únicos e não há descarte silencioso de linhas.
+- Nutrientes são numéricos, finitos e não negativos; `quantidade_base` é 100;
+  `unidade_base` é `g` ou `ml`; `idioma_nome` é `pt-BR`; `ativo` é `S` ou `N`.
+- Pesos de unidade/porção são opcionais, mas quando presentes precisam ser
+  positivos. Eles determinam se as ações `unidade` e `porção` podem aparecer
+  no diário.
+- O JSON e seus metadados só são gravados depois de toda a validação passar.
+  A validação posterior compara CSV, total e metadados antes do deploy.
 
-Comando previsto:
+Comandos vigentes:
 
-  npm run catalog:import -- lista_7083_alimentos_nutrientes_100g.csv --version 1.0.0
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:validate
 
-Resultado desta rodada: o CSV original não existia no workspace. O comando
-falhou com exit code 1 e os hashes de public/data/foods.json e
-public/data/foods-version.json permaneceram inalterados. Portanto, estes
-arquivos continuam com o stub vazio; não há afirmação falsa de importação,
-busca, cache ou total de 7.083 alimentos aprovado. O CSV precisa ser anexado
-à raiz para concluir essa única etapa bloqueada.
+O importador também mantém o contrato internacional `en-US` separado, para
+uma possível fonte USDA. Ele não baixa nem mistura fontes automaticamente: uma
+integração futura deve ter versão, contrato, origem e testes próprios. Alimentos
+particulares permanecem no Firestore e não são substituídos por uma atualização
+de `foods.json`.
 
 
 15.2 PERFIL, DATAS E ONBOARDING
@@ -765,7 +806,8 @@ acesso; a correção de rota está incluída no próximo push deste commit.
   smoke tests de interface isolados de leituras e escritas na produção.
 - npm run build agora executa scripts/clean-build.mjs, tsc -b e vite build.
 
-Resultados desta rodada:
+Resultados históricos da rodada de 30/07/2026 (anteriores ao catálogo
+brasileiro `1.0.0-br`):
 - npm ci --no-audit --no-fund: concluído normalmente, 775 pacotes, após
   sincronização do package-lock.json para o CI.
 - npm 10.9.4 (runtime do Node 22 usado no Pages): npm ci --dry-run aprovado,
@@ -778,7 +820,8 @@ Resultados desta rodada:
   regras compiladas e índices lidos com sucesso no projeto nutripro-9115a.
 
 Limitações declaradas, sem mascaramento:
-- O CSV original de 7.083 alimentos está ausente.
+- Os resultados acima não validam a importação, a busca ou o cache do catálogo
+  brasileiro de 126 itens; use o roteiro vigente em docs/TESTES-FUNCIONAIS.md.
 - Não houve escrita autenticada contra produção.
 - Não existe conta/projeto de homologação neste workspace.
 - java -version não está disponível, logo o Firestore Emulator não foi iniciado.
@@ -908,5 +951,48 @@ https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e4
 src/services/nutrition-service.transactions.test.ts
 https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/services/nutrition-service.transactions.test.ts
 
-FIM DO DOCUMENTO
+16. ÍNDICE DA INTEGRAÇÃO DO CATÁLOGO BRASILEIRO
+------------------------------------------------
+
+Versão: `1.0.0-br`
+Data: `2026-07-31`
+Total esperado: `126`
+
+Arquivos de dados:
+- `lista_alimentos_brasileiros_nutripro.csv`: fonte editável, em PT-BR.
+- `public/data/foods.json`: catálogo serializado que o frontend baixa.
+- `public/data/foods-version.json`: versão, data e total que protegem a troca
+  de cache.
+
+Arquivos de implementação:
+- `scripts/catalog-importer.ts`: contratos CSV, normalização, validações e
+  geração dos alimentos de runtime.
+- `scripts/convert-foods.ts`: interface de linha de comando, leitura da fonte
+  e escrita atômica dos artefatos.
+- `scripts/validate-food-catalog.ts`: validação reproduzível da fonte e dos
+  artefatos por `npm run catalog:validate`.
+- `src/lib/food-catalog.ts`: carregamento versionado, validação de contagem e
+  cache IndexedDB/offline.
+- `src/lib/food-search.ts`: busca e filtros normalizados.
+- `src/lib/nutrition.ts`: conversão de unidade-base, unidade e porção.
+- `src/pages/Lists.tsx`: navegação e ações do catálogo público.
+- `src/pages/Diary.tsx` e `src/services/nutrition-service.ts`: seleção e
+  validação das unidades compatíveis na gravação de refeições.
+
+Comando canônico:
+
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:validate
+
+Regras de evolução:
+- Para uma fonte brasileira nova, preserve o contrato CSV, incremente a versão
+  e substitua o total esperado de maneira explícita.
+- Uma futura fonte USDA deve usar o contrato `en-US` separado e metadados
+  próprios; não deve sobrescrever silenciosamente a fonte brasileira.
+- Alimentos privados continuam no Firestore com `userId`; eles não pertencem
+  ao JSON público nem são apagados por uma atualização de catálogo.
+- Registre resultados de browser autenticado somente após execução em conta de
+  teste/homologação. Esta documentação não afirma que esses fluxos foram
+  executados nesta integração.
+
 FIM DO DOCUMENTO
