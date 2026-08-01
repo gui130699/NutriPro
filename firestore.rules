@@ -289,6 +289,38 @@ service cloud.firestore {
         && data.usageCount <= 1000000;
     }
 
+    function validFoodUnitProfile(data) {
+      return validNonEmptyString(data.foodId, 1000)
+        && data.foodSource in ['public', 'private']
+        && validNonEmptyString(data.name, 120)
+        && validNonEmptyString(data.singularLabel, 120)
+        && optionalString(data, 'pluralLabel', 120)
+        && data.measureType in ['mass', 'volume']
+        && data.baseMeasure in ['g', 'ml']
+        && (
+          data.measureType == 'mass' && data.baseMeasure == 'g'
+          || data.measureType == 'volume' && data.baseMeasure == 'ml'
+        )
+        && data.amountPerUnit is number
+        && data.amountPerUnit >= 0.1
+        && data.amountPerUnit <= 10000
+        && data.isDefault is bool
+        && data.isActive is bool
+        && (data.isActive == true || data.isDefault == false)
+        && data.origin in ['catalog', 'user']
+        && optionalString(data, 'notes', 2000);
+    }
+
+    function validFoodDensityProfile(data) {
+      return validNonEmptyString(data.foodId, 1000)
+        && data.foodSource in ['public', 'private']
+        && data.gramsPerMl is number
+        && data.gramsPerMl > 0
+        && data.gramsPerMl <= 10000
+        && data.source in ['label', 'user', 'professional']
+        && optionalString(data, 'notes', 2000);
+    }
+
     match /profiles/{userId} {
       allow read: if signedIn() && userId == request.auth.uid;
       allow create: if signedIn()
@@ -352,6 +384,20 @@ service cloud.firestore {
       allow read: if ownsExisting();
       allow create: if createsOwn() && validFoodUsage(request.resource.data);
       allow update: if updatesOwnWithoutChangingOwner() && validFoodUsage(request.resource.data);
+      allow delete: if ownsExisting();
+    }
+
+    match /foodUnitProfiles/{profileId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn() && validFoodUnitProfile(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner() && validFoodUnitProfile(request.resource.data);
+      allow delete: if ownsExisting();
+    }
+
+    match /foodDensityProfiles/{profileId} {
+      allow read: if ownsExisting();
+      allow create: if createsOwn() && validFoodDensityProfile(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner() && validFoodDensityProfile(request.resource.data);
       allow delete: if ownsExisting();
     }
 

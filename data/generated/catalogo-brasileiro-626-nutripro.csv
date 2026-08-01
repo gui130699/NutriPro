@@ -1,0 +1,627 @@
+externalId,name,category,brand,calories,protein,carbs,fat,fiber,sodium,baseQuantity,baseUnit,unitWeightG,portionWeightG,source,language,isActive,catalogOrigin,sourceFoodNumber
+BR0001,Arroz branco tipo 1 cozido,Cereais e derivados,,128.3,2.5,28.1,0.2,1.6,,100,g,,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0002,Arroz integral cozido,Cereais e derivados,,123.5,2.6,25.8,1,2.7,,100,g,,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0003,Macarrão de trigo cozido,Cereais e derivados,,157,5.8,30.9,0.9,1.8,,100,g,,140,TACO/valor médio,pt-BR,true,curated-br,
+BR0004,Pão francês,Cereais e derivados,,300,8,58.6,3.1,2.3,,100,g,50,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0005,Pão de forma tradicional,Cereais e derivados,,253,9.4,49.9,3.7,3.4,,100,g,25,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0006,Pão de forma integral,Cereais e derivados,,253,9.4,44.1,3.7,6.9,,100,g,25,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0007,Tapioca pronta sem recheio,Cereais e derivados,,240,0.2,58,0.1,0.2,,100,g,,70,Valor médio de preparação,pt-BR,true,curated-br,
+BR0008,Cuscuz de milho cozido,Cereais e derivados,,113,2.2,25.3,0.7,2.1,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0009,Aveia em flocos crua,Cereais e derivados,,393.8,13.9,66.6,8.5,9.1,,100,g,,30,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0010,Granola tradicional,Cereais e derivados,,421,10,64,15,7,,100,g,,30,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0011,Farofa pronta temperada,Cereais e derivados,,406,2.1,80.3,9.1,7.8,,100,g,,30,TACO/valor médio,pt-BR,true,curated-br,
+BR0012,Batata inglesa cozida,Tubérculos e derivados,,52,1.2,11.9,0,1.3,,100,g,130,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0013,Batata-doce cozida,Tubérculos e derivados,,77,0.6,18.4,0.1,2.2,,100,g,130,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0014,Mandioca cozida,Tubérculos e derivados,,125,0.6,30.1,0.3,1.6,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0015,Polenta cozida,Cereais e derivados,,103,2.3,23.3,0.3,2.4,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0016,Pão de queijo assado,Cereais e derivados,,363,5.1,34.2,24.6,0.6,,100,g,25,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0017,Biscoito maisena,Cereais e derivados,,442.8,8.1,75.2,12,2.1,,100,g,6,30,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0018,Biscoito cream cracker,Cereais e derivados,,431.7,10.1,68.7,14.4,2.5,,100,g,7,30,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0019,Bolo de chocolate pronto,Cereais e derivados,,410,6.2,54.7,18.5,1.4,,100,g,,60,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0020,Milho verde cozido,Cereais e derivados,,98,3.2,22.1,2.4,3.9,,100,g,100,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0021,Feijão carioca cozido,Leguminosas e derivados,,76.4,4.8,13.6,0.5,8.5,,100,g,,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0022,Feijão preto cozido,Leguminosas e derivados,,77,4.5,14,0.5,8.4,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0023,Feijão fradinho cozido,Leguminosas e derivados,,78,5.1,13.5,0.6,7.5,,100,g,,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0024,Lentilha cozida,Leguminosas e derivados,,93,6.3,16.3,0.5,7.9,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0025,Grão-de-bico cozido,Leguminosas e derivados,,164,8.9,27.4,2.6,7.6,,100,g,,100,Valor médio USDA/TACO,pt-BR,true,curated-br,
+BR0026,Ervilha enlatada drenada,Leguminosas e derivados,,73.8,4.6,13.4,0.4,5.1,,100,g,,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0027,Soja cozida,Leguminosas e derivados,,151,12.5,11.9,6.8,5.2,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0028,Amendoim torrado sem sal,Leguminosas e derivados,,606,22.5,18.7,54,7.8,,100,g,1,30,TACO/valor médio,pt-BR,true,curated-br,
+BR0029,Hummus,Leguminosas e derivados,,166,7.9,14.3,9.6,6,,100,g,,30,Valor médio de preparação,pt-BR,true,curated-br,
+BR0030,Feijoada pronta,Preparações brasileiras,,117,8.7,11.6,4.8,5.1,,100,g,,250,Valor médio de preparação,pt-BR,true,curated-br,
+BR0031,Peito de frango grelhado sem pele,Carnes e derivados,,159,32,0,2.5,0,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0032,Peito de frango cozido sem pele,Carnes e derivados,,163,31,0,3.6,0,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0033,Coxa de frango assada sem pele,Carnes e derivados,,215,28.5,0,10.9,0,,100,g,90,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0034,Sobrecoxa de frango assada sem pele,Carnes e derivados,,233,28,0,13,0,,100,g,100,100,Valor médio,pt-BR,true,curated-br,
+BR0035,Frango inteiro assado sem pele,Carnes e derivados,,187.3,28,0,7.5,0,,100,g,,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0036,Filé de frango à milanesa,Carnes e derivados,,220.9,28.5,7.5,7.8,1.1,,100,g,,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0037,Patinho bovino grelhado,Carnes e derivados,,219,35.9,0,7.3,0,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0038,Carne moída bovina cozida,Carnes e derivados,,212,26.7,0,11.5,0,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0039,Acém bovino cozido,Carnes e derivados,,215,27.3,0,10.9,0,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0040,Coxão mole bovino cozido,Carnes e derivados,,219,32.4,0,9,0,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0041,Fígado bovino grelhado,Carnes e derivados,,225,29.9,0,9,0,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0042,Lombo suíno assado,Carnes e derivados,,210,35.7,0,6.4,0,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0043,Bisteca suína grelhada,Carnes e derivados,,276,29,0,17,0,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0044,Linguiça calabresa cozida,Carnes e derivados,,300,16,2,25,0,,100,g,80,80,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0045,Presunto cozido,Carnes e derivados,,129,13.5,2.9,6.7,0,,100,g,15,30,TACO/valor médio,pt-BR,true,curated-br,
+BR0046,Peito de peru fatiado,Carnes e derivados,,104,17.5,3,2,0,,100,g,15,30,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0047,Filé de tilápia grelhado,Pescados e frutos do mar,,111,23,0,1.7,0,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0048,Sardinha em conserva em óleo,Pescados e frutos do mar,,285,15.9,0,24,0,,100,g,,84,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0049,Atum em conserva em água drenado,Pescados e frutos do mar,,116,25.5,0,0.8,0,,100,g,,120,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0050,Salmão grelhado,Pescados e frutos do mar,,206,22,0,12,0,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0051,Camarão cozido,Pescados e frutos do mar,,99,24,0.2,0.3,0,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0052,Ovo de galinha cozido,Ovos e derivados,,146,13.3,0.6,9.5,0,,100,g,50,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0053,Ovo de galinha frito,Ovos e derivados,,240,15.6,1.2,18.6,0,,100,g,50,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0054,Omelete com queijo,Ovos e derivados,,268,15.6,0.4,22,0,,100,g,,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0055,Clara de ovo cozida,Ovos e derivados,,59,13.4,0,0.1,0,,100,g,33,66,Valor médio,pt-BR,true,curated-br,
+BR0056,Leite integral,Leite e derivados,,61,3.2,4.7,3.3,0,,100,ml,,200,Valor médio,pt-BR,true,curated-br,
+BR0057,Leite semidesnatado,Leite e derivados,,46,3.2,4.8,1.6,0,,100,ml,,200,Valor médio,pt-BR,true,curated-br,
+BR0058,Leite desnatado,Leite e derivados,,34,3.4,5,0.1,0,,100,ml,,200,Valor médio,pt-BR,true,curated-br,
+BR0059,Iogurte natural integral,Leite e derivados,,61,3.5,4.7,3.3,0,,100,g,170,170,Valor médio,pt-BR,true,curated-br,
+BR0060,Iogurte grego natural,Leite e derivados,,97,9,3.9,5,0,,100,g,100,100,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0061,Queijo cottage,Leite e derivados,,98,11.1,3.4,4.3,0,,100,g,,50,Valor médio,pt-BR,true,curated-br,
+BR0062,Ricota fresca,Leite e derivados,,140,12.6,3.8,8.1,0,,100,g,,50,Valor médio,pt-BR,true,curated-br,
+BR0063,Queijo minas frescal,Leite e derivados,,264,17.4,3.2,20.2,0,,100,g,30,30,TACO/valor médio,pt-BR,true,curated-br,
+BR0064,Queijo muçarela,Leite e derivados,,330,22.6,3,25.2,0,,100,g,20,40,Valor médio,pt-BR,true,curated-br,
+BR0065,Queijo prato,Leite e derivados,,360,22.7,1.9,29,0,,100,g,20,40,Valor médio,pt-BR,true,curated-br,
+BR0066,Requeijão cremoso,Leite e derivados,,257,9.6,2.4,23.4,0,,100,g,,30,TACO/valor médio,pt-BR,true,curated-br,
+BR0067,Manteiga com sal,Óleos e gorduras,,717,0.9,0.1,81.1,0,,100,g,10,10,Valor médio,pt-BR,true,curated-br,
+BR0068,Abacate cru,Frutas e derivados,,96.2,1.2,6,8.4,6.3,,100,g,200,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0069,Abacaxi cru,Frutas e derivados,,48,0.9,12.3,0.1,1,,100,g,900,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0070,Banana-prata crua,Frutas e derivados,,98,1.3,26,0.1,2,,100,g,80,80,TACO/valor médio,pt-BR,true,curated-br,
+BR0071,Banana-nanica crua,Frutas e derivados,,92,1.4,23.8,0.1,1.9,,100,g,90,90,TACO/valor médio,pt-BR,true,curated-br,
+BR0072,Maçã Gala com casca,Frutas e derivados,,56,0.3,15.2,0,1.3,,100,g,130,130,TACO/valor médio,pt-BR,true,curated-br,
+BR0073,Mamão Formosa cru,Frutas e derivados,,45,0.8,11.6,0.1,1.8,,100,g,500,150,TACO/valor médio,pt-BR,true,curated-br,
+BR0074,Laranja-pera crua,Frutas e derivados,,37,1,8.9,0.1,0.8,,100,g,130,130,TACO/valor médio,pt-BR,true,curated-br,
+BR0075,Mexerica Ponkan crua,Frutas e derivados,,38,0.8,9.6,0.1,0.9,,100,g,140,140,TACO/valor médio,pt-BR,true,curated-br,
+BR0076,Melancia crua,Frutas e derivados,,33,0.9,8.1,0,0.1,,100,g,,200,TACO/valor médio,pt-BR,true,curated-br,
+BR0077,Melão cru,Frutas e derivados,,29,0.7,7.5,0,0.3,,100,g,,150,TACO/valor médio,pt-BR,true,curated-br,
+BR0078,Manga Palmer crua,Frutas e derivados,,72,0.4,19.4,0.2,1.6,,100,g,300,150,TACO/valor médio,pt-BR,true,curated-br,
+BR0079,Uva Itália crua,Frutas e derivados,,53,0.7,13.6,0.2,0.9,,100,g,5,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0080,Morango cru,Frutas e derivados,,30.1,0.9,6.8,0.3,1.7,,100,g,15,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0081,Goiaba vermelha crua,Frutas e derivados,,54,1.1,13,0.4,6.2,,100,g,170,170,TACO/valor médio,pt-BR,true,curated-br,
+BR0082,Pera Williams crua,Frutas e derivados,,53.3,0.6,14,0.1,3,,100,g,140,140,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0083,Pêssego cru,Frutas e derivados,,36.3,0.8,9.3,0,1.4,,100,g,100,100,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0084,Maracujá polpa crua,Frutas e derivados,,68,2,12.3,2.1,1.1,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0085,Acerola crua,Frutas e derivados,,33,0.9,8,0.2,1.5,,100,g,8,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0086,Coco cru,Frutas e derivados,,406,3.7,10.4,42,5.4,,100,g,,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0087,Açaí polpa sem açúcar,Frutas e derivados,,58,0.8,6.2,3.9,2.6,,100,g,,100,Valor médio; conferir fabricante,pt-BR,true,curated-br,
+BR0088,Alface lisa crua,Verduras e legumes,,13.8,1.7,2.4,0.1,2.3,,100,g,,50,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0089,Tomate para salada cru,Verduras e legumes,,20.5,0.8,5.1,0,2.3,,100,g,120,120,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0090,Cenoura crua,Verduras e legumes,,34,1.3,7.7,0.2,3.2,,100,g,80,80,TACO/valor médio,pt-BR,true,curated-br,
+BR0091,Cenoura cozida,Verduras e legumes,,30,0.8,6.7,0.2,2.6,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0092,Beterraba crua,Verduras e legumes,,49,1.9,11.1,0.1,3.4,,100,g,100,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0093,Beterraba cozida,Verduras e legumes,,32,1.3,7.2,0.1,1.9,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0094,Brócolis cozido,Verduras e legumes,,25,2.1,4.4,0.5,3.4,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0095,Couve-flor cozida,Verduras e legumes,,19,1.2,3.9,0.3,2.1,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0096,Repolho branco cru,Verduras e legumes,,17,0.9,3.9,0.1,1.9,,100,g,,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0097,Couve-manteiga crua,Verduras e legumes,,27,2.9,4.3,0.5,3.1,,100,g,,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0098,Pepino cru,Verduras e legumes,,10,0.9,2,0.1,1.1,,100,g,200,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0099,Abobrinha italiana cozida,Verduras e legumes,,15,1.1,3,0.2,1.6,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0100,Berinjela cozida,Verduras e legumes,,19,0.7,4.5,0.1,2.5,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0101,Chuchu cozido,Verduras e legumes,,19,0.4,4.8,0,1,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0102,Abóbora cabotiá cozida,Verduras e legumes,,48,1.4,10.8,0.7,2.6,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0103,Abóbora moranga cozida,Verduras e legumes,,12,0.6,2.7,0.1,1.7,,100,g,,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0104,Cebola crua,Verduras e legumes,,39,1.7,8.9,0.1,2.2,,100,g,100,50,TACO/valor médio,pt-BR,true,curated-br,
+BR0105,Alho cru,Verduras e legumes,,113.1,7,23.9,0.2,4.3,,100,g,3,5,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0106,Pimentão verde cru,Verduras e legumes,,21,1.1,4.9,0.2,2.6,,100,g,120,100,TACO/valor médio,pt-BR,true,curated-br,
+BR0107,Pimentão vermelho cru,Verduras e legumes,,23,1,5.5,0.1,1.6,,100,g,120,100,Valor médio,pt-BR,true,curated-br,
+BR0108,Quiabo cozido,Verduras e legumes,,26,1.9,4.9,0.3,2.5,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0109,Vagem cozida,Verduras e legumes,,29,1.8,6,0.2,2.7,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0110,Espinafre cozido,Verduras e legumes,,23,2.9,3.8,0.3,2.4,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0111,Cogumelo champignon cozido,Verduras e legumes,,28,3.6,4.3,0.5,1,,100,g,,100,Valor médio,pt-BR,true,curated-br,
+BR0112,Palmito em conserva drenado,Verduras e legumes,,29,2.5,4.6,0.6,3.2,,100,g,,100,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0113,Azeite de oliva extra virgem,Óleos e gorduras,,884,0,0,100,0,,100,g,,13,Valor médio,pt-BR,true,curated-br,
+BR0114,Óleo de soja,Óleos e gorduras,,884,0,0,100,0,,100,g,,13,Valor médio,pt-BR,true,curated-br,
+BR0115,Açúcar refinado,Açúcares e doces,,387,0,99.9,0,0,,100,g,5,10,Valor médio,pt-BR,true,curated-br,
+BR0116,Mel de abelha,Açúcares e doces,,309,0.3,84,0,0.2,,100,g,,20,Valor médio,pt-BR,true,curated-br,
+BR0117,Café coado sem açúcar,Bebidas,,2,0.1,0,0,0,,100,ml,,100,Valor médio,pt-BR,true,curated-br,
+BR0118,Suco de laranja natural,Bebidas,,37,0.7,8.8,0.2,0.2,,100,ml,,200,Valor médio,pt-BR,true,curated-br,
+BR0119,Água de coco,Bebidas,,22,0,5.3,0,0,,100,ml,,200,Valor médio,pt-BR,true,curated-br,
+BR0120,Refrigerante tipo cola,Bebidas,,33.5,0,8.7,0,0,,100,ml,,350,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0121,Refrigerante tipo guaraná,Bebidas,,38.7,0,10,0,0,,100,ml,,350,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,curated-br,
+BR0122,Maionese tradicional,Molhos e condimentos,,302,0.6,7.9,30.5,0,,100,g,,15,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0123,Ketchup,Molhos e condimentos,,101,1.8,25.8,0.1,0.3,,100,g,,15,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0124,Chocolate ao leite,Açúcares e doces,,540,7.2,59,30.7,3.4,,100,g,25,25,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0125,Chocolate amargo 70%,Açúcares e doces,,598,7.8,46,43,11,,100,g,10,25,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+BR0126,Sorvete de creme,Açúcares e doces,,201,3.5,23.6,10.9,0.7,,100,g,,60,Valor médio; conferir rótulo,pt-BR,true,curated-br,
+TACO0002,"Arroz, integral, cru",Cereais e derivados,,360,7.3,77.5,1.9,4.8,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,2
+TACO0004,"Arroz, tipo 1, cru",Cereais e derivados,,358,7.2,78.8,0.3,1.6,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,4
+TACO0005,"Arroz, tipo 2, cozido",Cereais e derivados,,130,2.6,28.2,0.4,1.1,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,5
+TACO0006,"Arroz, tipo 2, cru",Cereais e derivados,,358,7.2,78.9,0.3,1.7,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,6
+TACO0009,"Biscoito, doce, recheado com chocolate",Cereais e derivados,,472,6.4,70.5,19.6,3,239,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,9
+TACO0010,"Biscoito, doce, recheado com morango",Cereais e derivados,,471,5.7,71,19.6,1.5,230,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,10
+TACO0011,"Biscoito, doce, wafer, recheado de chocolate",Cereais e derivados,,502,5.6,67.5,24.7,1.8,137,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,11
+TACO0012,"Biscoito, doce, wafer, recheado de morango",Cereais e derivados,,513,4.5,67.4,26.4,0.8,120,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,12
+TACO0014,"Bolo, mistura para",Cereais e derivados,,419,6.2,84.7,6.1,1.7,463,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,14
+TACO0015,"Bolo, pronto, aipim",Cereais e derivados,,324,4.4,47.9,12.7,0.7,111,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,15
+TACO0017,"Bolo, pronto, coco",Cereais e derivados,,333,5.7,52.3,11.3,1.1,190,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,17
+TACO0018,"Bolo, pronto, milho",Cereais e derivados,,311,4.8,45.1,12.4,0.7,134,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,18
+TACO0019,"Canjica, branca, crua",Cereais e derivados,,358,7.2,78.1,1,5.5,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,19
+TACO0020,"Canjica, com leite integral",Cereais e derivados,,112,2.4,23.6,1.2,1.2,28,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,20
+TACO0021,"Cereais, milho, flocos, com sal",Cereais e derivados,,370,7.3,80.8,1.6,5.3,272,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,21
+TACO0022,"Cereais, milho, flocos, sem sal",Cereais e derivados,,363,6.9,80.4,1.2,1.8,31,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,22
+TACO0023,"Cereais, mingau, milho, infantil",Cereais e derivados,,394,6.4,87.3,1.1,3.2,399,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,23
+TACO0024,"Cereais, mistura para vitamina, trigo, cevada e aveia",Cereais e derivados,,381,8.9,81.6,2.1,5,1163,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,24
+TACO0025,"Cereal matinal, milho",Cereais e derivados,,365,7.2,83.8,1,4.1,655,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,25
+TACO0026,"Cereal matinal, milho, açúcar",Cereais e derivados,,377,4.7,88.8,0.7,2.1,405,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,26
+TACO0027,"Creme de arroz, pó",Cereais e derivados,,386,7,83.9,1.2,1.1,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,27
+TACO0028,"Creme de milho, pó",Cereais e derivados,,333,4.8,86.1,1.6,3.7,594,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,28
+TACO0029,"Curau, milho verde",Cereais e derivados,,78,2.4,13.9,1.6,0.5,21,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,29
+TACO0030,"Curau, milho verde, mistura para",Cereais e derivados,,402,2.2,79.8,13.4,2.5,223,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,30
+TACO0031,"Farinha, de arroz, enriquecida",Cereais e derivados,,363,1.3,85.5,0.3,0.6,17,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,31
+TACO0032,"Farinha, de centeio, integral",Cereais e derivados,,336,12.5,73.3,1.8,15.5,41,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,32
+TACO0033,"Farinha, de milho, amarela",Cereais e derivados,,351,7.2,79.1,1.5,5.5,45,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,33
+TACO0034,"Farinha, de rosca",Cereais e derivados,,371,11.4,75.8,1.5,4.8,333,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,34
+TACO0035,"Farinha, de trigo",Cereais e derivados,,360,9.8,75.1,1.4,2.3,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,35
+TACO0036,"Farinha, láctea, de cereais",Cereais e derivados,,415,11.9,77.8,5.8,1.9,125,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,36
+TACO0037,"Lasanha, massa fresca, cozida",Cereais e derivados,,164,5.8,32.5,1.2,1.6,207,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,37
+TACO0038,"Lasanha, massa fresca, crua",Cereais e derivados,,220,7,45.1,1.3,1.6,667,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,38
+TACO0039,"Macarrão, instantâneo",Cereais e derivados,,436,8.8,62.4,17.2,5.6,1516,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,39
+TACO0040,"Macarrão, trigo, cru",Cereais e derivados,,371,10,77.9,1.3,2.9,7,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,40
+TACO0041,"Macarrão, trigo, cru, com ovos",Cereais e derivados,,371,10.3,76.6,2,2.3,15,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,41
+TACO0042,"Milho, amido, cru",Cereais e derivados,,361,0.6,87.1,0.00001,0.7,8,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,42
+TACO0043,"Milho, fubá, cru",Cereais e derivados,,353,7.2,78.9,1.9,4.7,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,43
+TACO0044,"Milho, verde, cru",Cereais e derivados,,138,6.6,28.6,0.6,3.9,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,44
+TACO0045,"Milho, verde, enlatado, drenado",Cereais e derivados,,98,3.2,17.1,2.4,4.6,260,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,45
+TACO0046,"Mingau tradicional, pó",Cereais e derivados,,373,0.6,89.3,0.4,0.9,15,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,46
+TACO0047,"Pamonha, barra para cozimento, pré-cozida",Cereais e derivados,,171,2.6,30.7,4.8,2.4,132,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,47
+TACO0048,"Pão, aveia, forma",Cereais e derivados,,343,12.4,59.6,5.7,6,606,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,48
+TACO0049,"Pão, de soja",Cereais e derivados,,309,11.3,56.5,3.6,5.7,663,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,49
+TACO0050,"Pão, glúten, forma",Cereais e derivados,,253,12,44.1,2.7,2.5,22,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,50
+TACO0051,"Pão, milho, forma",Cereais e derivados,,292,8.3,56.4,3.1,4.3,507,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,51
+TACO0054,"Pão, trigo, sovado",Cereais e derivados,,311,8.4,61.5,2.8,2.4,431,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,54
+TACO0055,"Pastel, de carne, cru",Cereais e derivados,,289,10.7,42,8.8,1,1309,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,55
+TACO0056,"Pastel, de carne, frito",Cereais e derivados,,388,10.1,43.8,20.1,1,1040,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,56
+TACO0057,"Pastel, de queijo, cru",Cereais e derivados,,308,9.9,45.9,9.6,1.1,985,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,57
+TACO0058,"Pastel, de queijo, frito",Cereais e derivados,,422,8.7,48.1,22.7,0.9,821,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,58
+TACO0059,"Pastel, massa, crua",Cereais e derivados,,310,6.9,57.4,5.5,1.4,1344,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,59
+TACO0060,"Pastel, massa, frita",Cereais e derivados,,570,6,49.3,40.9,1.3,1175,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,60
+TACO0061,"Pipoca, com óleo de soja, sem sal",Cereais e derivados,,448,9.9,70.3,15.9,14.3,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,61
+TACO0062,"Polenta, pré-cozida",Cereais e derivados,,103,2.3,23.3,0.3,2.4,442,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,62
+TACO0063,"Torrada, pão francês",Cereais e derivados,,377,10.5,74.6,3.3,3.4,829,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,63
+TACO0065,"Abóbora, cabotian, crua","Verduras, hortaliças e derivados",,39,1.7,8.4,0.5,2.2,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,65
+TACO0066,"Abóbora, menina brasileira, crua","Verduras, hortaliças e derivados",,14,0.6,3.3,0.00001,1.2,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,66
+TACO0067,"Abóbora, moranga, crua","Verduras, hortaliças e derivados",,12,1,2.7,0.1,1.7,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,67
+TACO0068,"Abóbora, moranga, refogada","Verduras, hortaliças e derivados",,29,0.4,6,0.8,1.5,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,68
+TACO0069,"Abóbora, pescoço, crua","Verduras, hortaliças e derivados",,24,0.7,6.1,0.1,2.3,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,69
+TACO0071,"Abobrinha, italiana, crua","Verduras, hortaliças e derivados",,19,1.1,4.3,0.1,1.4,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,71
+TACO0072,"Abobrinha, italiana, refogada","Verduras, hortaliças e derivados",,24,1.1,4.2,0.8,1.4,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,72
+TACO0073,"Abobrinha, paulista, crua","Verduras, hortaliças e derivados",,31,0.6,7.9,0.1,2.6,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,73
+TACO0074,"Acelga, crua","Verduras, hortaliças e derivados",,21,1.4,4.6,0.1,1.1,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,74
+TACO0075,"Agrião, cru","Verduras, hortaliças e derivados",,17,2.7,2.3,0.2,2.1,7,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,75
+TACO0076,"Aipo, cru","Verduras, hortaliças e derivados",,19,0.8,4.3,0.1,1,10,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,76
+TACO0077,"Alface, americana, crua","Verduras, hortaliças e derivados",,9,0.6,1.7,0.1,1,7,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,77
+TACO0078,"Alface, crespa, crua","Verduras, hortaliças e derivados",,11,1.3,1.7,0.2,1.8,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,78
+TACO0080,"Alface, roxa, crua","Verduras, hortaliças e derivados",,13,0.9,2.5,0.2,2,7,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,80
+TACO0081,"Alfavaca, crua","Verduras, hortaliças e derivados",,29,2.7,5.2,0.5,4.1,5,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,81
+TACO0083,"Alho-poró, cru","Verduras, hortaliças e derivados",,32,1.4,6.9,0.1,2.5,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,83
+TACO0084,"Almeirão, cru","Verduras, hortaliças e derivados",,18,1.8,3.3,0.2,2.6,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,84
+TACO0085,"Almeirão, refogado","Verduras, hortaliças e derivados",,65,1.7,5.7,4.8,3.4,15,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,85
+TACO0086,"Batata, baroa, cozida","Verduras, hortaliças e derivados",,80,0.9,18.9,0.2,1.8,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,86
+TACO0087,"Batata, baroa, crua","Verduras, hortaliças e derivados",,101,1,24,0.2,2.1,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,87
+TACO0089,"Batata, doce, crua","Verduras, hortaliças e derivados",,118,1.3,28.2,0.1,2.6,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,89
+TACO0090,"Batata, frita, tipo chips, industrializada","Verduras, hortaliças e derivados",,543,5.6,51.2,36.6,2.5,607,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,90
+TACO0092,"Batata, inglesa, crua","Verduras, hortaliças e derivados",,64,1.8,14.7,0.00001,1.2,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,92
+TACO0093,"Batata, inglesa, frita","Verduras, hortaliças e derivados",,267,5,35.6,13.1,8.1,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,93
+TACO0094,"Batata, inglesa, sauté","Verduras, hortaliças e derivados",,68,1.3,14.1,0.9,1.4,8,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,94
+TACO0096,"Berinjela, crua","Verduras, hortaliças e derivados",,20,1.2,4.4,0.1,2.9,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,96
+TACO0099,"Biscoito, polvilho doce","Verduras, hortaliças e derivados",,438,1.3,80.5,12.2,1.2,98,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,99
+TACO0101,"Brócolis, cru","Verduras, hortaliças e derivados",,25,3.6,4,0.3,2.9,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,101
+TACO0102,"Cará, cozido","Verduras, hortaliças e derivados",,78,1.5,18.9,0.1,2.6,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,102
+TACO0103,"Cará, cru","Verduras, hortaliças e derivados",,96,2.3,23,0.1,7.3,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,103
+TACO0104,"Caruru, cru","Verduras, hortaliças e derivados",,34,3.2,6,0.6,4.5,14,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,104
+TACO0105,"Catalonha, crua","Verduras, hortaliças e derivados",,24,1.9,4.8,0.3,2,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,105
+TACO0106,"Catalonha, refogada","Verduras, hortaliças e derivados",,63,2,4.8,4.8,3.7,25,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,106
+TACO0108,"Cebolinha, crua","Verduras, hortaliças e derivados",,20,1.9,3.4,0.4,3.6,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,108
+TACO0111,"Chicória, crua","Verduras, hortaliças e derivados",,14,1.1,2.9,0.1,2.2,14,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,111
+TACO0113,"Chuchu, cru","Verduras, hortaliças e derivados",,17,0.7,4.1,0.1,1.3,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,113
+TACO0114,"Coentro, folhas desidratadas","Verduras, hortaliças e derivados",,309,20.9,48,10.4,37.3,18,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,114
+TACO0116,"Couve, manteiga, refogada","Verduras, hortaliças e derivados",,90,1.7,8.7,6.6,5.7,11,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,116
+TACO0117,"Couve-flor, crua","Verduras, hortaliças e derivados",,23,1.9,4.5,0.2,2.4,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,117
+TACO0119,"Espinafre, Nova Zelândia, cru","Verduras, hortaliças e derivados",,16,2,2.6,0.2,2.1,17,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,119
+TACO0120,"Espinafre, Nova Zelândia, refogado","Verduras, hortaliças e derivados",,67,2.7,4.2,5.4,2.5,47,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,120
+TACO0121,"Farinha, de mandioca, crua","Verduras, hortaliças e derivados",,361,1.6,87.9,0.3,6.4,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,121
+TACO0122,"Farinha, de mandioca, torrada","Verduras, hortaliças e derivados",,365,1.2,89.2,0.3,6.5,10,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,122
+TACO0123,"Farinha, de puba","Verduras, hortaliças e derivados",,360,1.6,87.3,0.5,4.2,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,123
+TACO0124,"Fécula, de mandioca","Verduras, hortaliças e derivados",,331,0.5,81.1,0.3,0.6,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,124
+TACO0125,"Feijão, broto, cru","Verduras, hortaliças e derivados",,39,4.2,7.8,0.1,2,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,125
+TACO0126,"Inhame, cru","Verduras, hortaliças e derivados",,97,2.1,23.2,0.2,1.7,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,126
+TACO0127,"Jiló, cru","Verduras, hortaliças e derivados",,27,1.4,6.2,0.2,4.8,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,127
+TACO0128,"Jurubeba, crua","Verduras, hortaliças e derivados",,126,4.4,23.1,3.9,23.9,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,128
+TACO0130,"Mandioca, crua","Verduras, hortaliças e derivados",,151,1.1,36.2,0.3,1.9,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,130
+TACO0131,"Mandioca, farofa, temperada","Verduras, hortaliças e derivados",,406,2.1,80.3,9.1,7.8,575,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,131
+TACO0132,"Mandioca, frita","Verduras, hortaliças e derivados",,300,1.4,50.3,11.2,1.9,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,132
+TACO0133,"Manjericão, cru","Verduras, hortaliças e derivados",,21,2,3.6,0.4,3.3,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,133
+TACO0134,"Maxixe, cru","Verduras, hortaliças e derivados",,14,1.4,2.7,0.1,2.2,11,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,134
+TACO0135,"Mostarda, folha, crua","Verduras, hortaliças e derivados",,18,2.1,3.2,0.2,1.9,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,135
+TACO0136,"Nhoque, batata, cozido","Verduras, hortaliças e derivados",,181,5.9,36.8,1.9,1.8,7,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,136
+TACO0137,"Nabo, cru","Verduras, hortaliças e derivados",,18,1.2,4.1,0.1,2.6,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,137
+TACO0138,"Palmito, juçara, em conserva","Verduras, hortaliças e derivados",,23,1.8,4.3,0.4,3.2,514,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,138
+TACO0139,"Palmito, pupunha, em conserva","Verduras, hortaliças e derivados",,29,2.5,5.5,0.5,2.6,563,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,139
+TACO0141,"Pão, de queijo, cru","Verduras, hortaliças e derivados",,295,3.6,38.5,14,1,405,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,141
+TACO0143,"Pimentão, amarelo, cru","Verduras, hortaliças e derivados",,28,1.2,6,0.4,1.9,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,143
+TACO0146,"Polvilho, doce","Verduras, hortaliças e derivados",,351,0.4,86.8,0.00001,0.2,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,146
+TACO0147,"Quiabo, cru","Verduras, hortaliças e derivados",,30,1.9,6.4,0.3,4.6,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,147
+TACO0148,"Rabanete, cru","Verduras, hortaliças e derivados",,14,1.4,2.7,0.1,2.2,11,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,148
+TACO0150,"Repolho, roxo, cru","Verduras, hortaliças e derivados",,31,1.9,7.2,0.1,2,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,150
+TACO0151,"Repolho, roxo, refogado","Verduras, hortaliças e derivados",,42,1.8,7.6,1.2,1.8,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,151
+TACO0152,"Rúcula, crua","Verduras, hortaliças e derivados",,13,1.8,2.2,0.1,1.7,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,152
+TACO0153,"Salsa, crua","Verduras, hortaliças e derivados",,33,3.3,5.7,0.6,1.9,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,153
+TACO0154,"Seleta de legumes, enlatada","Verduras, hortaliças e derivados",,57,3.4,12.7,0.4,3.1,398,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,154
+TACO0155,"Serralha, crua","Verduras, hortaliças e derivados",,30,2.7,4.9,0.7,3.5,19,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,155
+TACO0156,"Taioba, crua","Verduras, hortaliças e derivados",,34,2.9,5.4,0.9,4.5,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,156
+TACO0157,"Tomate, com semente, cru","Verduras, hortaliças e derivados",,15,1.1,3.1,0.2,1.2,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,157
+TACO0158,"Tomate, extrato","Verduras, hortaliças e derivados",,61,2.4,15,0.2,2.8,498,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,158
+TACO0159,"Tomate, molho industrializado","Verduras, hortaliças e derivados",,38,1.4,7.7,0.9,3.1,418,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,159
+TACO0160,"Tomate, purê","Verduras, hortaliças e derivados",,28,1.4,6.9,0.00001,1,104,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,160
+TACO0161,"Tomate, salada","Verduras, hortaliças e derivados",,21,0.8,5.1,0.00001,2.3,5,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,161
+TACO0162,"Vagem, crua","Verduras, hortaliças e derivados",,25,1.8,5.3,0.2,2.4,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,162
+TACO0165,"Abacaxi, polpa, congelada",Frutas e derivados,,31,0.5,7.8,0.1,0.3,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,165
+TACO0166,"Abiu, cru",Frutas e derivados,,62,0.8,14.9,0.7,1.7,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,166
+TACO0167,"Açaí, polpa, com xarope de guaraná e glucose",Frutas e derivados,,110,0.7,21.5,3.7,1.7,15,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,167
+TACO0170,"Acerola, polpa, congelada",Frutas e derivados,,22,0.6,5.5,0.00001,0.7,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,170
+TACO0171,"Ameixa, calda, enlatada",Frutas e derivados,,183,0.4,46.9,0.00001,0.5,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,171
+TACO0172,"Ameixa, crua",Frutas e derivados,,53,0.8,13.9,0.00001,2.4,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,172
+TACO0173,"Ameixa, em calda, enlatada, drenada",Frutas e derivados,,177,1,47.7,0.3,4.5,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,173
+TACO0174,"Atemóia, crua",Frutas e derivados,,97,1,25.3,0.3,2.1,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,174
+TACO0175,"Banana, da terra, crua",Frutas e derivados,,128,1.4,33.7,0.2,1.5,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,175
+TACO0176,"Banana, doce em barra",Frutas e derivados,,280,2.2,75.7,0.1,3.8,10,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,176
+TACO0177,"Banana, figo, crua",Frutas e derivados,,105,1.1,27.8,0.1,2.8,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,177
+TACO0178,"Banana, maçã, crua",Frutas e derivados,,87,1.8,22.3,0.1,2.6,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,178
+TACO0180,"Banana, ouro, crua",Frutas e derivados,,112,1.5,29.3,0.2,2,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,180
+TACO0181,"Banana, pacova, crua",Frutas e derivados,,78,1.2,20.3,0.1,2,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,181
+TACO0183,"Cacau, cru",Frutas e derivados,,74,1,19.4,0.1,2.2,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,183
+TACO0184,"Cajá-Manga, cru",Frutas e derivados,,46,1.3,11.4,0.00001,2.6,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,184
+TACO0185,"Cajá, polpa, congelada",Frutas e derivados,,26,0.6,6.4,0.2,1.4,7,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,185
+TACO0186,"Caju, cru",Frutas e derivados,,43,1,10.3,0.3,1.7,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,186
+TACO0187,"Caju, polpa, congelada",Frutas e derivados,,37,0.5,9.4,0.2,0.8,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,187
+TACO0188,"Caju, suco concentrado, envasado",Frutas e derivados,,45,0.4,10.7,0.2,0.6,45,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,188
+TACO0189,"Caqui, chocolate, cru",Frutas e derivados,,71,0.4,19.3,0.1,6.5,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,189
+TACO0190,"Carambola, crua",Frutas e derivados,,46,0.9,11.5,0.2,2,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,190
+TACO0191,"Ciriguela, crua",Frutas e derivados,,76,1.4,18.9,0.4,3.9,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,191
+TACO0192,"Cupuaçu, cru",Frutas e derivados,,49,1.2,10.4,1,3.1,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,192
+TACO0193,"Cupuaçu, polpa, congelada",Frutas e derivados,,49,0.8,11.4,0.6,1.6,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,193
+TACO0194,"Figo, cru",Frutas e derivados,,41,1,10.2,0.2,1.8,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,194
+TACO0195,"Figo, enlatado, em calda",Frutas e derivados,,184,0.6,50.3,0.2,2,7,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,195
+TACO0196,"Fruta-pão, crua",Frutas e derivados,,67,1.1,17.2,0.2,5.5,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,196
+TACO0197,"Goiaba, branca, com casca, crua",Frutas e derivados,,52,0.9,12.4,0.5,6.3,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,197
+TACO0198,"Goiaba, doce em pasta",Frutas e derivados,,269,0.6,74.1,0,3.7,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,198
+TACO0199,"Goiaba, doce, cascão",Frutas e derivados,,286,0.4,78.7,0.1,4.4,11,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,199
+TACO0201,"Graviola, crua",Frutas e derivados,,62,0.8,15.8,0.2,1.9,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,201
+TACO0202,"Graviola, polpa, congelada",Frutas e derivados,,38,0.6,9.8,0.1,1.2,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,202
+TACO0203,"Jabuticaba, crua",Frutas e derivados,,58,0.6,15.3,0.1,2.3,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,203
+TACO0204,"Jaca, crua",Frutas e derivados,,88,1.4,22.5,0.3,2.4,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,204
+TACO0205,"Jambo, cru",Frutas e derivados,,27,0.9,6.5,0.1,5.1,22,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,205
+TACO0206,"Jamelão, cru",Frutas e derivados,,41,0.5,10.6,0.1,1.8,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,206
+TACO0207,"Kiwi, cru",Frutas e derivados,,51,1.3,11.5,0.6,2.7,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,207
+TACO0208,"Laranja, baía, crua",Frutas e derivados,,45,1,11.5,0.1,1.1,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,208
+TACO0209,"Laranja, baía, suco",Frutas e derivados,,37,0.7,8.7,0.00001,0.00001,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,209
+TACO0210,"Laranja, da terra, crua",Frutas e derivados,,51,1.1,12.9,0.2,4,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,210
+TACO0211,"Laranja, da terra, suco",Frutas e derivados,,41,0.7,9.6,0.1,1,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,211
+TACO0212,"Laranja, lima, crua",Frutas e derivados,,46,1.1,11.5,0.1,1.8,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,212
+TACO0213,"Laranja, lima, suco",Frutas e derivados,,39,0.7,9.2,0.1,0.4,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,213
+TACO0215,"Laranja, pêra, suco",Frutas e derivados,,33,0.7,7.6,0.1,0.00001,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,215
+TACO0216,"Laranja, valência, crua",Frutas e derivados,,46,0.8,11.7,0.2,1.7,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,216
+TACO0217,"Laranja, valência, suco",Frutas e derivados,,36,0.5,8.6,0.1,0.4,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,217
+TACO0218,"Limão, cravo, suco",Frutas e derivados,,14,0.3,5.2,0.00001,0.00001,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,218
+TACO0219,"Limão, galego, suco",Frutas e derivados,,22,0.6,7.3,0.1,0.00001,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,219
+TACO0220,"Limão, tahiti, cru",Frutas e derivados,,32,0.9,11.1,0.1,1.2,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,220
+TACO0221,"Maçã, Argentina, com casca, crua",Frutas e derivados,,63,0.2,16.6,0.2,2,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,221
+TACO0222,"Maçã, Fuji, com casca, crua",Frutas e derivados,,56,0.3,15.2,0.00001,1.3,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,222
+TACO0223,"Macaúba, crua",Frutas e derivados,,404,2.1,13.9,40.7,13.4,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,223
+TACO0224,"Mamão, doce em calda, drenado",Frutas e derivados,,196,0.2,54,0.1,1.3,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,224
+TACO0226,"Mamão, Papaia, cru",Frutas e derivados,,40,0.5,10.4,0.1,1,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,226
+TACO0227,"Mamão verde, doce em calda, drenado",Frutas e derivados,,209,0.3,57.6,0.1,1.2,5,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,227
+TACO0228,"Manga, Haden, crua",Frutas e derivados,,64,0.4,16.7,0.3,1.6,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,228
+TACO0230,"Manga, polpa, congelada",Frutas e derivados,,48,0.4,12.5,0.2,1.1,7,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,230
+TACO0231,"Manga, Tommy Atkins, crua",Frutas e derivados,,51,0.9,12.8,0.2,2.1,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,231
+TACO0232,"Maracujá, cru",Frutas e derivados,,68,2,12.3,2.1,1.1,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,232
+TACO0233,"Maracujá, polpa, congelada",Frutas e derivados,,39,0.8,9.6,0.2,0.5,8,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,233
+TACO0234,"Maracujá, suco concentrado, envasado",Frutas e derivados,,42,0.8,9.6,0.2,0.4,22,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,234
+TACO0237,"Mexerica, Murcote, crua",Frutas e derivados,,58,0.9,14.9,0.1,3.1,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,237
+TACO0238,"Mexerica, Rio, crua",Frutas e derivados,,37,0.7,9.3,0.1,2.7,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,238
+TACO0240,"Nêspera, crua",Frutas e derivados,,43,0.3,11.5,0.00001,3,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,240
+TACO0241,"Pequi, cru",Frutas e derivados,,205,2.3,13,18,19,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,241
+TACO0242,"Pêra, Park, crua",Frutas e derivados,,61,0.2,16.1,0.2,3,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,242
+TACO0244,"Pêssego, Aurora, cru",Frutas e derivados,,36,0.8,9.3,0.00001,1.4,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,244
+TACO0245,"Pêssego, enlatado, em calda",Frutas e derivados,,63,0.7,16.9,0.00001,1,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,245
+TACO0246,"Pinha, crua",Frutas e derivados,,88,1.5,22.4,0.3,3.4,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,246
+TACO0247,"Pitanga, crua",Frutas e derivados,,41,0.9,10.2,0.2,3.2,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,247
+TACO0248,"Pitanga, polpa, congelada",Frutas e derivados,,19,0.3,4.8,0.1,0.7,5,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,248
+TACO0249,"Romã, crua",Frutas e derivados,,56,0.4,15.1,0.00001,0.4,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,249
+TACO0250,"Tamarindo, cru",Frutas e derivados,,276,3.2,72.5,0.5,6.4,0,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,250
+TACO0251,"Tangerina, Poncã, crua",Frutas e derivados,,38,0.8,9.6,0.1,0.9,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,251
+TACO0252,"Tangerina, Poncã, suco",Frutas e derivados,,36,0.5,8.8,0.00001,0.00001,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,252
+TACO0253,"Tucumã, cru",Frutas e derivados,,262,2.1,26.5,19.1,12.7,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,253
+TACO0254,"Umbu, cru",Frutas e derivados,,37,0.8,9.4,0.00001,2,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,254
+TACO0255,"Umbu, polpa, congelada",Frutas e derivados,,34,0.5,8.8,0.1,1.3,6,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,255
+TACO0257,"Uva, Rubi, crua",Frutas e derivados,,49,0.6,12.7,0.2,0.9,8,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,257
+TACO0258,"Uva, suco concentrado, envasado",Frutas e derivados,,58,0.00001,14.7,0.00001,0.2,10,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,258
+TACO0262,"Manteiga, sem sal",Gorduras e Oleos,,758,0.4,0,86,0,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,262
+TACO0263,"Margarina, com óleo hidrogenado, com sal (65% de lipídeos)",Gorduras e Oleos,,596,0.00001,0,67.4,0,894,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,263
+TACO0264,"Margarina, com óleo hidrogenado, sem sal (80% de lipídeos)",Gorduras e Oleos,,723,0.00001,0,81.7,0,78,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,264
+TACO0265,"Margarina, com óleo interesterificado, com sal (65%de lipídeos)",Gorduras e Oleos,,594,0.00001,0,67.2,0,561,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,265
+TACO0266,"Margarina, com óleo interesterificado, sem sal (65% de lipídeos)",Gorduras e Oleos,,593,0.00001,0,67.1,0,33,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,266
+TACO0273,"Abadejo, filé, congelado, assado",Pescados e Frutos do Mar,,112,23.5,0,1.2,0,334,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,273
+TACO0274,"Abadejo, filé, congelado,cozido",Pescados e Frutos do Mar,,91,19.3,0,0.9,0,189,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,274
+TACO0275,"Abadejo, filé, congelado, cru",Pescados e Frutos do Mar,,59,13.1,0,0.4,0,79,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,275
+TACO0276,"Abadejo, filé, congelado, grelhado",Pescados e Frutos do Mar,,130,27.6,0,1.3,0,305,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,276
+TACO0277,"Atum, conserva em óleo",Pescados e Frutos do Mar,,166,26.2,0,6,0,362,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,277
+TACO0278,"Atum, fresco, cru",Pescados e Frutos do Mar,,118,25.7,0,0.9,0,30,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,278
+TACO0279,"Bacalhau, salgado, cru",Pescados e Frutos do Mar,,136,29,0,1.3,0,13585,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,279
+TACO0280,"Bacalhau, salgado, refogado",Pescados e Frutos do Mar,,140,24,1.2,3.6,0,1256,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,280
+TACO0281,"Cação, posta, com farinha de trigo, frita",Pescados e Frutos do Mar,,208,25,3.1,10,0.5,160,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,281
+TACO0282,"Cação, posta, cozida",Pescados e Frutos do Mar,,116,25.6,0,0.7,0,115,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,282
+TACO0283,"Cação, posta, crua",Pescados e Frutos do Mar,,83,17.9,0,0.8,0,176,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,283
+TACO0284,"Camarão, Rio Grande, grande, cozido",Pescados e Frutos do Mar,,90,19,0,1,0,367,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,284
+TACO0285,"Camarão, Rio Grande, grande, cru",Pescados e Frutos do Mar,,47,10,0,0.5,0,201,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,285
+TACO0286,"Camarão, Sete Barbas, sem cabeça, com casca, frito",Pescados e Frutos do Mar,,231,18.4,2.9,15.6,0,99,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,286
+TACO0287,"Caranguejo, cozido",Pescados e Frutos do Mar,,83,18.5,0,0.4,0,360,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,287
+TACO0288,"Corimba, cru",Pescados e Frutos do Mar,,128,17.4,0,6,0,47,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,288
+TACO0289,"Corimbatá, assado",Pescados e Frutos do Mar,,261,19.9,0,19.6,0,40,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,289
+TACO0290,"Corimbatá, cozido",Pescados e Frutos do Mar,,239,20.1,0,16.9,0,37,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,290
+TACO0291,"Corvina de água doce, crua",Pescados e Frutos do Mar,,101,18.9,0,2.2,0,45,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,291
+TACO0292,"Corvina do mar, crua",Pescados e Frutos do Mar,,94,18.6,0,1.6,0,68,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,292
+TACO0293,"Corvina grande, assada",Pescados e Frutos do Mar,,147,26.8,0,3.6,0,85,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,293
+TACO0294,"Corvina grande, cozida",Pescados e Frutos do Mar,,100,23.4,0,2.6,0,68,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,294
+TACO0295,"Dourada de água doce, fresca",Pescados e Frutos do Mar,,131,18.8,0,5.6,0,40,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,295
+TACO0296,"Lambari, congelado, cru",Pescados e Frutos do Mar,,131,16.8,0,6.5,0,48,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,296
+TACO0297,"Lambari, congelado, frito",Pescados e Frutos do Mar,,327,28.4,0,22.8,0,65,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,297
+TACO0298,"Lambari, fresco, cru",Pescados e Frutos do Mar,,152,15.7,0,9.4,0,41,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,298
+TACO0299,"Manjuba, com farinha de trigo, frita",Pescados e Frutos do Mar,,344,23.5,10.2,22.6,0.4,37,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,299
+TACO0300,"Manjuba, frita",Pescados e Frutos do Mar,,349,30.1,0,24.5,0,41,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,300
+TACO0301,"Merluza, filé, assado",Pescados e Frutos do Mar,,122,26.6,0,0.9,0,120,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,301
+TACO0302,"Merluza, filé, cru",Pescados e Frutos do Mar,,89,16.6,0,2,0,80,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,302
+TACO0303,"Merluza, filé, frito",Pescados e Frutos do Mar,,192,26.9,0,8.5,0,90,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,303
+TACO0304,"Pescada, branca, crua",Pescados e Frutos do Mar,,111,16.3,0,4.6,0,76,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,304
+TACO0305,"Pescada, branca, frita",Pescados e Frutos do Mar,,223,27.4,0,11.8,0,107,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,305
+TACO0306,"Pescada, filé, com farinha de trigo, frito",Pescados e Frutos do Mar,,283,21.4,5,19.1,0.00001,91,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,306
+TACO0307,"Pescada, filé, cru",Pescados e Frutos do Mar,,107,16.7,0,4,0,77,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,307
+TACO0308,"Pescada, filé, frito",Pescados e Frutos do Mar,,154,28.6,0,3.6,0,115,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,308
+TACO0309,"Pescada, filé, molho escabeche",Pescados e Frutos do Mar,,142,11.8,5,8,0.8,51,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,309
+TACO0310,"Pescadinha, crua",Pescados e Frutos do Mar,,76,15.5,0,1.1,0,120,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,310
+TACO0311,"Pintado, assado",Pescados e Frutos do Mar,,192,36.5,0,4,0,81,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,311
+TACO0312,"Pintado, cru",Pescados e Frutos do Mar,,91,18.6,0,1.3,0,43,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,312
+TACO0313,"Pintado, grelhado",Pescados e Frutos do Mar,,152,30.8,0,2.3,0,53,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,313
+TACO0314,"Porquinho, cru",Pescados e Frutos do Mar,,93,20.5,0,0.6,0,67,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,314
+TACO0315,"Salmão, filé, com pele, fresco, grelhado",Pescados e Frutos do Mar,,229,23.9,0,14,0,85,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,315
+TACO0316,"Salmão, sem pele, fresco, cru",Pescados e Frutos do Mar,,170,19.3,0,9.7,0,64,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,316
+TACO0317,"Salmão, sem pele, fresco, grelhado",Pescados e Frutos do Mar,,243,26.1,0,14.5,0,96,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,317
+TACO0318,"Sardinha, assada",Pescados e Frutos do Mar,,164,32.2,0,3,0,74,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,318
+TACO0320,"Sardinha, frita",Pescados e Frutos do Mar,,257,33.4,0,12.7,0,60,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,320
+TACO0321,"Sardinha, inteira, crua",Pescados e Frutos do Mar,,114,21.1,0,2.7,0,60,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,321
+TACO0322,"Tucunaré, filé, congelado, cru",Pescados e Frutos do Mar,,88,18,0,1.2,0,57,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,322
+TACO0323,Apresuntado,Carnes e Derivados,,129,13.5,2.9,6.7,0,943,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,323
+TACO0324,"Caldo de carne, tablete",Carnes e Derivados,,241,7.8,15.1,16.6,0.6,22180,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,324
+TACO0325,"Caldo de galinha, tablete",Carnes e Derivados,,251,6.3,10.6,20.4,11.8,22300,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,325
+TACO0326,"Carne, bovina, acém, moído, cozido",Carnes e Derivados,,212,26.7,0,10.9,0,52,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,326
+TACO0327,"Carne, bovina, acém, moído, cru",Carnes e Derivados,,137,19.4,0,5.9,0,49,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,327
+TACO0329,"Carne, bovina, acém, sem gordura, cru",Carnes e Derivados,,144,20.8,0,6.1,0,50,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,329
+TACO0330,"Carne, bovina, almôndegas, cruas",Carnes e Derivados,,189,12.3,9.8,11.2,0,621,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,330
+TACO0331,"Carne, bovina, almôndegas, fritas",Carnes e Derivados,,272,18.2,14.3,15.8,0,1030,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,331
+TACO0332,"Carne, bovina, bucho, cozido",Carnes e Derivados,,133,21.6,0,4.5,0,38,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,332
+TACO0333,"Carne, bovina, bucho, cru",Carnes e Derivados,,137,20.5,0,5.5,0,45,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,333
+TACO0334,"Carne, bovina, capa de contra-filé, com gordura, crua",Carnes e Derivados,,217,19.2,0,15,0,58,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,334
+TACO0335,"Carne, bovina, capa de contra-filé, com gordura, grelhada",Carnes e Derivados,,312,30.7,0,20,0,81,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,335
+TACO0336,"Carne, bovina, capa de contra-filé, sem gordura, crua",Carnes e Derivados,,131,21.5,0,4.3,0,79,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,336
+TACO0337,"Carne, bovina, capa de contra-filé, sem gordura, grelhada",Carnes e Derivados,,239,35.1,0,10,0,83,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,337
+TACO0338,"Carne, bovina, charque, cozido",Carnes e Derivados,,263,36.4,0,11.9,0,1443,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,338
+TACO0339,"Carne, bovina, charque, cru",Carnes e Derivados,,249,22.7,0,16.8,0,5875,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,339
+TACO0340,"Carne, bovina, contra-filé, à milanesa",Carnes e Derivados,,352,20.6,12.2,24,0.4,77,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,340
+TACO0341,"Carne, bovina, contra-filé de costela, cru",Carnes e Derivados,,202,19.8,0,13.1,0,39,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,341
+TACO0342,"Carne, bovina, contra-filé de costela, grelhado",Carnes e Derivados,,275,29.9,0,16.3,0,51,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,342
+TACO0343,"Carne, bovina, contra-filé, com gordura, cru",Carnes e Derivados,,206,21.2,0,12.8,0,44,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,343
+TACO0344,"Carne, bovina, contra-filé, com gordura, grelhado",Carnes e Derivados,,278,32.4,0,15.5,0,57,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,344
+TACO0345,"Carne, bovina, contra-filé, sem gordura, cru",Carnes e Derivados,,157,24,0,6,0,53,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,345
+TACO0346,"Carne, bovina, contra-filé, sem gordura, grelhado",Carnes e Derivados,,194,35.9,0,4.5,0,58,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,346
+TACO0347,"Carne, bovina, costela, assada",Carnes e Derivados,,373,28.8,0,27.7,0,92,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,347
+TACO0348,"Carne, bovina, costela, crua",Carnes e Derivados,,358,16.7,0,31.8,0,70,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,348
+TACO0349,"Carne, bovina, coxão duro, sem gordura, cozido",Carnes e Derivados,,217,31.9,0,8.9,0,41,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,349
+TACO0350,"Carne, bovina, coxão duro, sem gordura, cru",Carnes e Derivados,,148,21.5,0,6.2,0,49,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,350
+TACO0352,"Carne, bovina, coxão mole, sem gordura, cru",Carnes e Derivados,,169,21.2,0,8.7,0,61,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,352
+TACO0353,"Carne, bovina, cupim, assado",Carnes e Derivados,,330,28.6,0,23,0,72,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,353
+TACO0354,"Carne, bovina, cupim, cru",Carnes e Derivados,,221,19.5,0,15.3,0,47,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,354
+TACO0355,"Carne, bovina, fígado, cru",Carnes e Derivados,,141,20.7,1.1,5.4,0,76,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,355
+TACO0357,"Carne, bovina, filé mingnon, sem gordura, cru",Carnes e Derivados,,143,21.6,0,5.6,0,49,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,357
+TACO0358,"Carne, bovina, filé mingnon, sem gordura, grelhado",Carnes e Derivados,,220,32.8,0,8.8,0,58,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,358
+TACO0359,"Carne, bovina, flanco, sem gordura, cozido",Carnes e Derivados,,196,29.4,0,7.8,0,42,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,359
+TACO0360,"Carne, bovina, flanco, sem gordura, cru",Carnes e Derivados,,141,20,0,6.2,0,54,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,360
+TACO0361,"Carne, bovina, fraldinha, com gordura, cozida",Carnes e Derivados,,338,24.2,0,26,0,39,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,361
+TACO0362,"Carne, bovina, fraldinha, com gordura, crua",Carnes e Derivados,,221,17.6,0,16.1,0,51,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,362
+TACO0363,"Carne, bovina, lagarto, cozido",Carnes e Derivados,,222,32.9,0,9.1,0,48,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,363
+TACO0364,"Carne, bovina, lagarto, cru",Carnes e Derivados,,135,20.5,0,5.2,0,54,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,364
+TACO0365,"Carne, bovina, língua, cozida",Carnes e Derivados,,315,21.4,0,24.8,0,59,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,365
+TACO0366,"Carne, bovina, língua, crua",Carnes e Derivados,,215,17.1,0,15.8,0,73,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,366
+TACO0367,"Carne, bovina, maminha, crua",Carnes e Derivados,,153,20.9,0,7,0,37,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,367
+TACO0368,"Carne, bovina, maminha, grelhada",Carnes e Derivados,,153,30.7,0,2.4,0,58,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,368
+TACO0369,"Carne, bovina, miolo de alcatra, sem gordura, cru",Carnes e Derivados,,163,21.6,0,7.8,0,43,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,369
+TACO0370,"Carne, bovina, miolo de alcatra, sem gordura, grelhado",Carnes e Derivados,,241,31.9,0,11.6,0,52,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,370
+TACO0371,"Carne, bovina, músculo, sem gordura, cozido",Carnes e Derivados,,194,31.2,0,6.7,0,62,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,371
+TACO0372,"Carne, bovina, músculo, sem gordura, cru",Carnes e Derivados,,142,21.6,0,5.5,0,66,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,372
+TACO0373,"Carne, bovina, paleta, com gordura, crua",Carnes e Derivados,,159,21.4,0,7.5,0,65,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,373
+TACO0374,"Carne, bovina, paleta, sem gordura, cozida",Carnes e Derivados,,194,29.7,0,7.4,0,58,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,374
+TACO0375,"Carne, bovina, paleta, sem gordura, crua",Carnes e Derivados,,141,21,0,5.7,0,66,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,375
+TACO0376,"Carne, bovina, patinho, sem gordura, cru",Carnes e Derivados,,133,21.7,0,4.5,0,49,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,376
+TACO0378,"Carne, bovina, peito, sem gordura, cozido",Carnes e Derivados,,338,22.2,0,27,0,56,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,378
+TACO0379,"Carne, bovina, peito, sem gordura, cru",Carnes e Derivados,,259,17.6,0,20.4,0,64,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,379
+TACO0380,"Carne, bovina, picanha, com gordura, crua",Carnes e Derivados,,213,18.8,0,14.7,0,38,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,380
+TACO0381,"Carne, bovina, picanha, com gordura, grelhada",Carnes e Derivados,,289,26.4,0,19.5,0,60,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,381
+TACO0382,"Carne, bovina, picanha, sem gordura, crua",Carnes e Derivados,,134,21.3,0,4.7,0,61,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,382
+TACO0383,"Carne, bovina, picanha, sem gordura, grelhada",Carnes e Derivados,,238,31.9,0,11.3,0,61,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,383
+TACO0384,"Carne, bovina, seca, cozida",Carnes e Derivados,,313,26.9,0,21.9,0,1943,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,384
+TACO0385,"Carne, bovina, seca, crua",Carnes e Derivados,,313,19.7,0,25.4,0,4440,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,385
+TACO0386,"Coxinha de frango, frita",Carnes e Derivados,,283,9.6,34.5,11.8,5,532,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,386
+TACO0387,"Croquete, de carne, cru",Carnes e Derivados,,246,12,13.9,15.6,0,711,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,387
+TACO0388,"Croquete, de carne, frito",Carnes e Derivados,,347,16.9,18.1,22.7,0,916,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,388
+TACO0389,"Empada de frango, pré-cozida, assada",Carnes e Derivados,,358,6.9,47.5,15.6,2.2,525,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,389
+TACO0390,"Empada, de frango, pré-cozida",Carnes e Derivados,,377,7.3,35.5,22.9,2.2,771,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,390
+TACO0391,"Frango, asa, com pele, crua",Carnes e Derivados,,213,18.1,0,15.1,0,96,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,391
+TACO0392,"Frango, caipira, inteiro, com pele, cozido",Carnes e Derivados,,243,23.9,0,15.6,0,56,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,392
+TACO0393,"Frango, caipira, inteiro, sem pele, cozido",Carnes e Derivados,,196,29.6,0,7.7,0,53,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,393
+TACO0394,"Frango, coração, cru",Carnes e Derivados,,222,12.6,0,18.6,0,95,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,394
+TACO0395,"Frango, coração, grelhado",Carnes e Derivados,,207,22.4,0.6,12.1,0,128,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,395
+TACO0396,"Frango, coxa, com pele, assada",Carnes e Derivados,,215,28.5,0.1,10.4,0,95,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,396
+TACO0397,"Frango, coxa, com pele, crua",Carnes e Derivados,,161,17.1,0,9.8,0,95,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,397
+TACO0398,"Frango, coxa, sem pele, cozida",Carnes e Derivados,,167,26.9,0,5.8,0,64,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,398
+TACO0399,"Frango, coxa, sem pele, crua",Carnes e Derivados,,120,17.8,0,4.9,0,98,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,399
+TACO0400,"Frango, fígado, cru",Carnes e Derivados,,106,17.6,0,3.5,0,82,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,400
+TACO0402,"Frango, inteiro, com pele, cru",Carnes e Derivados,,226,16.4,0,17.3,0,63,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,402
+TACO0404,"Frango, inteiro, sem pele, cozido",Carnes e Derivados,,170,25,0,7.1,0,51,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,404
+TACO0405,"Frango, inteiro, sem pele, cru",Carnes e Derivados,,129,20.6,0,4.6,0,73,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,405
+TACO0406,"Frango, peito, com pele, assado",Carnes e Derivados,,212,33.4,0,7.6,0,56,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,406
+TACO0407,"Frango, peito, com pele, cru",Carnes e Derivados,,149,20.8,0,6.7,0,62,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,407
+TACO0409,"Frango, peito, sem pele, cru",Carnes e Derivados,,119,21.5,0,3,0,56,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,409
+TACO0411,"Frango, sobrecoxa, com pele, assada",Carnes e Derivados,,260,28.7,0,15.2,0,96,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,411
+TACO0412,"Frango, sobrecoxa, com pele, crua",Carnes e Derivados,,255,15.5,0,20.9,0,68,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,412
+TACO0414,"Frango, sobrecoxa, sem pele, crua",Carnes e Derivados,,162,17.6,0,9.6,0,80,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,414
+TACO0415,"Hambúrguer, bovino, cru",Carnes e Derivados,,215,13.2,4.2,16.2,0,869,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,415
+TACO0416,"Hambúrguer, bovino, frito",Carnes e Derivados,,258,20,6.3,17,0,1252,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,416
+TACO0417,"Hambúrguer, bovino, grelhado",Carnes e Derivados,,210,13.2,11.3,12.4,0,1090,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,417
+TACO0418,"Lingüiça, frango, crua",Carnes e Derivados,,218,14.2,0,17.4,0,1126,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,418
+TACO0419,"Lingüiça, frango, frita",Carnes e Derivados,,245,18.3,0,18.5,0,1374,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,419
+TACO0420,"Lingüiça, frango, grelhada",Carnes e Derivados,,244,18.2,0,18.4,0,1351,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,420
+TACO0421,"Lingüiça, porco, crua",Carnes e Derivados,,227,16.1,0,17.6,0,1176,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,421
+TACO0422,"Lingüiça, porco, frita",Carnes e Derivados,,280,20.5,0,21.3,0,1432,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,422
+TACO0423,"Lingüiça, porco, grelhada",Carnes e Derivados,,296,23.2,0,21.9,0,1456,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,423
+TACO0424,Mortadela,Carnes e Derivados,,269,12,5.8,21.6,0,1212,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,424
+TACO0425,"Peru, congelado, assado",Carnes e Derivados,,163,26.2,0,5.7,0,628,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,425
+TACO0426,"Peru, congelado, cru",Carnes e Derivados,,94,18.1,0,1.8,0,711,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,426
+TACO0427,"Porco, bisteca, crua",Carnes e Derivados,,164,21.5,0,8,0,54,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,427
+TACO0428,"Porco, bisteca, frita",Carnes e Derivados,,311,33.7,0,18.5,0,63,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,428
+TACO0430,"Porco, costela, assada",Carnes e Derivados,,402,30.2,0,30.3,0,63,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,430
+TACO0431,"Porco, costela, crua",Carnes e Derivados,,256,18,0,19.8,0,88,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,431
+TACO0433,"Porco, lombo, cru",Carnes e Derivados,,176,22.6,0,8.8,0,53,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,433
+TACO0434,"Porco, orelha, salgada, crua",Carnes e Derivados,,258,18.5,0,19.9,0,616,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,434
+TACO0435,"Porco, pernil, assado",Carnes e Derivados,,262,32.1,0,13.9,0,62,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,435
+TACO0436,"Porco, pernil, cru",Carnes e Derivados,,186,20.1,0,11.1,0,102,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,436
+TACO0437,"Porco, rabo, salgado, cru",Carnes e Derivados,,377,15.6,0,34.5,0,1158,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,437
+TACO0438,"Presunto, com capa de gordura",Carnes e Derivados,,128,14.4,1.4,6.8,0,1021,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,438
+TACO0439,"Presunto, sem capa de gordura",Carnes e Derivados,,94,14.3,2.1,2.7,0,1039,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,439
+TACO0440,"Quibe, assado",Carnes e Derivados,,136,14.6,12.9,2.7,1.9,40,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,440
+TACO0441,"Quibe, cru",Carnes e Derivados,,109,12.4,10.8,1.7,1.6,39,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,441
+TACO0442,"Quibe, frito",Carnes e Derivados,,254,14.9,12.3,15.8,0,836,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,442
+TACO0443,Salame,Carnes e Derivados,,398,25.8,2.9,30.6,0,1574,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,443
+TACO0444,"Toucinho, cru",Carnes e Derivados,,593,11.5,0,60.3,0,50,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,444
+TACO0445,"Toucinho, frito",Carnes e Derivados,,697,27.3,0,64.3,0,125,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,445
+TACO0446,"Bebida láctea, pêssego",Leite e Derivados,,55,2.1,7.6,1.9,0.3,46,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,446
+TACO0447,Creme de Leite,Leite e Derivados,,221,1.5,4.5,22.5,0,52,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,447
+TACO0448,"Iogurte, natural",Leite e Derivados,,51,4.1,1.9,3,0,52,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,448
+TACO0449,"Iogurte, natural, desnatado",Leite e Derivados,,41,3.8,5.8,0.3,0,60,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,449
+TACO0451,"Iogurte, sabor morango",Leite e Derivados,,70,2.7,9.7,2.3,0.2,38,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,451
+TACO0452,"Iogurte, sabor pêssego",Leite e Derivados,,68,2.5,9.4,2.3,0.7,37,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,452
+TACO0453,"Leite, condensado",Leite e Derivados,,313,7.7,57,6.7,0,94,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,453
+TACO0454,"Leite, de cabra",Leite e Derivados,,66,3.1,5.2,3.8,0,74,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,454
+TACO0455,"Leite, de vaca, achocolatado",Leite e Derivados,,83,2.1,14.2,2.2,0.6,72,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,455
+TACO0456,"Leite, de vaca, desnatado, pó",Leite e Derivados,,362,34.7,53,0.9,0,432,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,456
+TACO0459,"Leite, de vaca, integral, pó",Leite e Derivados,,497,25.4,39.2,26.9,0,323,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,459
+TACO0460,"Leite, fermentado",Leite e Derivados,,70,1.9,15.7,0.1,0,33,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,460
+TACO0462,"Queijo, minas, meia cura",Leite e Derivados,,321,21.2,3.6,24.6,0,501,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,462
+TACO0464,"Queijo, parmesão",Leite e Derivados,,453,35.6,1.7,33.5,0,1844,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,464
+TACO0465,"Queijo, pasteurizado",Leite e Derivados,,303,9.4,5.7,27.4,0,780,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,465
+TACO0466,"Queijo, petit suisse, morango",Leite e Derivados,,121,5.8,18.5,2.8,0,412,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,466
+TACO0470,"Bebida isotônica, sabores variados",Bebidas (alcoólicas e não alcoólicas),,26,0,6.4,0,0,44,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,470
+TACO0471,"Café, infusão 10%",Bebidas (alcoólicas e não alcoólicas),,9,0.7,1.5,0.1,0,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,471
+TACO0473,"Cana, caldo de",Bebidas (alcoólicas e não alcoólicas),,65,0.00001,18.2,0.00001,0.1,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,473
+TACO0475,"Chá, erva-doce, infusão 5%",Bebidas (alcoólicas e não alcoólicas),,1,0,0.4,0,0,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,475
+TACO0476,"Chá, mate, infusão 5%",Bebidas (alcoólicas e não alcoólicas),,3,0,0.6,0.1,0,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,476
+TACO0477,"Chá, preto, infusão 5%",Bebidas (alcoólicas e não alcoólicas),,2,0,0.6,0,0,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,477
+TACO0479,"Refrigerante, tipo água tônica",Bebidas (alcoólicas e não alcoólicas),,31,0,8,0,0,8,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,479
+TACO0482,"Refrigerante, tipo laranja",Bebidas (alcoólicas e não alcoólicas),,46,0,11.8,0,0,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,482
+TACO0483,"Refrigerante, tipo limão",Bebidas (alcoólicas e não alcoólicas),,40,0,10.3,0,0,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,483
+TACO0485,"Ovo, de codorna, inteiro, cru",Ovos e Derivados,,177,13.7,0.8,12.7,0,129,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,485
+TACO0487,"Ovo, de galinha, gema, cozida/10minutos",Ovos e Derivados,,353,15.9,1.6,30.8,0,45,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,487
+TACO0489,"Ovo, de galinha, inteiro, cru",Ovos e Derivados,,143,13,1.6,8.9,0,168,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,489
+TACO0491,"Achocolatado, pó",Produtos Açucarados,,401,4.2,91.2,2.2,3.9,65,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,491
+TACO0492,"Açúcar, cristal",Produtos Açucarados,,387,0.3,99.6,0.00001,0,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,492
+TACO0493,"Açúcar, mascavo",Produtos Açucarados,,369,0.8,94.5,0.1,0,25,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,493
+TACO0496,"Chocolate, ao leite, com castanha do Pará",Produtos Açucarados,,559,7.4,55.4,34.2,2.5,64,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,496
+TACO0497,"Chocolate, ao leite, dietético",Produtos Açucarados,,557,6.9,56.3,33.8,2.8,85,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,497
+TACO0498,"Chocolate, meio amargo",Produtos Açucarados,,475,4.9,62.4,29.9,4.9,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,498
+TACO0499,Cocada branca,Produtos Açucarados,,449,1.1,81.4,13.6,3.6,29,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,499
+TACO0500,"Doce, de abóbora, cremoso",Produtos Açucarados,,199,0.9,54.6,0.2,2.3,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,500
+TACO0501,"Doce, de leite, cremoso",Produtos Açucarados,,306,5.5,59.5,6,0,120,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,501
+TACO0502,"Geléia, mocotó, natural",Produtos Açucarados,,106,2.1,24.2,0.1,0,43,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,502
+TACO0503,Glicose de milho,Produtos Açucarados,,292,0,79.4,0,0,59,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,503
+TACO0504,Maria mole,Produtos Açucarados,,301,3.8,73.6,0.2,0.7,15,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,504
+TACO0505,"Maria mole, coco queimado",Produtos Açucarados,,307,3.9,75.1,0.1,0.6,14,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,505
+TACO0506,Marmelada,Produtos Açucarados,,257,0.4,70.8,0.1,4.1,11,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,506
+TACO0508,Melado,Produtos Açucarados,,297,0,76.6,0,0,4,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,508
+TACO0509,Quindim,Produtos Açucarados,,411,4.7,46.3,24.4,3.2,27,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,509
+TACO0510,Rapadura,Produtos Açucarados,,352,1,90.8,0.1,0,22,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,510
+TACO0511,"Café, pó, torrado",Miscelâneas,,419,14.7,65.8,11.9,51.2,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,511
+TACO0512,"Capuccino, pó",Miscelâneas,,417,11.3,73.6,8.6,2.4,382,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,512
+TACO0513,"Fermento em pó, químico",Miscelâneas,,90,0.5,43.9,0.1,0,10052,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,513
+TACO0514,"Fermento, biológico, levedura, tablete",Miscelâneas,,90,17,7.7,1.5,4.2,40,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,514
+TACO0515,"Gelatina, sabores variados, pó",Miscelâneas,,380,8.9,89.2,0.00001,0,235,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,515
+TACO0518,Shoyu,Miscelâneas,,61,3.3,11.6,0.3,0,5024,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,518
+TACO0519,Tempero a base de sal,Miscelâneas,,21,2.7,2.1,0.3,0.6,32560,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,519
+TACO0520,"Azeitona, preta, conserva",Outros Alimentos Industrializados,,194,1.2,5.5,20.3,4.6,1567,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,520
+TACO0521,"Azeitona, verde, conserva",Outros Alimentos Industrializados,,137,0.9,4.1,14.2,3.8,1347,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,521
+TACO0522,"Chantilly, spray, com gordura vegetal",Outros Alimentos Industrializados,,315,0.5,16.9,27.3,0,110,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,522
+TACO0523,"Leite, de coco",Outros Alimentos Industrializados,,166,1,2.2,18.4,0.7,44,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,523
+TACO0525,Acarajé,Alimentos Preparados,,289,8.3,19.1,19.9,9.4,305,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,525
+TACO0526,Arroz carreteiro,Alimentos Preparados,,154,10.8,11.6,7.1,1.5,1622,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,526
+TACO0527,"Baião de dois, arroz e feijão-de-corda",Alimentos Preparados,,136,6.2,20.4,3.2,5.1,93,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,527
+TACO0528,Barreado,Alimentos Preparados,,165,18.3,0.2,9.5,0.1,48,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,528
+TACO0529,"Bife à cavalo, com contra filé",Alimentos Preparados,,291,23.7,0,21.1,0,83,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,529
+TACO0530,Bolinho de arroz,Alimentos Preparados,,274,8,41.7,8.3,2.7,59,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,530
+TACO0531,Camarão à baiana,Alimentos Preparados,,101,7.9,3.2,6,0.4,85,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,531
+TACO0532,"Charuto, de repolho",Alimentos Preparados,,78,6.8,10.1,1.1,1.5,12,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,532
+TACO0533,"Cuscuz, de milho, cozido com sal",Alimentos Preparados,,113,2.2,25.3,0.7,2.1,248,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,533
+TACO0534,"Cuscuz, paulista",Alimentos Preparados,,142,2.6,22.5,4.6,2.4,236,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,534
+TACO0535,"Cuxá, molho",Alimentos Preparados,,80,5.6,5.7,3.6,3,1344,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,535
+TACO0536,Dobradinha,Alimentos Preparados,,125,19.8,0,4.4,0,29,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,536
+TACO0537,Estrogonofe de carne,Alimentos Preparados,,173,15,3,10.8,0,123,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,537
+TACO0538,Estrogonofe de frango,Alimentos Preparados,,157,17.6,2.6,8,0,99,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,538
+TACO0539,Feijão tropeiro mineiro,Alimentos Preparados,,152,10.2,19.6,6.8,3.6,365,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,539
+TACO0541,"Frango, com açafrão",Alimentos Preparados,,113,9.7,4.1,6.2,0.2,29,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,541
+TACO0542,"Macarrão, molho bolognesa",Alimentos Preparados,,120,4.9,22.5,0.9,0.8,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,542
+TACO0543,Maniçoba,Alimentos Preparados,,134,10,3.4,8.7,2.2,407,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,543
+TACO0544,Quibebe,Alimentos Preparados,,86,8.6,6.6,2.7,1.7,247,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,544
+TACO0545,"Salada, de legumes, com maionese",Alimentos Preparados,,96,1.1,8.9,7,2.2,228,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,545
+TACO0546,"Salada, de legumes, cozida no vapor",Alimentos Preparados,,35,2,7.1,0.3,2.5,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,546
+TACO0547,"Salpicão, de frango",Alimentos Preparados,,148,13.9,4.6,7.8,0.4,248,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,547
+TACO0548,Sarapatel,Alimentos Preparados,,123,18.5,1.1,4.4,0,216,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,548
+TACO0549,Tabule,Alimentos Preparados,,57,2,10.6,1.2,2.1,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,549
+TACO0550,Tacacá,Alimentos Preparados,,47,7,3.4,0.4,0.2,1349,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,550
+TACO0551,"Tapioca, com manteiga",Alimentos Preparados,,348,0.1,63.6,10.9,0.00001,158,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,551
+TACO0552,"Tucupi, com pimenta-de-cheiro",Alimentos Preparados,,27,2.1,4.7,0.3,0.2,5,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,552
+TACO0553,Vaca atolada,Alimentos Preparados,,145,5.1,10.1,9.3,2.3,26,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,553
+TACO0554,Vatapá,Alimentos Preparados,,255,6,9.7,23.2,1.7,880,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,554
+TACO0555,Virado à paulista,Alimentos Preparados,,307,10.2,14.1,25.6,2.2,346,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,555
+TACO0556,Yakisoba,Alimentos Preparados,,113,7.5,18.3,2.6,1.1,794,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,556
+TACO0557,"Amendoim, grão, cru",Leguminosas e Derivados,,544,27.2,20.3,43.9,8,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,557
+TACO0558,"Amendoim, torrado, salgado",Leguminosas e Derivados,,606,22.5,18.7,54,7.8,376,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,558
+TACO0559,"Ervilha, em vagem",Leguminosas e Derivados,,88,7.5,14.2,0.5,9.7,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,559
+TACO0562,"Feijão, carioca, cru",Leguminosas e Derivados,,329,20,61.2,1.3,18.4,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,562
+TACO0564,"Feijão, fradinho, cru",Leguminosas e Derivados,,339,20.2,61.2,2.4,23.6,10,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,564
+TACO0565,"Feijão, jalo, cozido",Leguminosas e Derivados,,93,6.1,16.5,0.5,13.9,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,565
+TACO0566,"Feijão, jalo, cru",Leguminosas e Derivados,,328,20.1,61.5,0.9,30.3,25,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,566
+TACO0568,"Feijão, preto, cru",Leguminosas e Derivados,,324,21.3,58.8,1.2,21.8,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,568
+TACO0569,"Feijão, rajado, cozido",Leguminosas e Derivados,,85,5.5,15.3,0.4,9.3,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,569
+TACO0570,"Feijão, rajado, cru",Leguminosas e Derivados,,326,17.3,62.9,1.2,24,14,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,570
+TACO0571,"Feijão, rosinha, cozido",Leguminosas e Derivados,,68,4.5,11.8,0.5,4.8,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,571
+TACO0572,"Feijão, rosinha, cru",Leguminosas e Derivados,,337,20.9,62.2,1.3,20.6,24,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,572
+TACO0573,"Feijão, roxo, cozido",Leguminosas e Derivados,,77,5.7,12.9,0.5,11.5,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,573
+TACO0574,"Feijão, roxo, cru",Leguminosas e Derivados,,331,22.2,60,1.2,33.8,10,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,574
+TACO0575,"Grão-de-bico, cru",Leguminosas e Derivados,,355,21.2,57.9,5.4,12.4,5,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,575
+TACO0576,"Guandu, cru",Leguminosas e Derivados,,344,19,64,2.1,21.3,2,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,576
+TACO0578,"Lentilha, crua",Leguminosas e Derivados,,339,23.2,62,0.8,16.9,0.00001,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,578
+TACO0579,"Paçoca, amendoim",Leguminosas e Derivados,,487,16,52.4,26.1,7.3,167,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,579
+TACO0580,"Pé-de-moleque, amendoim",Leguminosas e Derivados,,503,13.2,54.7,28,3.4,16,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,580
+TACO0581,"Soja, farinha",Leguminosas e Derivados,,404,36,38.4,14.6,20.2,6,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,581
+TACO0582,"Soja, extrato solúvel, natural, fluido",Leguminosas e Derivados,,39,2.4,4.3,1.6,0.4,57,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,582
+TACO0583,"Soja, extrato solúvel, pó",Leguminosas e Derivados,,459,35.7,28.5,26.2,7.3,83,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,583
+TACO0584,"Soja, queijo (tofu)",Leguminosas e Derivados,,64,6.6,2.1,4,0.8,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,584
+TACO0585,"Tremoço, cru",Leguminosas e Derivados,,381,33.6,43.8,10.3,32.3,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,585
+TACO0586,"Tremoço, em conserva",Leguminosas e Derivados,,121,11.1,12.4,3.8,14.4,1809,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,586
+TACO0587,"Amêndoa, torrada, salgada",Nozes e Sementes,,581,18.6,29.5,47.3,11.6,279,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,587
+TACO0588,"Castanha-de-caju, torrada, salgada",Nozes e Sementes,,570,18.5,29.1,46.3,3.7,125,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,588
+TACO0589,"Castanha-do-Brasil, crua",Nozes e Sementes,,643,14.5,15.1,63.5,7.9,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,589
+TACO0592,"Farinha, de mesocarpo de babaçu, crua",Nozes e Sementes,,329,1.4,79.2,0.2,17.9,12,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,592
+TACO0593,"Gergelim, semente",Nozes e Sementes,,584,21.2,21.6,50.4,11.9,3,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,593
+TACO0594,"Linhaça, semente",Nozes e Sementes,,495,14.1,43.3,32.3,33.5,9,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,594
+TACO0595,"Pinhão, cozido",Nozes e Sementes,,174,3,43.9,0.7,15.6,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,595
+TACO0596,"Pupunha, cozida",Nozes e Sementes,,219,2.5,29.6,12.8,4.3,1,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,596
+TACO0597,"Noz, crua",Nozes e Sementes,,620,14,18.4,59.4,7.2,5,100,g,,,TACO 4ª ed. NEPA/UNICAMP,pt-BR,true,taco,597

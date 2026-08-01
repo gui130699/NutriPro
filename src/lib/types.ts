@@ -1,6 +1,10 @@
 export type Unit = 'g' | 'kg' | 'ml' | 'l' | 'unidade' | 'porção'
 export type BaseUnit = 'g' | 'ml'
 export type FoodSource = 'public' | 'private'
+export type FoodUnitMeasureType = 'mass' | 'volume'
+export type FoodUnitProfileOrigin = 'catalog' | 'user'
+export type FoodDensitySource = 'label' | 'user' | 'professional'
+export type SyncStatus = 'synced' | 'pending'
 export type ThemePreference = 'light' | 'dark' | 'system'
 
 export type Nutrients = {
@@ -64,6 +68,105 @@ export type FoodFavorite = {
   createdAt?: string
 }
 
+/**
+ * A user-owned household measure for one food. Timestamps are normalized to
+ * ISO strings when Firestore documents are read by the application.
+ */
+export type FoodUnitProfile = {
+  id: string
+  userId: string
+  foodId: string
+  foodSource: FoodSource
+  name: string
+  singularLabel: string
+  pluralLabel?: string | null
+  measureType: FoodUnitMeasureType
+  baseMeasure: BaseUnit
+  amountPerUnit: number
+  isDefault: boolean
+  isActive: boolean
+  origin: FoodUnitProfileOrigin
+  notes?: string | null
+  createdAt?: string
+  updatedAt?: string
+  /** Local-only state used while a deterministic offline mutation is queued. */
+  syncStatus?: SyncStatus
+}
+
+/**
+ * A catalogue weight is presented exactly like a selectable unit, but is
+ * intentionally virtual: accepting it must not create a Firestore document.
+ */
+export type CatalogUnitSuggestion = Omit<FoodUnitProfile, 'userId' | 'createdAt' | 'updatedAt' | 'syncStatus' | 'origin'> & {
+  origin: 'catalog'
+  isPersisted: false
+}
+
+export type FoodUnitChoice = FoodUnitProfile | CatalogUnitSuggestion
+
+export type FoodUnitProfileDraft = {
+  foodId: string
+  foodSource: FoodSource
+  name: string
+  singularLabel: string
+  pluralLabel?: string | null
+  measureType: FoodUnitMeasureType
+  baseMeasure: BaseUnit
+  /** Form values may use the Brazilian decimal separator and are normalized before persistence. */
+  amountPerUnit: number | string
+  isDefault?: boolean
+  isActive?: boolean
+  origin?: FoodUnitProfileOrigin
+  notes?: string | null
+}
+
+/** A one-off measure has the same validation as a saved profile, but is never persisted. */
+export type TemporaryFoodUnit = {
+  name?: string | null
+  singularLabel?: string | null
+  amountPerUnit: number | string
+  baseMeasure: BaseUnit
+}
+
+export type FoodDensityProfile = {
+  id: string
+  userId: string
+  foodId: string
+  foodSource: FoodSource
+  gramsPerMl: number
+  source: FoodDensitySource
+  notes?: string | null
+  createdAt?: string
+  updatedAt?: string
+  syncStatus?: SyncStatus
+}
+
+export type FoodDensityProfileDraft = {
+  foodId: string
+  foodSource: FoodSource
+  gramsPerMl: number | string
+  source: FoodDensitySource
+  notes?: string | null
+}
+
+/**
+ * Saved with a meal item so later edits to a profile never alter historical
+ * nutrients or the label originally chosen by the user.
+ */
+export type MealItemUnitSnapshot = {
+  unitProfileId?: string | null
+  unitLabelSnapshot?: string | null
+  amountPerUnitSnapshot?: number | null
+  baseMeasureSnapshot?: BaseUnit | null
+  consumedBaseAmount?: number | null
+}
+
+export type MealItemUnitSelection = {
+  unitProfile?: FoodUnitChoice | null
+  temporaryUnit?: TemporaryFoodUnit | null
+  densityProfile?: FoodDensityProfile | null
+}
+
 export type FoodSearchFilters = {
   query: string
   category?: string
@@ -87,7 +190,7 @@ export type MealType = {
   updatedAt?: string
 }
 
-export type MealItem = Nutrients & {
+export type MealItem = Nutrients & MealItemUnitSnapshot & {
   id: string
   userId: string
   date: string

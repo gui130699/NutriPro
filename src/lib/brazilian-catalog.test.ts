@@ -32,12 +32,16 @@ const asFood = (food: CatalogFood): Food => ({
   isPublic: true,
 })
 
-describe('catálogo brasileiro 1.0.0-br', () => {
-  it('tem exatamente 126 itens válidos, únicos e em português', () => {
-    expect(foods).toHaveLength(126)
-    expect(foods[0]?.externalId).toBe('BR0001')
-    expect(foods.at(-1)?.externalId).toBe('BR0126')
-    expect(new Set(foods.map((food) => food.externalId)).size).toBe(126)
+describe('catálogo brasileiro 2.0.0-br', () => {
+  it('tem 126 curados preservados e 500 itens TACO válidos, únicos e em português', () => {
+    expect(foods).toHaveLength(626)
+    const curated = foods.filter((food) => food.catalogOrigin === 'curated-br')
+    const taco = foods.filter((food) => food.catalogOrigin === 'taco')
+    expect(curated).toHaveLength(126)
+    expect(taco).toHaveLength(500)
+    expect(curated[0]?.externalId).toBe('BR0001')
+    expect(curated.at(-1)?.externalId).toBe('BR0126')
+    expect(new Set(foods.map((food) => food.externalId)).size).toBe(626)
 
     for (const food of foods) {
       expect(food.name.trim()).not.toBe('')
@@ -47,6 +51,11 @@ describe('catálogo brasileiro 1.0.0-br', () => {
       expect(food.baseQuantity).toBe(100)
       expect(['g', 'ml']).toContain(food.baseUnit)
       expect([food.calories, food.protein, food.carbs, food.fat, food.fiber].every((value) => value >= 0)).toBe(true)
+    }
+    for (const food of taco) {
+      expect(food.externalId).toMatch(/^TACO\d{4}$/)
+      expect(food.sourceFoodNumber).toBeGreaterThan(0)
+      expect(food.source).toBe('TACO 4ª ed. NEPA/UNICAMP')
     }
   })
 

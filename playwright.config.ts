@@ -23,6 +23,9 @@ export default defineConfig({
     ? undefined
     : {
         command: 'node ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173',
+        // Smoke tests deliberately have no real backend. Force this for local
+        // runs too, so the default command can never initialize production Firebase.
+        env: { ...process.env, VITE_E2E: 'true' },
         url: baseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 120_000,

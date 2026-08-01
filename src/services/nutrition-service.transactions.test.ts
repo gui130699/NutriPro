@@ -105,6 +105,40 @@ describe('nutritionService meal usage transactions', () => {
     })
   })
 
+  it('extends new meal items with an immutable custom-unit snapshot while keeping legacy fields', async () => {
+    firestore.transaction.get.mockResolvedValue(snapshot(false))
+    const unitProfile = {
+      id: 'unit_user-1_private_food-42_fatia-media',
+      userId: 'user-1',
+      foodId: 'food-42',
+      foodSource: 'private' as const,
+      name: 'Fatia média',
+      singularLabel: 'fatia média',
+      pluralLabel: 'fatias médias',
+      measureType: 'mass' as const,
+      baseMeasure: 'g' as const,
+      amountPerUnit: 25,
+      isDefault: true,
+      isActive: true,
+      origin: 'user' as const,
+    }
+
+    await nutritionService.addMealItem('user-1', '2026-07-30', meal, food, 2, 'unidade', { unitProfile })
+
+    const mealWrite = firestore.transaction.set.mock.calls
+      .find(([reference]) => reference.collection === 'mealItems')?.[1] as Record<string, unknown>
+    expect(mealWrite).toMatchObject({
+      unit: 'unidade',
+      unitProfileId: unitProfile.id,
+      unitLabelSnapshot: 'fatias médias',
+      amountPerUnitSnapshot: 25,
+      baseMeasureSnapshot: 'g',
+      consumedBaseAmount: 50,
+      consumedGrams: 50,
+      calories: 50,
+    })
+  })
+
   it('deletes the meal item and decrements the matching aggregate atomically', async () => {
     firestore.transaction.get.mockImplementation(async (reference: { collection: string }) => {
       if (reference.collection === 'mealItems') {

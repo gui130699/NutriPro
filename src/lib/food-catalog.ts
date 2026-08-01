@@ -31,6 +31,10 @@ export type CatalogFood = {
   source: string | null
   language: string | null
   isActive: boolean
+  /** Identifies records curated by NutriPro from records imported from TACO. */
+  catalogOrigin?: 'curated-br' | 'taco'
+  /** Stable source number supplied by the TACO 4th-edition dataset. */
+  sourceFoodNumber?: number | null
 }
 
 export type FoodCatalogVersion = {
@@ -176,6 +180,16 @@ export function normalizeCatalogFood<T extends object>(raw: T): CatalogFood {
     source: nullableString(pickValue(record, ['source', 'fonte'])),
     language: nullableString(pickValue(record, ['language', 'nameLanguage', 'name_language', 'idioma', 'idiomaNome'])),
     isActive: !FALSE_VALUES.has(normalizedIsActive),
+    catalogOrigin: (() => {
+      const value = normalizeFoodName(stringValue(pickValue(record, ['catalogOrigin', 'catalog_origin', 'origemCatalogo', 'origem_catálogo'])))
+      return value === 'taco' ? 'taco' : value === 'curated br' || value === 'curated-br' || value === 'curado br' ? 'curated-br' : undefined
+    })(),
+    sourceFoodNumber: (() => {
+      const value = pickValue(record, ['sourceFoodNumber', 'source_food_number', 'numeroAlimento', 'numero_alimento', 'numero', 'número'])
+      if (value == null || stringValue(value) === '') return undefined
+      const parsed = toNonNegativeNumber(value, Number.NaN)
+      return Number.isInteger(parsed) && parsed > 0 ? parsed : undefined
+    })(),
   }
 }
 

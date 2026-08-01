@@ -1,0 +1,3 @@
+# The upstream TACO file is stored and validated byte-for-byte. Preserve its
+# original line endings and intentional trailing empty cells on every platform.
+data/sources/taco-4a-edicao-cleaned.csv -text whitespace=-trailing

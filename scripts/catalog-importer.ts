@@ -325,6 +325,12 @@ export function validateCatalogFoods(foods: readonly CatalogFood[], expectedTota
     if (food.unitWeightG != null && (!(food.unitWeightG > 0) || !Number.isFinite(food.unitWeightG))) throw new Error(`Catálogo inválido: unitWeightG inválido para "${food.externalId}".`)
     if (food.portionWeightG != null && (!(food.portionWeightG > 0) || !Number.isFinite(food.portionWeightG))) throw new Error(`Catálogo inválido: portionWeightG inválido para "${food.externalId}".`)
     if (typeof food.isActive !== 'boolean') throw new Error(`Catálogo inválido: isActive inválido para "${food.externalId}".`)
+    if (food.catalogOrigin != null && food.catalogOrigin !== 'curated-br' && food.catalogOrigin !== 'taco') {
+      throw new Error(`Catálogo inválido: catalogOrigin inválido para "${food.externalId}".`)
+    }
+    if (food.sourceFoodNumber != null && (!Number.isInteger(food.sourceFoodNumber) || food.sourceFoodNumber <= 0)) {
+      throw new Error(`Catálogo inválido: sourceFoodNumber inválido para "${food.externalId}".`)
+    }
   })
 }
 
