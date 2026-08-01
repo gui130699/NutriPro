@@ -2,28 +2,28 @@ NUTRIPRO — DOCUMENTAÇÃO TÉCNICA E ÍNDICE DO CÓDIGO
 ==================================================
 
 Versão base PWA documentada: 8fbdd1ff252104b19c50d6031e43e259561a1f94
-Versão funcional desta atualização: 397fb2126b9cbfb3e8b7a6978e41232e41498c7a
-Mensagem do commit funcional: feat: expand evolution and harden PWA data flows
-Relatório documental desta atualização: 069fad9b93dd862f8daf3bc8c8abfc98ced02f70
-Commit da atualização documental principal: 069fad9 (docs: document evolution release and validation)
-Data da atualização: 30/07/2026
+Base funcional histórica documentada: 397fb2126b9cbfb3e8b7a6978e41232e41498c7a
+Atualização documental vigente: catálogo `2.0.0-br` e unidades pessoais
+Data da atualização vigente: 01/08/2026
 Repositório: https://github.com/gui130699/NutriPro
 GitHub Pages: https://gui130699.github.io/NutriPro/
 Firebase Hosting: https://nutripro-9115a.web.app/
 
-Atualização de catálogo vigente: 31/07/2026 — catálogo brasileiro `1.0.0-br`
-com 126 alimentos. Esta atualização substitui as referências operacionais
-anteriores ao catálogo vazio de 7.083 itens. Registros de testes e commits de
-30/07/2026 permanecem como histórico, não como evidência de validação do novo
-catálogo.
+Atualização de catálogo vigente: 01/08/2026 — catálogo brasileiro `2.0.0-br`
+com exatamente 626 alimentos: 126 curados preservados e 500 registros TACO
+adicionais. Esta atualização substitui as referências operacionais anteriores
+ao catálogo vazio de 7.083 itens e à versão `1.0.0-br`. Registros de testes e
+commits anteriores permanecem como histórico, não como evidência de validação
+do catálogo e do fluxo de unidades atual.
 
 Este é o dossiê técnico consolidado do NutriPro. As seções históricas mantêm a
 base PWA no commit 8fbdd1ff252104b19c50d6031e43e259561a1f94, que corresponde
 à correção do service worker — não ao primeiro commit de instalação. A seção
-15 registra, com links no commit funcional 397fb2126b9cbfb3e8b7a6978e41232e41498c7a,
-a evolução atual de catálogo, perfil, evolução corporal, segurança, CI e PWA.
-O dossiê em si recebe esta referência em uma atualização documental posterior,
-evitando uma referência Git autorreferencial no mesmo commit do relatório.
+16 substitui o estado operacional dos catálogos e unidades: descreve a
+importação TACO auditável, os perfis pessoais de medida, snapshots, densidade,
+cache/fila offline e as regras Firestore atuais. Os links fixados em seções
+históricas apontam para seus commits de origem; os arquivos em árvore e os
+artefatos locais são a referência de código vigente.
 
 Itens intencionalmente excluídos deste índice:
 - node_modules/ e package-lock.json (dependências e arquivo gerado)
@@ -89,9 +89,11 @@ Firebase e visualização.
 3. CATÁLOGO PÚBLICO DE ALIMENTOS
 --------------------------------
 
-Versão pública vigente: `1.0.0-br`, atualizada em `2026-07-31`, com
-exatamente 126 alimentos brasileiros. A fonte editável é
-`lista_alimentos_brasileiros_nutripro.csv`; os artefatos de runtime são
+Versão pública vigente: `2.0.0-br`, atualizada em `2026-08-01`, com
+exatamente 626 alimentos brasileiros. São 126 registros curados preservados
+(`BR0001` a `BR0126`) e 500 registros TACO adicionais (`TACOxxxx`). A fonte
+curada é `lista_alimentos_brasileiros_nutripro.csv`; a fonte TACO fixada é
+`data/sources/taco-4a-edicao-cleaned.csv`; os artefatos de runtime são
 `public/data/foods.json` e `public/data/foods-version.json`.
 
 Contrato brasileiro do CSV (separado por ponto e vírgula):
@@ -99,28 +101,45 @@ Contrato brasileiro do CSV (separado por ponto e vírgula):
   codigo_alimento;nome_alimento_pt_br;categoria_pt_br;marca;calorias_kcal_100;proteinas_g_100;carboidratos_g_100;gorduras_g_100;fibras_g_100;quantidade_base;unidade_base;peso_medio_unidade_g;peso_porcao_g;idioma_nome;ativo;fonte
 
 Fluxo controlado:
-1. `scripts/catalog-importer.ts` reconhece contratos explícitos de catálogo:
-   o brasileiro (`pt-BR`) e o internacional (`en-US`) mantido para uma futura
-   fonte USDA. As colunas de um contrato não são inferidas nem misturadas.
-2. Cada registro recebe `externalId`, nome normalizado e palavras de pesquisa;
-   categoria, marca, fonte, macros, base, pesos opcionais, idioma e estado
-   ativo são preservados.
-3. O importador exige total informado na linha de comando, códigos únicos,
-   nutrientes finitos e não negativos, `quantidade_base = 100`, unidade-base
-   `g` ou `ml`, idioma compatível e `ativo` igual a `S` ou `N`.
-4. Só após a validação completa, `scripts/convert-foods.ts` substitui os dois
-   JSONs por arquivos temporários/atômicos. Uma fonte inválida mantém o último
-   catálogo íntegro.
-5. `npm run catalog:validate` verifica a correspondência entre o CSV e os
-   artefatos gerados, incluindo versão e total.
-6. O app consulta os metadados, confere `totalFoods` antes de trocar o
+1. `scripts/catalog-importer.ts` valida a fonte curada de 126 itens. Ela exige
+   cabeçalho, códigos únicos, nutrientes finitos/não negativos, base 100,
+   unidade `g`/`ml`, idioma compatível e estado `S`/`N`.
+2. `scripts/taco-catalog.ts` lê a fonte TACO e mapeia número, grupo, descrição,
+   energia, proteínas, lipídios, carboidratos, fibra e sódio. Vírgulas
+   decimais são normalizadas; `Tr` vira `0,00001`; `NA`, `*` e vazio são
+   ausentes. Nome, categoria, código, calorias, proteínas, gorduras e
+   carboidratos não podem ser ausentes. A fibra pode ser `0` quando a TACO não
+   a publica; nenhum macro obrigatório é inventado.
+3. A identidade normalizada remove acentos, pontuação e diferenças de ordem,
+   mas preserva preparação, corte, sabor, pele, sal e conservação. A seleção
+   evita colisões óbvias com os 126 curados e dentro da TACO, sem descartar
+   variantes materiais como cru/cozido/frito/assado.
+4. Cada item recebe `externalId`, nome normalizado, palavras de busca, origem
+   `catalogOrigin` (`curated-br` ou `taco`) e, para TACO, `sourceFoodNumber`.
+5. `scripts/convert-foods.ts` prepara todos os JSONs, CSVs e relatório em
+   arquivos temporários e só então os publica de forma atômica. Uma fonte
+   inválida mantém o catálogo íntegro.
+6. `npm run catalog:validate` reconstrói a seleção e confere os 126 curados,
+   os 500 TACO, versão, total, CSVs, JSONs, relatório e checksums da fonte e
+   da seleção.
+7. O app consulta os metadados, confere `totalFoods` antes de trocar o
    IndexedDB, troca o cache de forma atômica e conserva a última versão válida
    quando a rede estiver indisponível.
 
 Comandos da versão atual:
 
-  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --taco data/sources/taco-4a-edicao-cleaned.csv --additional-total 500 --expected-total 626 --version 2.0.0-br
   npm run catalog:validate
+
+Para reproduzir exatamente a data publicada em outro dia, acrescente
+`--updated-at 2026-08-01`. A fonte primária preservada é
+https://huggingface.co/datasets/julianamarques/tabela-taco/raw/main/taco-4a-edicao-cleaned.csv;
+o espelho de contingência
+https://raw.githubusercontent.com/machine-learning-mocha/taco/refs/heads/main/formatados/alimentos.csv
+foi consultado somente para auditoria. O SHA-256 da fonte usada é
+`bc77766e56d7c669dd9cdba3fdbde7bcbf1bb4140e829720cb4a676d27670ea8`;
+`docs/RELATORIO-IMPORTACAO-ALIMENTOS.md` registra também os hashes de seleção
+e IDs, distribuição, duplicidades e motivos de exclusão.
 
 Na rota `/listas`, a pesquisa local ignora acentos, pontuação e hífens e busca
 por nome, categoria ou marca. Filtros de categoria, favoritos/ocultos,
@@ -172,7 +191,8 @@ teclado.
 Novos lançamentos no diário gravam:
 - mealTypeId, mealNameSnapshot e mealIconSnapshot.
 - foodId, foodSource, foodNameSnapshot, unitWeightGSnapshot.
-- Quantidade, unidade, gramas consumidas e nutrientes calculados.
+- Quantidade, unidade, `unitProfileId`, rótulo/medida por unidade/base e
+  quantidade consumida como snapshot, além dos nutrientes calculados.
 
 Leituras antigas com somente mealName continuam compatíveis: o sistema resolve
 um nome e ícone de fallback. scripts/migrate-meal-snapshots.ts oferece uma
@@ -180,11 +200,27 @@ migração administrativa opcional, primeiro em modo de simulação e depois com
 --apply. O script exige GOOGLE_APPLICATION_CREDENTIALS ou
 FIREBASE_SERVICE_ACCOUNT_JSON e jamais é executado no navegador.
 
-No diário, as unidades são derivadas do próprio alimento: a base `g` libera
-`g`/`kg`, a base `ml` libera `ml`/`l`, e `unidade` ou `porção` só ficam
-disponíveis quando há peso médio ou peso de porção maior que zero. Hidratação
-aceita atalhos e valor personalizado, respeita a data selecionada e permite
-excluir registros.
+No diário, a base `g` libera `g`/`kg` e a base `ml` libera `ml`/`l`. A opção
+`+ unidade personalizada…` abre um formulário automático que pede nome e valor
+em `g` ou `ml` conforme o alimento; não há peso estimado. O campo aceita
+vírgula/ponto e exige de `0,1` a `10.000`, bloqueando zero, negativos, texto,
+NaN e infinito. As ações são salvar um perfil pessoal ou usar somente naquele
+lançamento.
+
+Perfis persistentes ficam em `foodUnitProfiles`, podem ser múltiplos por
+alimento, têm uma medida padrão e permitem edição, duplicação, desativação,
+restauração e exclusão física apenas se nenhum `mealItems.unitProfileId` os
+referenciar. A chave do perfil é determinística:
+`${userId}_${foodSource}_${foodId}_${normalizedUnitName}`. Medidas antigas do
+catálogo são sugestões virtuais e nunca são copiadas automaticamente para a
+conta. Alterar o perfil depois não muda lançamentos já gravados, pois o diário
+usa snapshots.
+
+Em Listas > detalhes do alimento, a pessoa também pode cadastrar densidade
+opcional em `g/ml` com origem rótulo, pessoa usuária ou profissional. A única
+conversão entre g e ml é aquela que tem densidade explícita; o sistema nunca
+presume `1 ml = 1 g`. Hidratação aceita atalhos e valor personalizado, respeita
+a data selecionada e permite excluir registros.
 
 
 6. TEMA, PWA E OFFLINE
@@ -220,7 +256,11 @@ PWA/offline e instalação:
   metadado remoto; uma resposta parcial não substitui a versão íntegra.
 - Quando a atualização remota falha e existe cache, a lista continua disponível
   em modo offline/stale.
-- A fila pending do Dexie foi preservada para operações offline futuras.
+- Além do catálogo, Dexie mantém cache de `foodUnitProfiles` e
+  `foodDensityProfiles`. Escritas que falham por indisponibilidade entram em
+  fila determinística, aparecem como “Aguardando sincronização” e são
+  reenviadas ao entrar ou quando o navegador volta a ficar online. A fila não
+  cria automaticamente uma nova medida para a mesma chave determinística.
 
 
 7. MODELO DE DADOS E SEGURANÇA FIRESTORE
@@ -238,6 +278,14 @@ foodOverrides
   userId, publicFoodId, campos individualmente personalizados e isHidden.
 foodFavorites
   userId, foodId, foodSource e createdAt.
+foodUnitProfiles
+  userId, foodId, foodSource, nome/rótulos, tipo/base, quantidade por unidade,
+  padrão, estado, origem e timestamps. Documento determinístico por usuário,
+  alimento, origem e nome normalizado da medida.
+foodDensityProfiles
+  userId, foodId, foodSource, gramsPerMl, origem (label/user/professional) e
+  timestamps. Há no máximo um perfil de densidade determinístico por alimento
+  qualificado pelo usuário.
 mealTypes
   userId, nome, ícone, cor, horário, ordem, estado e timestamps.
 mealItems
@@ -249,15 +297,22 @@ weightLogs, recipes, dailyNotes, userPreferences
 
 firestore.rules possui correspondências explícitas para todas essas coleções.
 Dados privados somente podem ser lidos, criados, atualizados e excluídos pelo
-proprietário. Atualizações não podem alterar userId. Alimentos públicos no
-Firestore, se existirem, não podem ser criados/alterados/excluídos por um
-usuário comum. O catálogo oficial em JSON é separado do Firestore.
+proprietário. Atualizações não podem alterar userId. Para unidades, as regras
+exigem `foodSource` público/privado, `measureType` compatível com `baseMeasure`
+(`mass`/`g` ou `volume`/`ml`), valor de `0,1` a `10.000`, estado/padrão
+coerentes e origem permitida. Densidade exige `gramsPerMl` maior que zero e no
+máximo `10.000`, com origem `label`, `user` ou `professional`. Alimentos
+públicos no Firestore, se existirem, não podem ser criados/alterados/excluídos
+por um usuário comum. O catálogo oficial em JSON é separado do Firestore.
 
 Índices compostos adicionados:
 - mealItems: userId + date.
 - waterLogs: userId + date.
 - foods: userId + name.
 - mealTypes: userId + order.
+- foodUnitProfiles: userId + foodId + foodSource + isActive; e consulta de
+  padrão por usuário/alimento.
+- foodDensityProfiles: userId + foodId + foodSource.
 
 
 8. INSTALAÇÃO, EXECUÇÃO E DEPLOY
@@ -289,7 +344,7 @@ usuário comum. O catálogo oficial em JSON é separado do Firestore.
 
 Comandos de qualidade:
 
-  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --taco data/sources/taco-4a-edicao-cleaned.csv --additional-total 500 --expected-total 626 --version 2.0.0-br
   npm run catalog:validate
   npm run lint
   npm run test
@@ -303,24 +358,28 @@ Comandos de qualidade:
 ---------------------------------
 
 As contagens e os resultados registrados nas seções históricas referem-se às
-rodadas anteriores a `1.0.0-br`; não certificam o catálogo brasileiro atual.
-O roteiro vigente está em `docs/TESTES-FUNCIONAIS.md` e deve começar por:
+rodadas anteriores a `2.0.0-br`; não certificam o catálogo brasileiro atual
+nem o fluxo de unidades pessoais. O roteiro vigente está em
+`docs/TESTES-FUNCIONAIS.md` e deve começar por:
 
-  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --taco data/sources/taco-4a-edicao-cleaned.csv --additional-total 500 --expected-total 626 --version 2.0.0-br
   npm run catalog:validate
   npm run lint
   npm run test
   npm run test:e2e
   npm run build
 
-A aprovação do catálogo requer a conferência de 126 itens, metadados
-`1.0.0-br`/`2026-07-31`, pesquisa sem acento/pontuação/hífen, categoria,
-paginação, unidades compatíveis, alerta de fonte variável e cache offline
-atualizado somente quando a contagem estiver íntegra.
+A aprovação do catálogo requer a conferência de 626 itens (126 curados + 500
+TACO), metadados `2.0.0-br`/`2026-08-01`, pesquisa sem
+acento/pontuação/hífen, categoria, paginação, relatório de importação e cache
+offline atualizado somente quando a contagem estiver íntegra. A aprovação do
+novo diário inclui perfil salvo/temporário, snapshots, conversão com densidade
+explícita e fila offline, conforme roteiro funcional.
 
 Limitações declaradas, sem mascaramento:
 - Esta documentação não afirma execução autenticada de cadastro, onboarding,
-  favoritos, overrides, diário, regras Firestore ou cache por conta.
+  favoritos, overrides, perfis de unidade/densidade, diário, regras Firestore
+  ou cache por conta.
 - Esses cenários exigem Firebase Emulator Suite ou um projeto de homologação e
   conta(s) exclusiva(s), jamais uma conta de produção.
 - A instalação real em Android, iOS ou desktop precisa ser confirmada no
@@ -361,17 +420,23 @@ Limitações declaradas, sem mascaramento:
 11. VALIDAÇÃO DA VERSÃO
 -----------------------
 
-[CONFIGURADO] Catálogo público `1.0.0-br`: fonte CSV editável, metadados com
-             data `2026-07-31` e total esperado de 126 alimentos.
-[OBRIGATÓRIO] npm run catalog:import ... --expected-total 126 e
+[CONFIGURADO] Catálogo público `2.0.0-br`: 126 itens curados preservados +
+             500 itens TACO, fonte auditada, metadados `2026-08-01` e total
+             esperado de 626 alimentos.
+[CONFIGURADO] Perfis pessoais de unidade/densidade, snapshots no diário,
+             cache/fila Dexie e regras/índices Firestore correspondentes.
+[OBRIGATÓRIO] npm run catalog:import ... --taco ... --additional-total 500
+              --expected-total 626 e
               npm run catalog:validate antes de cada publicação de catálogo.
 [OBRIGATÓRIO] npm run lint, npm run test, npm run test:e2e, npm run build e
               NUTRIPRO_GITHUB_PAGES=true npm run build para registrar uma nova
               rodada de validação.
 [OBRIGATÓRIO] Pesquisa por nome/categoria/marca sem acento, pontuação ou hífen;
-              unidades compatíveis; detalhe com fonte/aviso e cache offline.
-[NÃO DECLARADO] Fluxos autenticados, isolamento entre duas contas e cache de
-                uma sessão real até que sejam executados em homologação.
+              unidades compatíveis, sem peso presumido, snapshot/densidade
+              seguros, detalhe com fonte/aviso e cache offline.
+[NÃO DECLARADO] Fluxos autenticados, isolamento entre duas contas, unidades,
+                densidade, fila offline e cache de uma sessão real até que
+                sejam executados em homologação.
 [NÃO DECLARADO] Instalação física em Android, iOS e desktop até a confirmação
                 no respectivo sistema operacional.
 
@@ -380,7 +445,11 @@ Limitações declaradas, sem mascaramento:
 -----------------------
 
 NutriPro/
+├── data/
+│   ├── sources/taco-4a-edicao-cleaned.csv
+│   └── generated/ (500 TACO, JSON e catálogo de 626)
 ├── docs/
+│   ├── RELATORIO-IMPORTACAO-ALIMENTOS.md
 │   └── TESTES-FUNCIONAIS.md
 ├── lista_alimentos_brasileiros_nutripro.csv
 ├── public/data/
@@ -391,12 +460,14 @@ NutriPro/
 │   ├── convert-foods.ts
 │   ├── generate-pwa-icons.ts
 │   ├── migrate-meal-snapshots.ts
+│   ├── taco-catalog.ts
 │   └── validate-food-catalog.ts
 ├── src/
-│   ├── components/foods/, components/meals/, components/theme/ e PwaInstallControl.tsx
+│   ├── components/foods/ (FoodUnitManager e FoodUnitProfileDialog incluídos)
+│   ├── components/meals/, components/theme/ e PwaInstallControl.tsx
 │   ├── data/meal-icons.ts
 │   ├── hooks/ (inclui usePwaInstall.ts)
-│   ├── lib/
+│   ├── lib/ (food-units.ts, offline.ts e catálogo)
 │   ├── pages/Lists.tsx e demais páginas
 │   └── services/nutrition-service.ts
 ├── tests/e2e/
@@ -451,8 +522,8 @@ https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e4
 CATÁLOGO E SCRIPTS
 
 lista_alimentos_brasileiros_nutripro.csv
-Fonte editável do catálogo brasileiro `1.0.0-br`; deve permanecer alinhada
-com os artefatos gerados abaixo.
+Fonte editável dos 126 itens curados preservados. Na versão `2.0.0-br`, ela é
+combinada de forma reprodutível com a fonte TACO local descrita na seção 16.
 
 public/data/foods.json
 https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e43e259561a1f94/public/data/foods.json
@@ -468,7 +539,8 @@ Valida os contratos brasileiro e internacional, normaliza a pesquisa e rejeita
 uma fonte incompleta/ambígua antes da escrita atômica.
 
 scripts/validate-food-catalog.ts
-Validação reprodutível do CSV e dos artefatos de `1.0.0-br` executada por
+O link histórico aponta para a versão antiga; no workspace vigente, a validação
+reprodutível de `2.0.0-br` confere CSV curado, TACO, hashes e artefatos por
 `npm run catalog:validate`.
 
 scripts/generate-pwa-icons.ts
@@ -645,14 +717,17 @@ https://raw.githubusercontent.com/gui130699/NutriPro/8fbdd1ff252104b19c50d6031e4
 14. PRÓXIMOS PASSOS
 -------------------
 
-1. Em qualquer alteração de catálogo, atualizar o CSV, versionar a mudança e
-   executar a importação com `--expected-total`, seguida de
+1. Em qualquer alteração de catálogo, preservar a fonte TACO auditada, atualizar
+   a política/versão/total de modo explícito e executar a importação com
+   `--taco`, `--additional-total` e `--expected-total`, seguida de
    `npm run catalog:validate`.
 2. Configurar Firebase Emulator Suite ou um projeto de homologação com conta
    de teste exclusiva.
 3. Executar em homologação os fluxos autenticados descritos em
    docs/TESTES-FUNCIONAIS.md, sem modificar dados reais.
-4. Publicar regras/índices e Hosting apenas após a rodada técnica e a
+4. Executar em homologação os fluxos de perfis de unidade/densidade, snapshots,
+   exclusão segura e fila offline antes de declarar esses cenários aprovados.
+5. Publicar regras/índices e Hosting apenas após a rodada técnica e a
    validação de versão/cache do catálogo.
 
 
@@ -668,10 +743,11 @@ acrescentado ou alterado neste commit funcional e deve ser lida junto das
 seções 1 a 14, que continuam descrevendo os módulos preservados da base PWA.
 
 
-15.1 CATÁLOGO BRASILEIRO `1.0.0-br` — IMPORTADOR E ESTADO ATUAL
-----------------------------------------------------------------
+15.1 HISTÓRICO DO CATÁLOGO BRASILEIRO `1.0.0-br`
+--------------------------------------------------
 
-Esta subseção substitui o estado histórico de catálogo vazio. O repositório
+Esta subseção registra a primeira versão curada e foi superada pelo catálogo
+`2.0.0-br` descrito na seção 16. Na época, o repositório
 mantém `lista_alimentos_brasileiros_nutripro.csv` como fonte editável e gera
 `public/data/foods.json` e `public/data/foods-version.json` para o catálogo
 brasileiro de 126 alimentos, datado de `2026-07-31`.
@@ -807,7 +883,7 @@ acesso; a correção de rota está incluída no próximo push deste commit.
 - npm run build agora executa scripts/clean-build.mjs, tsc -b e vite build.
 
 Resultados históricos da rodada de 30/07/2026 (anteriores ao catálogo
-brasileiro `1.0.0-br`):
+brasileiro `2.0.0-br`):
 - npm ci --no-audit --no-fund: concluído normalmente, 775 pacotes, após
   sincronização do package-lock.json para o CI.
 - npm 10.9.4 (runtime do Node 22 usado no Pages): npm ci --dry-run aprovado,
@@ -951,48 +1027,240 @@ https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e4
 src/services/nutrition-service.transactions.test.ts
 https://raw.githubusercontent.com/gui130699/NutriPro/397fb2126b9cbfb3e8b7a6978e41232e41498c7a/src/services/nutrition-service.transactions.test.ts
 
-16. ÍNDICE DA INTEGRAÇÃO DO CATÁLOGO BRASILEIRO
-------------------------------------------------
+16. ATUALIZAÇÃO VIGENTE — CATÁLOGO TACO E UNIDADES PESSOAIS
+-----------------------------------------------------------
 
-Versão: `1.0.0-br`
-Data: `2026-07-31`
-Total esperado: `126`
+Versão pública: `2.0.0-br`
+Data: `2026-08-01`
+Total esperado: `626` (126 curados + 500 TACO)
+
+Esta seção é a referência operacional atual e supera as descrições de
+`1.0.0-br` mantidas somente como histórico nas seções anteriores.
+
+
+16.1 DADOS, ORIGEM E AUDITORIA DO CATÁLOGO
+-------------------------------------------
 
 Arquivos de dados:
-- `lista_alimentos_brasileiros_nutripro.csv`: fonte editável, em PT-BR.
+- `lista_alimentos_brasileiros_nutripro.csv`: fonte editável dos 126 alimentos
+  curados. IDs, valores nutricionais e identificadores continuam preservados.
+- `data/sources/taco-4a-edicao-cleaned.csv`: cópia local fixa da TACO 4ª edição
+  usada pela importação. SHA-256:
+  `bc77766e56d7c669dd9cdba3fdbde7bcbf1bb4140e829720cb4a676d27670ea8`.
+- `data/generated/lista_500_alimentos_taco_nutripro.csv`: lista CSV dos 500
+  novos registros, com IDs `TACOxxxx` e número de origem.
+- `data/generated/foods-500-taco-nutripro.json`: a mesma lista em JSON.
+- `data/generated/catalogo-brasileiro-626-nutripro.csv`: os 626 registros
+  completos, em ordem de publicação.
 - `public/data/foods.json`: catálogo serializado que o frontend baixa.
 - `public/data/foods-version.json`: versão, data e total que protegem a troca
   de cache.
+- `docs/RELATORIO-IMPORTACAO-ALIMENTOS.md`: relatório reprodutível com fonte,
+  hash, total, critérios, itens ignorados, distribuição e hashes da seleção.
+
+Fonte primária da cópia preservada:
+https://huggingface.co/datasets/julianamarques/tabela-taco/raw/main/taco-4a-edicao-cleaned.csv
+
+Espelho de contingência consultado apenas em auditoria:
+https://raw.githubusercontent.com/machine-learning-mocha/taco/refs/heads/main/formatados/alimentos.csv
+
+O modelo público inclui `catalogOrigin: curated-br|taco`. Somente entradas TACO
+recebem `sourceFoodNumber`; entradas curadas preservam sua identidade e
+nutrientes, com a proveniência estrutural adicionada.
+
+Resumo auditado da rodada: 597 registros de origem, 581 com campos obrigatórios
+completos e 500 selecionados. Os 97 descartes incluem 80 duplicidades revisadas
+contra os curados, 1 omissão por prioridade e 16 registros com dados ausentes
+ou inválidos. Os detalhes e as linhas afetadas estão no relatório de
+importação.
+
+Regras de importação TACO:
+- A leitura aceita vírgula decimal e converte `Tr` para `0,00001`.
+- `NA`, `*` e células vazias são ausentes, não se tornam valores nutricionais
+  inventados.
+- Nome, categoria, código, calorias, proteínas, gorduras e carboidratos são
+  obrigatórios. Fibra pode ser `0` quando não for publicada pela fonte.
+- A normalização de identidade remove acentos, pontuação, conectores e ordem
+  superficial, mas conserva diferenças de preparo, corte, sabor, sal, pele e
+  conservação.
+- Uma lista auditada impede duplicidade óbvia contra os 126 curados; outra
+  verificação impede repetição dentro dos 500 novos. Variantes materiais, como
+  cru/cozido/frito/assado, não são colapsadas indevidamente.
+- A seleção é determinística e `catalog:validate` confere seus hashes e todos
+  os artefatos para evitar publicação parcial ou alteração silenciosa.
+
+
+16.2 CÓDIGO DO PIPELINE E COMANDOS
+----------------------------------
 
 Arquivos de implementação:
-- `scripts/catalog-importer.ts`: contratos CSV, normalização, validações e
-  geração dos alimentos de runtime.
-- `scripts/convert-foods.ts`: interface de linha de comando, leitura da fonte
-  e escrita atômica dos artefatos.
-- `scripts/validate-food-catalog.ts`: validação reproduzível da fonte e dos
-  artefatos por `npm run catalog:validate`.
-- `src/lib/food-catalog.ts`: carregamento versionado, validação de contagem e
-  cache IndexedDB/offline.
-- `src/lib/food-search.ts`: busca e filtros normalizados.
-- `src/lib/nutrition.ts`: conversão de unidade-base, unidade e porção.
-- `src/pages/Lists.tsx`: navegação e ações do catálogo público.
-- `src/pages/Diary.tsx` e `src/services/nutrition-service.ts`: seleção e
-  validação das unidades compatíveis na gravação de refeições.
+- `scripts/catalog-importer.ts`: valida a fonte curada brasileira.
+- `scripts/taco-catalog.ts`: parser, normalização nutricional, identidade,
+  seleção TACO, CSVs e relatório.
+- `scripts/convert-foods.ts`: interface de linha de comando e escrita atômica
+  dos artefatos de publicação.
+- `scripts/validate-food-catalog.ts`: validação somente leitura do release
+  `2.0.0-br`, inclusive hashes e seleção determinística.
+- `src/lib/food-catalog.ts`: carregamento versionado e cache atômico do
+  catálogo público no IndexedDB.
+- `src/lib/food-search.ts`: busca e filtros sem acento/pontuação/hífen.
 
 Comando canônico:
 
-  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --version 1.0.0-br --expected-total 126
+  npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv --taco data/sources/taco-4a-edicao-cleaned.csv --additional-total 500 --expected-total 626 --version 2.0.0-br
   npm run catalog:validate
 
-Regras de evolução:
-- Para uma fonte brasileira nova, preserve o contrato CSV, incremente a versão
-  e substitua o total esperado de maneira explícita.
-- Uma futura fonte USDA deve usar o contrato `en-US` separado e metadados
-  próprios; não deve sobrescrever silenciosamente a fonte brasileira.
-- Alimentos privados continuam no Firestore com `userId`; eles não pertencem
-  ao JSON público nem são apagados por uma atualização de catálogo.
-- Registre resultados de browser autenticado somente após execução em conta de
-  teste/homologação. Esta documentação não afirma que esses fluxos foram
-  executados nesta integração.
+Para reproduzir a data publicada em outro dia, usar adicionalmente
+`--updated-at 2026-08-01`. O importador prepara os destinos em arquivos
+temporários e só os renomeia depois de validar a fonte inteira. Não editar
+`foods.json`, os CSVs gerados ou o relatório manualmente: reexecute o pipeline.
+
+
+16.3 PERFIS DE UNIDADE, DENSIDADE E SNAPSHOTS
+---------------------------------------------
+
+Arquivos de implementação:
+- `src/lib/types.ts`: contratos de `FoodUnitProfile`, `FoodDensityProfile`,
+  escolhas temporárias, sugestões de catálogo e snapshot de lançamento.
+- `src/lib/food-units.ts`: IDs determinísticos, normalização de nomes,
+  validação pt-BR, resolução de unidade e conversão segura.
+- `src/lib/offline.ts`: cache Dexie e fila determinística de perfis/densidades.
+- `src/services/nutrition-service.ts`: CRUD isolado por usuário, padrão,
+  exclusão segura, sincronização e gravação de snapshots de `mealItems`.
+- `src/components/foods/FoodUnitProfileDialog.tsx`: formulário de medida
+  personalizada do diário e do detalhe do alimento.
+- `src/components/foods/FoodUnitManager.tsx`: administração de unidades e
+  densidade dentro de Listas > detalhes do alimento.
+- `src/pages/Diary.tsx` e `src/pages/Lists.tsx`: seleção, administração e
+  apresentação da unidade sem alterar catálogo público ou overrides globais.
+
+Contrato de `foodUnitProfiles`:
+
+  id: ${userId}_${foodSource}_${foodId}_${normalizedUnitName}
+  userId, foodId, foodSource: public|private
+  name, singularLabel, pluralLabel?
+  measureType: mass|volume, baseMeasure: g|ml
+  amountPerUnit, isDefault, isActive, origin: catalog|user, notes?
+  createdAt, updatedAt
+
+O ID usa o nome normalizado (sem diferença de acento, caixa ou espaçamento),
+por isso a mesma unidade pessoal não é duplicada em uma nova sincronização. A
+chave inclui usuário, alimento e origem, isolando inclusive medidas de um
+alimento público entre pessoas diferentes.
+
+Contrato de `foodDensityProfiles`:
+
+  id determinístico por userId + foodSource + foodId
+  userId, foodId, foodSource, gramsPerMl
+  source: label|user|professional, notes?, createdAt, updatedAt
+
+Fluxo de uso:
+1. No diário, `g`/`kg` ficam disponíveis para base em massa e `ml`/`l` para
+   base em volume.
+2. Ao escolher uma unidade personalizada, o modal pede nome e quantidade em
+   `g` ou `ml`; nomes sugeridos são apenas texto, nunca pesos sugeridos.
+3. “Salvar para as próximas vezes” cria/atualiza o perfil pessoal. “Usar só
+   desta vez” aplica a medida no lançamento, mas não cria um documento.
+4. Pesos antigos de unidade/porção do catálogo são sugestões virtuais; aceitá-
+   los não grava cópias na conta. A pessoa pode personalizá-los se desejar.
+5. Um perfil pode ser padrão, editado, duplicado, desativado e restaurado. A
+   exclusão física só acontece se nenhum lançamento histórico o referencia;
+   caso contrário a medida é desativada para preservar o histórico.
+6. Cada lançamento recebe `unitProfileId`, `unitLabelSnapshot`,
+   `amountPerUnitSnapshot`, `baseMeasureSnapshot` e `consumedBaseAmount`.
+   Alterar perfil, densidade ou sugestão depois não recalcula o lançamento.
+7. Conversão g↔ml somente é permitida com `gramsPerMl` explícito. O sistema
+   nunca aplica `1 ml = 1 g` como aproximação.
+
+Validação de entrada:
+- Vírgula e ponto decimal são aceitos.
+- `amountPerUnit` exige valor finito de `0,1` a `10.000` na medida-base.
+- Zero, negativos, letras, formatos mistos, NaN, infinito e valores fora da
+  faixa são rejeitados antes da persistência.
+
+Offline:
+- Perfis e densidades são cacheados no IndexedDB.
+- Falha de rede cria uma operação de fila determinística; a interface exibe
+  “Aguardando sincronização”.
+- A sincronização é tentada quando a sessão inicia e no evento `online`.
+- Exclusão offline é conservadora: torna a medida inativa até que a consulta de
+  uso no servidor possa confirmar uma remoção física segura.
+
+
+16.4 FIRESTORE, ÍNDICES E SEGURANÇA
+------------------------------------
+
+`firestore.rules` protege `foodUnitProfiles` e `foodDensityProfiles` por dono:
+somente sessão autenticada com `userId` igual ao da requisição pode ler ou
+mutar. Atualização não troca proprietário. As regras validam origem
+`public|private`, tipos de medida, compatibilidade massa/g ou volume/ml,
+faixa `0,1–10.000`, estado/padrão e origem de densidade permitida.
+
+`firestore.indexes.json` inclui índices para consultas por usuário/alimento/
+origem/estado de `foodUnitProfiles`, padrão por usuário/alimento e consulta de
+`foodDensityProfiles`. Os índices existentes de diário, água, alimentos,
+refeições e evolução permanecem preservados.
+
+As demais coleções pessoais continuam isoladas: `profiles`, `goals`, `foods`
+privados, `foodOverrides`, `foodFavorites`, `mealTypes`, `mealItems`,
+`waterLogs`, evolução e preferências. A atualização do catálogo JSON não grava
+nem remove qualquer um desses dados.
+
+
+16.5 TESTES, ROTAS E LIMITAÇÕES DE APROVAÇÃO
+---------------------------------------------
+
+Testes unitários relevantes:
+- `src/lib/taco-catalog.test.ts` e `src/lib/brazilian-catalog.test.ts`:
+  importação, total, origem, duplicidade e release TACO.
+- `src/lib/food-units.test.ts`: normalização, limites, medidas temporárias,
+  persistentes, sugestões, densidade e snapshots.
+- `src/services/nutrition-service.transactions.test.ts`: lançamento e
+  compatibilidade de snapshot nas transações.
+
+Smoke tests Playwright em `VITE_E2E=true` verificam a tela de acesso,
+redirecionamento de visitantes em `/`, `/diario`, `/listas`, `/perfil` e rotas
+de evolução, responsividade, instalação PWA e recuperação de rota interna no
+GitHub Pages. Nesse modo Auth/Firestore não são inicializados, portanto a
+suíte não lê nem grava produção.
+
+Roteiro autenticado obrigatório em Emulator ou homologação:
+- Criar conta, onboarding e recarregar rota privada.
+- Pesquisar TACO/curado, criar perfil de unidade e testar padrão, edição,
+  duplicação, desativação, restauração e exclusão segura.
+- Testar medida temporária, snapshot de lançamento, edição posterior e
+  bloqueio de conversão g↔ml sem densidade explícita.
+- Configurar densidade de rótulo/usuário/profissional e confirmar que só ela
+  permite conversão cruzada.
+- Simular offline, conferir “Aguardando sincronização”, voltar online e
+  confirmar envio idempotente.
+- Validar isolamento com segunda conta e regras Firestore no ambiente de teste.
+
+Status declarado de forma honesta: este dossiê não afirma que os fluxos
+autenticados acima foram executados contra Firebase real, Emulator ou
+homologação. A aprovação deve ser registrada em `docs/TESTES-FUNCIONAIS.md`
+com ambiente, conta mascarada e saída da rodada atual de validação. Também não
+declara instalação física concluída em Android, iOS ou desktop sem teste no
+respectivo sistema.
+
+16.6 RODADA DE VALIDAÇÃO EXECUTADA — 01/08/2026
+------------------------------------------------
+
+- `npm run catalog:validate`: aprovado, com 626 alimentos (126 curados e
+  500 TACO).
+- `npx tsc -b --pretty false`, `npm run lint` e `npm run test`: aprovados;
+  Vitest registrou 19 arquivos e 72 testes.
+- `npm run test:e2e`: aprovado com 18 cenários Chromium. O servidor de teste
+  força `VITE_E2E=true`, portanto os smoke tests não inicializam nem escrevem
+  no Firebase de produção.
+- `npm run build` e o build com `NUTRIPRO_GITHUB_PAGES=true`: aprovados, com
+  manifesto e service worker PWA gerados. O aviso de tamanho de chunk não
+  bloqueou a geração.
+- No navegador local, a tela de acesso, o caminho de cadastro, o console e a
+  responsividade foram checados em 375×667, 390×844, 768×1024, 1366×768 e
+  1920×1080: não houve rolagem horizontal nem erro de console.
+- Não houve escrita destrutiva em Firebase real. A checagem autenticada com
+  Emulator/homologação permanece registrada como pendente porque o Firestore
+  Emulator necessita de JDK, indisponível nesta máquina nesta rodada.
 
 FIM DO DOCUMENTO
