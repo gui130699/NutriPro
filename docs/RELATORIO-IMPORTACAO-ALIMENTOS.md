@@ -82,3 +82,30 @@ Checksum SHA-256 dos IDs TACO selecionados: `94e93758a776bf589e5726be335f6a403ad
 | 92 | 91 | Batata, inglesa, cozida | duplicidade revisada com alimento curado existente |
 
 A importação converteu `Tr` em `0,00001`; `NA`, `*` e campos vazios foram tratados como ausentes. Registros sem calorias, proteínas, gorduras, carboidratos, nome, categoria ou código foram recusados. A fibra não é campo eliminatório da TACO e é representada como `0` quando a fonte não a publica; nenhum valor ausente de calorias, proteínas, gorduras ou carboidratos foi inventado.
+
+## Política de medida publicada na homologação de 2026-08-05
+
+Cada alimento passou a publicar `measurementPolicy`, sem mudar os nutrientes nem os identificadores preservados:
+
+| Origem/base | Política |
+| --- | --- |
+| Alimento com base `ml` | `volume-source` |
+| Qualquer alimento TACO | `mass-source`, referência explícita por 100 g |
+| Bebida não TACO cuja fonte é massa | `requires-density` para conversão em ml |
+| Demais alimentos em base `g` | `mass-source` |
+
+As nove bebidas TACO selecionadas permanecem em 100 g. Não foi criada versão em mililitros, pois a fonte auditada não fornece densidade confiável por item. Na interface, tentar uma medida volumétrica para bebida TACO requer densidade pessoal documentada ou uma medida explícita; o sistema não presume `1 ml = 1 g`.
+
+Comando exato reproduzido:
+
+```bash
+npm run catalog:import -- lista_alimentos_brasileiros_nutripro.csv \
+  --taco data/sources/taco-4a-edicao-cleaned.csv \
+  --additional-total 500 \
+  --expected-total 626 \
+  --version 2.0.0-br \
+  --updated-at 2026-08-01
+npm run catalog:validate
+```
+
+Resultado final: **626 alimentos validados**, sem ID duplicado, com os mesmos checksums de fonte/seleção acima. Os testes unitários verificam a política TACO e o E2E autenticado abre “Bebida isotônica, sabores variados” e confirma a referência `100 g`.

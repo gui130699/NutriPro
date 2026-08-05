@@ -27,7 +27,7 @@ async function filesIn(directory: string): Promise<string[]> {
       if (!excludedDirectories.has(entry.name)) files.push(...await filesIn(path))
     } else if (entry.isFile()) {
       const extension = entry.name.includes('.') ? `.${entry.name.split('.').pop()}` : ''
-      if (!excludedFiles.has(entry.name) && includedExtensions.has(extension)) files.push(path)
+      if (!excludedFiles.has(entry.name) && (entry.name === '.env.example' || includedExtensions.has(extension))) files.push(path)
     }
   }
   return files
@@ -59,8 +59,12 @@ async function main() {
     'npm run build                  Valida TypeScript e cria build de produção',
     'npm run preview                Serve o build localmente',
     'npm run lint                   Executa Oxlint',
-    'npm run test                   Executa testes unitários (Vitest)',
-    'npm run test:e2e               Executa testes end-to-end (Playwright)',
+    'npm run test:typecheck         Executa a verificação TypeScript',
+    'npm run test                   Executa 81 testes unitários (Vitest)',
+    'npm run test:firebase          Executa 21 testes de regras nos Emulators',
+    'npm run test:e2e:firebase      Executa 13 fluxos autenticados nos Emulators',
+    'npm run test:e2e               Executa 23 testes públicos (Playwright)',
+    'npm run test:all               Executa a matriz automatizada completa',
     'npm run catalog:import -- ...  Gera os artefatos do catálogo alimentar',
     'npm run catalog:validate       Confere integridade do catálogo publicado',
     'npm run migrate:meals          Migra snapshots de refeições',
@@ -70,7 +74,7 @@ async function main() {
     '',
     'CONFIGURAÇÃO INICIAL',
     '--------------------',
-    '1. Instale Node.js 20 ou superior e Firebase CLI.',
+    '1. Instale Node.js 22 ou 24 LTS, JDK 21 e as dependências com npm ci.',
     '2. Copie .env.example para .env e preencha VITE_FIREBASE_*.',
     '3. Habilite Email/Senha no Firebase Authentication.',
     '4. Execute npm ci e npm run dev.',
@@ -96,6 +100,7 @@ async function main() {
     lines.push('```')
   }
 
+  lines.push('', 'FIM DO DOCUMENTO')
   await mkdir(projectRoot, { recursive: true })
   await writeFile(outputPath, `${lines.join('\n')}\n`, 'utf8')
   console.log(`Documentação criada: ${outputPath}`)
