@@ -178,14 +178,18 @@ Nenhuma versão em ml foi inventada para alimentos TACO. A interface alerta que 
 
 - `generateSW` produziu `dist/sw.js` e `dist/workbox-2fbc6a65.js`.
 - 47 entradas, aproximadamente 1,799 MiB, foram incluídas no precache.
+- O service worker usa `autoUpdate`, `skipWaiting`, `clientsClaim` e limpeza de
+  caches antigos. Uma versão nova assume o controle sem depender do bundle
+  anterior, inclusive quando esse bundle falha durante a inicialização.
 - O catálogo público mantém troca atômica no IndexedDB e não substitui cache íntegro por download parcial.
 - Firestore usa cache persistente multiaba.
 - A instalação real em Android/iOS/desktop físico **não foi executada**; somente os fluxos de prompt/guia foram automatizados.
 
 ## O que não foi executado
 
-- Nenhum deploy para Firebase Hosting, Firestore ou GitHub Pages.
-- Nenhum `firebase deploy`, merge em `main` ou migração contra produção.
+- Nenhum deploy para Firebase Hosting ou Firestore.
+- Nenhum `firebase deploy` ou migração contra produção. O GitHub Pages foi
+  publicado pelos workflows versionados do repositório.
 - Nenhuma instalação PWA física em Android, iOS, Windows ou macOS.
 - Nenhum leitor de tela físico; a evidência de acessibilidade é Axe + teclado automatizado.
 - Nenhuma escrita em credenciais, contas ou dados reais.

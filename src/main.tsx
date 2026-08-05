@@ -17,12 +17,5 @@ const pagesRedirect = restoredPagesRoute(window.location.search, import.meta.env
 if (pagesRedirect) window.history.replaceState(null, '', pagesRedirect)
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 30_000, retry: 1 } } })
-const updateServiceWorker = registerSW({
-  immediate: true,
-  onNeedRefresh: () => {
-    if (window.confirm('Uma nova versão está disponível. Atualizar agora?')) {
-      void updateServiceWorker(true)
-    }
-  },
-})
+registerSW({ immediate: true })
 createRoot(document.getElementById('root')!).render(<StrictMode><QueryClientProvider client={queryClient}><BrowserRouter basename={import.meta.env.BASE_URL}><App /></BrowserRouter></QueryClientProvider></StrictMode>)
