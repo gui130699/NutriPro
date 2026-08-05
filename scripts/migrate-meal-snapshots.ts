@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Optional one-time migration for old diary entries that only contain
- * `mealName`. The application already reads those entries safely; run this
- * script only when a permanent snapshot migration is desired.
+ * Optional one-time migration for old diary entries that contain legacy meal
+ * names or snake_case unit snapshots. The application reads those entries
+ * during the transition; this script canonicalizes and removes the aliases.
  *
  * Default: dry run (no writes).
  * Apply:   npm run migrate:meals -- --apply
@@ -75,7 +75,11 @@ async function migrate() {
     const userId = typeof data.userId === 'string' ? data.userId : ''
     const legacyName = typeof data.mealName === 'string' ? data.mealName : ''
     const hasSnapshot = typeof data.mealNameSnapshot === 'string' && typeof data.mealIconSnapshot === 'string'
-    if (!userId || (!legacyName && hasSnapshot)) continue
+    const legacyUnitFields = [
+      'unit_profile_id', 'unit_label_snapshot', 'amount_per_unit_snapshot',
+      'base_measure_snapshot', 'consumed_base_amount',
+    ].filter((field) => data[field] !== undefined)
+    if (!userId || (!legacyName && hasSnapshot && legacyUnitFields.length === 0 && data.nutrientBaseAmount !== undefined)) continue
 
     const types = await loadMealTypes(userId, mealTypesByUser)
     const existingId = typeof data.mealTypeId === 'string' ? data.mealTypeId : ''
@@ -93,6 +97,23 @@ async function migrate() {
       updatedAt: FieldValue.serverTimestamp(),
     }
     if (!existingId && resolvedType) patch.mealTypeId = resolvedType.id
+    const aliases: Record<string, string> = {
+      unit_profile_id: 'unitProfileId',
+      unit_label_snapshot: 'unitLabelSnapshot',
+      amount_per_unit_snapshot: 'amountPerUnitSnapshot',
+      base_measure_snapshot: 'baseMeasureSnapshot',
+      consumed_base_amount: 'consumedBaseAmount',
+    }
+    Object.entries(aliases).forEach(([legacy, canonical]) => {
+      if (data[canonical] === undefined && data[legacy] !== undefined) patch[canonical] = data[legacy]
+      if (data[legacy] !== undefined) patch[legacy] = FieldValue.delete()
+    })
+    if (data.nutrientBaseAmount === undefined) {
+      const nutrientBaseAmount = data.consumedGrams ?? data.consumed_grams ?? data.consumedBaseAmount ?? data.consumed_base_amount
+      if (typeof nutrientBaseAmount === 'number' && Number.isFinite(nutrientBaseAmount) && nutrientBaseAmount > 0) {
+        patch.nutrientBaseAmount = nutrientBaseAmount
+      }
+    }
     updates.push({ id: document.id, data: patch })
   }
 

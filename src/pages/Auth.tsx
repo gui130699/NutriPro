@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
@@ -234,7 +234,7 @@ function SetupScreen() {
             </li>
           ))}
         </ol>
-        <div className="mt-7 flex items-center gap-2 border-t border-[#e7eeea] pt-5 text-xs font-medium text-[#71827c]">
+        <div className="mt-7 flex items-center gap-2 border-t border-[#e7eeea] pt-5 text-xs font-medium text-[#5f716a]">
           <ShieldCheck size={16} className="text-[#17835c]" /> Nenhuma chave
           administrativa é usada no navegador.
         </div>
@@ -394,7 +394,7 @@ export function Login({ setup = false }: { setup?: boolean }) {
           <div className="relative z-10 w-full max-w-[27rem]">
             <div className="mb-12 lg:hidden">
               <Brand />
-              <p className="mt-3 text-sm text-[#71827c]">
+              <p className="mt-3 text-sm text-[#5f716a]">
                 Seu diário alimentar, no seu ritmo.
               </p>
             </div>
@@ -416,7 +416,7 @@ export function Login({ setup = false }: { setup?: boolean }) {
               <h1 className="mt-4 text-[2rem] font-black leading-[1.07] tracking-[-0.055em] text-[#143c35] sm:text-[2.35rem]">
                 {copy.title}
               </h1>
-              <p className="mt-3 max-w-sm text-sm leading-6 text-[#687b74]">
+              <p className="mt-3 max-w-sm text-sm leading-6 text-[#5f716a]">
                 {copy.description}
               </p>
             </div>
@@ -535,7 +535,7 @@ export function Login({ setup = false }: { setup?: boolean }) {
             </form>
 
             {mode === "login" && (
-              <div className="mt-7 border-t border-[#e5ece7] pt-6 text-center text-sm text-[#71827c]">
+              <div className="mt-7 border-t border-[#e5ece7] pt-6 text-center text-sm text-[#5f716a]">
                 <p>Ainda não tem uma conta?</p>
                 <button
                   type="button"
@@ -552,7 +552,7 @@ export function Login({ setup = false }: { setup?: boolean }) {
             )}
 
             {mode === "signup" && (
-              <div className="mt-7 border-t border-[#e5ece7] pt-6 text-center text-sm text-[#71827c]">
+              <div className="mt-7 border-t border-[#e5ece7] pt-6 text-center text-sm text-[#5f716a]">
                 Já faz parte do NutriPro?{" "}
                 <button
                   type="button"
@@ -564,7 +564,7 @@ export function Login({ setup = false }: { setup?: boolean }) {
               </div>
             )}
 
-            <p className="mt-8 flex items-center justify-center gap-2 text-center text-xs leading-5 text-[#8a9a95]">
+            <p className="mt-8 flex items-center justify-center gap-2 text-center text-xs leading-5 text-[#607068]">
               <ShieldCheck size={15} className="shrink-0 text-[#4b9b6a]" /> Seus
               dados pessoais permanecem protegidos.
             </p>
@@ -579,7 +579,6 @@ export function Onboarding() {
   const nav = useNavigate();
   const { user, loading } = useAuth();
   const [notice, setNotice] = useState<Notice | null>(null);
-  const [checkingCompletion, setCheckingCompletion] = useState(true);
   const {
     register,
     handleSubmit,
@@ -600,35 +599,6 @@ export function Onboarding() {
       waterMl: 2500,
     },
   });
-
-  useEffect(() => {
-    let active = true;
-    if (loading) return () => { active = false; };
-    if (!user) {
-      nav("/entrar", { replace: true });
-      return () => { active = false; };
-    }
-    if (!db) {
-      setCheckingCompletion(false);
-      return () => { active = false; };
-    }
-
-    setCheckingCompletion(true);
-    void getDoc(doc(db, "profiles", user.uid))
-      .then((snapshot) => {
-        if (!active) return;
-        if (snapshot.data()?.onboardingCompleted === true) {
-          nav("/", { replace: true });
-          return;
-        }
-        setCheckingCompletion(false);
-      })
-      .catch(() => {
-        if (active) setCheckingCompletion(false);
-      });
-
-    return () => { active = false; };
-  }, [loading, nav, user]);
 
   async function submit(values: OnboardingForm) {
     const currentUser = auth?.currentUser ?? user;
@@ -651,11 +621,14 @@ export function Onboarding() {
         "weightLogs",
         `${currentUser.uid}_initial`,
       );
-      // The canonical profile path can be read by its owner even before it
-      // exists. Goals and weight logs are intentionally readable only after
-      // ownership exists, so pre-reading those new documents would be denied
-      // for every first-time user before this atomic batch could create them.
-      const existingProfile = await getDoc(profileRef);
+      // Canonical onboarding ids are readable only by their authenticated
+      // owner, including before creation, so retries can preserve timestamps
+      // without duplicating goals or the initial weight.
+      const [existingProfile, existingGoals, existingWeight] = await Promise.all([
+        getDoc(profileRef),
+        getDoc(goalsRef),
+        getDoc(initialWeightRef),
+      ]);
       if (existingProfile.data()?.onboardingCompleted === true) {
         nav("/", { replace: true });
         return;
@@ -664,7 +637,6 @@ export function Onboarding() {
       const batch = writeBatch(db);
       const now = serverTimestamp();
       const today = localIsoDate();
-      const creatingInitialRecords = !existingProfile.exists();
 
       batch.set(
         profileRef,
@@ -696,7 +668,7 @@ export function Onboarding() {
           fiber: values.fiber,
           waterMl: values.waterMl,
           updatedAt: now,
-          ...(creatingInitialRecords ? { createdAt: now } : {}),
+          ...(!existingGoals.exists() || existingGoals.data().createdAt === undefined ? { createdAt: now } : {}),
         },
         { merge: true },
       );
@@ -709,7 +681,7 @@ export function Onboarding() {
           date: today,
           source: "onboarding",
           updatedAt: now,
-          ...(creatingInitialRecords ? { createdAt: now } : {}),
+          ...(!existingWeight.exists() || existingWeight.data().createdAt === undefined ? { createdAt: now } : {}),
         },
         { merge: true },
       );
@@ -725,7 +697,7 @@ export function Onboarding() {
     }
   }
 
-  if (loading || checkingCompletion) {
+  if (loading) {
     return <main className="grid min-h-[100dvh] place-items-center bg-[#f3f7f2] text-sm font-semibold text-[#294b41]">Carregando seu perfil…</main>;
   }
 

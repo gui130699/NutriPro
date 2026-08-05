@@ -1,11 +1,13 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useState, type ReactNode } from 'react'
 import { doc, getDoc } from 'firebase/firestore'
+import { signOut } from 'firebase/auth'
 import { Layout } from './components/Layout'
 import { PwaInstallControl } from './components/PwaInstallControl'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import { ThemeProvider } from './components/theme/ThemeProvider'
-import { db } from './lib/firebase'
+import { auth, db } from './lib/firebase'
+import { resolveOnboardingState, type OnboardingState } from './lib/onboarding-state'
 
 const AddFood = lazy(() => import('./pages/AddFood').then((module) => ({ default: module.AddFood })))
 const Login = lazy(() => import('./pages/Auth').then((module) => ({ default: module.Login })))
@@ -18,31 +20,27 @@ const PhysicalAssessmentPage = lazy(() => import('./pages/PhysicalAssessment').t
 const Lists = lazy(() => import('./pages/Lists').then((module) => ({ default: module.Lists })))
 const Profile = lazy(() => import('./pages/Profile').then((module) => ({ default: module.Profile })))
 
-type OnboardingState = 'loading' | 'complete' | 'incomplete'
-
-function useOnboardingState(userId?: string): OnboardingState {
+function useOnboardingState(userId?: string): { state: OnboardingState; retry: () => void } {
   const [state, setState] = useState<OnboardingState>('loading')
+  const [attempt, setAttempt] = useState(0)
+  const retry = useCallback(() => setAttempt((current) => current + 1), [])
 
   useEffect(() => {
     let active = true
     if (!userId || !db) {
-      setState('incomplete')
+      setState('error')
       return () => { active = false }
     }
+    const database = db
 
     setState('loading')
-    void getDoc(doc(db, 'profiles', userId))
-      .then((snapshot) => {
-        if (active) setState(snapshot.data()?.onboardingCompleted === true ? 'complete' : 'incomplete')
-      })
-      .catch(() => {
-        if (active) setState('incomplete')
-      })
+    void resolveOnboardingState(() => getDoc(doc(database, 'profiles', userId)))
+      .then((nextState) => { if (active) setState(nextState) })
 
     return () => { active = false }
-  }, [userId])
+  }, [attempt, userId])
 
-  return state
+  return { state, retry }
 }
 
 function Private() {
@@ -63,13 +61,43 @@ function OnboardingGate() {
   const { user, loading, configured } = useAuth()
   if (loading) return <div className="grid min-h-screen place-items-center text-brand">Carregando o NutriPro…</div>
   if (!configured || !user) return <Navigate to="/entrar" replace />
-  return <Onboarding />
+  return <OnboardingWithState userId={user.uid} />
 }
 
 function PrivateWithOnboarding({ userId }: { userId: string }) {
-  const onboarding = useOnboardingState(userId)
-  if (onboarding === 'loading') return <div className="grid min-h-screen place-items-center text-brand">Carregando seu {'espa\u00e7o'}…</div>
-  return onboarding === 'complete' ? <Layout /> : <Navigate to="/onboarding" replace />
+  return <OnboardingStateGate
+    userId={userId}
+    complete={<Layout />}
+    incomplete={<Navigate to="/onboarding" replace />}
+  />
+}
+
+function OnboardingWithState({ userId }: { userId: string }) {
+  return <OnboardingStateGate
+    userId={userId}
+    complete={<Navigate to="/" replace />}
+    incomplete={<Onboarding />}
+  />
+}
+
+function OnboardingStateGate({ userId, complete, incomplete }: { userId: string; complete: ReactNode; incomplete: ReactNode }) {
+  const { state, retry } = useOnboardingState(userId)
+  if (state === 'loading') return <div className="grid min-h-screen place-items-center text-brand">Carregando seu {'espa\u00e7o'}…</div>
+  if (state === 'error') return <OnboardingError retry={retry} />
+  return state === 'complete' ? complete : incomplete
+}
+
+function OnboardingError({ retry }: { retry: () => void }) {
+  return <main className="grid min-h-screen place-items-center bg-[#f3f7f2] p-5">
+    <section className="w-full max-w-md rounded-[1.75rem] border border-[#dce9e0] bg-white p-7 text-center shadow-xl" role="alert" aria-live="assertive">
+      <h1 className="text-2xl font-black text-[#143c35]">Não foi possível verificar seu perfil.</h1>
+      <p className="mt-3 text-sm leading-6 text-[#63766f]">Confira sua conexão e tente novamente.</p>
+      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <button type="button" className="btn btn-primary" onClick={retry}>Tentar novamente</button>
+        <button type="button" className="btn btn-soft" onClick={() => { if (auth) void signOut(auth) }}>Sair da conta</button>
+      </div>
+    </section>
+  </main>
 }
 
 export default function App() {

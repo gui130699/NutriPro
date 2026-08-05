@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteField,
   deleteDoc,
   doc,
   getDoc,
@@ -156,6 +157,18 @@ function errorFromValidation(errors: readonly { message: string }[]): Error {
   return new Error(errors.map((error) => error.message).join(' '))
 }
 
+function withoutNullishFields<T extends Record<string, unknown>>(value: T): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(value).filter(([, fieldValue]) => fieldValue !== null && fieldValue !== undefined),
+  ) as Partial<T>
+}
+
+function nullableFieldsAsDeletes<T extends Record<string, unknown>>(value: T): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(value).map(([key, fieldValue]) => [key, fieldValue === null || fieldValue === undefined ? deleteField() : fieldValue]),
+  )
+}
+
 async function ownedDocument(collectionName: string, id: string, userId: string) {
   const reference = doc(firestore(), collectionName, id)
   const snapshot = await getDoc(reference)
@@ -287,7 +300,7 @@ export const evolutionService = {
     if (!validated.ok) throw errorFromValidation(validated.errors)
     const reference = await addDoc(collection(firestore(), 'physicalAssessments'), {
       userId,
-      ...validated.value,
+      ...withoutNullishFields(validated.value),
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     })
@@ -302,7 +315,7 @@ export const evolutionService = {
     const current = toPhysicalAssessment(id, snapshot.data())
     const validated = validatePhysicalAssessmentInput({ ...current, ...changes, assessmentDate: changes.assessmentDate ?? current.assessmentDate })
     if (!validated.ok) throw errorFromValidation(validated.errors)
-    await updateDoc(reference, { ...validated.value, updatedAt: serverTimestamp() })
+    await updateDoc(reference, { ...nullableFieldsAsDeletes(validated.value), updatedAt: serverTimestamp() })
     const linked = options.registerWeight
       ? await ensureLinkedWeight(userId, validated.value.assessmentDate, validated.value.weightKg, 'assessment')
       : null

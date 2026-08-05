@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   deleteDoc,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -251,13 +252,19 @@ const densityDocument = (profile: FoodDensityProfile) => ({
 })
 
 const isOfflineFailure = (error: unknown) => {
-  if (typeof navigator !== 'undefined' && !navigator.onLine) return true
+  if (typeof window !== 'undefined' && typeof navigator !== 'undefined' && !navigator.onLine) return true
   const code = error && typeof error === 'object' && 'code' in error && typeof error.code === 'string' ? error.code : ''
   return code === 'unavailable'
     || code === 'deadline-exceeded'
     || code === 'network-request-failed'
     || code.endsWith('/unavailable')
     || code.endsWith('/deadline-exceeded')
+}
+
+const failFastWhenOffline = () => {
+  if (typeof window !== 'undefined' && typeof navigator !== 'undefined' && !navigator.onLine) {
+    throw Object.assign(new Error('Sem conexão; a operação será sincronizada quando o dispositivo voltar a ficar online.'), { code: 'unavailable' })
+  }
 }
 
 const withProfileSyncStatus = async (userId: string, profiles: readonly FoodUnitProfile[]) => {
@@ -376,11 +383,33 @@ async function persistFoodUnitProfileState(userId: string, profileId: string, is
 }
 
 const foodUnitProfileHasSnapshots = async (userId: string, profileId: string) => {
-  const snapshot = await getDocs(query(collection(firestore(), 'mealItems'), where('userId', '==', userId)))
-  return snapshot.docs.some((item) => {
-    const data = item.data()
-    return data.unitProfileId === profileId || data.unit_profile_id === profileId
-  })
+  const items = collection(firestore(), 'mealItems')
+  const canonical = await getDocs(query(
+    items,
+    where('userId', '==', userId),
+    where('unitProfileId', '==', profileId),
+    limit(1),
+  ))
+  if (canonical.docs.length > 0) return true
+
+  // Temporary compatibility for documents created before the canonical field
+  // migration. Both paths are indexed and bounded to one document.
+  const legacy = await getDocs(query(
+    items,
+    where('userId', '==', userId),
+    where('unit_profile_id', '==', profileId),
+    limit(1),
+  ))
+  return legacy.docs.length > 0
+}
+
+const allowedOverrideFields = [
+  'name', 'category', 'brand', 'calories', 'protein', 'carbs', 'fat', 'fiber',
+  'unitWeightG', 'portionWeightG', 'notes', 'isHidden',
+] as const
+
+export function sanitizeFoodOverrideChanges(changes: Record<string, unknown>) {
+  return Object.fromEntries(allowedOverrideFields.flatMap((field) => field in changes ? [[field, changes[field]]] : []))
 }
 
 /** Pure mapper used by the aggregate query and focused unit tests. */
@@ -434,7 +463,8 @@ export const nutritionService = {
   },
 
   async createFood(userId: string, input: Omit<Food, 'id' | 'userId' | 'isPublic' | 'createdAt' | 'updatedAt'>) {
-    const ref = await addDoc(collection(firestore(), 'foods'), { ...input, userId, isPublic: false, isActive: input.isActive !== false, createdAt: serverTimestamp(), updatedAt: serverTimestamp() })
+    const definedInput = Object.fromEntries(Object.entries(input).filter(([, value]) => value !== undefined))
+    const ref = await addDoc(collection(firestore(), 'foods'), { ...definedInput, userId, isPublic: false, isActive: input.isActive !== false, createdAt: serverTimestamp(), updatedAt: serverTimestamp() })
     return ref.id
   },
 
@@ -442,7 +472,8 @@ export const nutritionService = {
     const ref = doc(firestore(), 'foods', foodId)
     const current = await getDoc(ref)
     if (!current.exists() || current.data().userId !== userId) throw new Error('Você não pode alterar este alimento.')
-    await updateDoc(ref, { ...input, updatedAt: serverTimestamp() })
+    const normalizedInput = Object.fromEntries(Object.entries(input).map(([key, value]) => [key, value === undefined ? deleteField() : value]))
+    await updateDoc(ref, { ...normalizedInput, updatedAt: serverTimestamp() })
   },
 
   async softDeletePrivateFood(userId: string, foodId: string) {
@@ -464,7 +495,14 @@ export const nutritionService = {
       transaction.set(ref, {
         userId,
         publicFoodId,
-        ...changes,
+        description: deleteField(),
+        baseUnit: deleteField(),
+        saturatedFat: deleteField(),
+        sugar: deleteField(),
+        sodium: deleteField(),
+        source: deleteField(),
+        isActive: deleteField(),
+        ...sanitizeFoodOverrideChanges(changes as Record<string, unknown>),
         updatedAt: serverTimestamp(),
         ...(!existing.exists() || existing.data().createdAt === undefined
           ? { createdAt: serverTimestamp() }
@@ -488,12 +526,19 @@ export const nutritionService = {
 
   async setFavorite(userId: string, foodId: string, foodSource: 'public' | 'private', active: boolean) {
     const ref = doc(firestore(), 'foodFavorites', favoriteId(userId, foodSource, foodId))
-    if (active) await setDoc(ref, { userId, foodId, foodSource, createdAt: serverTimestamp() })
-    else await deleteDoc(ref)
+    await runTransaction(firestore(), async (transaction) => {
+      const existing = await transaction.get(ref)
+      if (active && !existing.exists()) {
+        transaction.set(ref, { userId, foodId, foodSource, createdAt: serverTimestamp() })
+      } else if (!active && existing.exists()) {
+        transaction.delete(ref)
+      }
+    })
   },
 
   async foodUnitProfiles(userId: string, foodId?: string, foodSource?: FoodSource, options: { includeInactive?: boolean } = {}) {
     try {
+      failFastWhenOffline()
       const constraints: QueryConstraint[] = [where('userId', '==', userId)]
       if (foodId) constraints.push(where('foodId', '==', foodId))
       if (foodSource) constraints.push(where('foodSource', '==', foodSource))
@@ -522,6 +567,7 @@ export const nutritionService = {
     }
 
     try {
+      failFastWhenOffline()
       const persisted = await persistFoodUnitProfile(userId, profile, options.replacesProfileId)
       await cacheFoodUnitProfileWithDefault(persisted)
       if (options.replacesProfileId && options.replacesProfileId !== persisted.id) {
@@ -544,27 +590,34 @@ export const nutritionService = {
 
   async setDefaultFoodUnitProfile(userId: string, profileId: string, options: { queueIfOffline?: boolean } = {}) {
     try {
+      failFastWhenOffline()
       const database = firestore()
       const ref = doc(database, 'foodUnitProfiles', profileId)
-      const userProfileRefs = (await getDocs(query(
+      const candidate = await getDoc(ref)
+      if (!candidate.exists() || candidate.data().userId !== userId) throw new Error('Você não pode alterar esta unidade.')
+      const candidateProfile = toFoodUnitProfile(candidate.id, candidate.data())
+      if (!candidateProfile.isActive) throw new Error('Não é possível definir uma unidade desativada como padrão.')
+      const peerRefs = (await getDocs(query(
         collection(database, 'foodUnitProfiles'),
         where('userId', '==', userId),
+        where('foodId', '==', candidateProfile.foodId),
+        where('foodSource', '==', candidateProfile.foodSource),
       ))).docs.map((item) => item.ref)
       let selected: FoodUnitProfile | null = null
       await runTransaction(database, async (transaction) => {
         const [current, ...profiles] = await Promise.all([
           transaction.get(ref),
-          ...userProfileRefs.map((profileRef) => transaction.get(profileRef)),
+          ...peerRefs.map((profileRef) => transaction.get(profileRef)),
         ])
         if (!current.exists() || current.data().userId !== userId) throw new Error('Você não pode alterar esta unidade.')
         const profile = toFoodUnitProfile(current.id, current.data())
         if (!profile.isActive) throw new Error('Não é possível definir uma unidade desativada como padrão.')
+        if (profile.foodId !== candidateProfile.foodId || profile.foodSource !== candidateProfile.foodSource) {
+          throw new Error('A unidade mudou de alimento durante a operação. Tente novamente.')
+        }
         profiles.forEach((peer) => {
           if (peer.exists()
             && peer.id !== profileId
-            && peer.data().foodId === profile.foodId
-            && peer.data().foodSource === profile.foodSource
-            && peer.data().isActive !== false
             && peer.data().isDefault === true) {
             transaction.update(peer.ref, { isDefault: false, updatedAt: serverTimestamp() })
           }
@@ -589,6 +642,7 @@ export const nutritionService = {
 
   async deactivateFoodUnitProfile(userId: string, profileId: string, options: { queueIfOffline?: boolean } = {}) {
     try {
+      failFastWhenOffline()
       const profile = await persistFoodUnitProfileState(userId, profileId, false)
       await cacheFoodUnitProfile(profile)
       return profile
@@ -605,6 +659,7 @@ export const nutritionService = {
 
   async restoreFoodUnitProfile(userId: string, profileId: string, options: { queueIfOffline?: boolean } = {}) {
     try {
+      failFastWhenOffline()
       const profile = await persistFoodUnitProfileState(userId, profileId, true)
       await cacheFoodUnitProfile(profile)
       return profile
@@ -621,6 +676,7 @@ export const nutritionService = {
 
   async deleteFoodUnitProfile(userId: string, profileId: string, hardDeleteIfUnused = false): Promise<DeleteFoodUnitProfileResult> {
     try {
+      failFastWhenOffline()
       const ref = doc(firestore(), 'foodUnitProfiles', profileId)
       const current = await getDoc(ref)
       if (!current.exists() || current.data().userId !== userId) throw new Error('Você não pode excluir esta unidade.')
@@ -649,6 +705,7 @@ export const nutritionService = {
   async foodDensityProfile(userId: string, foodId: string, foodSource: FoodSource) {
     const profileId = foodDensityProfileId(userId, foodSource, foodId)
     try {
+      failFastWhenOffline()
       const snapshot = await getDoc(doc(firestore(), 'foodDensityProfiles', profileId))
       if (!snapshot.exists()) {
         await removeCachedFoodDensityProfile(profileId)
@@ -676,6 +733,7 @@ export const nutritionService = {
       syncStatus: 'synced',
     }
     try {
+      failFastWhenOffline()
       const persisted = await persistFoodDensityProfile(userId, profile)
       await cacheFoodDensityProfile(persisted)
       return persisted
@@ -691,6 +749,7 @@ export const nutritionService = {
   async deleteFoodDensityProfile(userId: string, foodId: string, foodSource: FoodSource) {
     const profileId = foodDensityProfileId(userId, foodSource, foodId)
     try {
+      failFastWhenOffline()
       const ref = doc(firestore(), 'foodDensityProfiles', profileId)
       const current = await getDoc(ref)
       if (!current.exists() || current.data().userId !== userId) throw new Error('Você não pode excluir esta densidade.')
@@ -863,6 +922,7 @@ export const nutritionService = {
         amountPerUnitSnapshot: resolvedUnit.amountPerUnitSnapshot ?? null,
         baseMeasureSnapshot: resolvedUnit.baseMeasureSnapshot ?? null,
         consumedBaseAmount: resolvedUnit.consumedBaseAmount ?? null,
+        nutrientBaseAmount: resolvedUnit.nutrientBaseAmount,
         // Kept for legacy screens and documents. For ml-based foods this is a
         // numeric base amount, not an implicit mass conversion.
         consumedGrams: resolvedUnit.nutrientBaseAmount,
@@ -887,14 +947,15 @@ export const nutritionService = {
   },
 
   async addWater(userId: string, amountMl: number, date = localIsoDate()) {
-    if (!Number.isFinite(amountMl) || amountMl <= 0) throw new Error('Informe uma quantidade de água maior que zero.')
-    const now = new Date()
-    await addDoc(collection(firestore(), 'waterLogs'), { userId, date, amountMl, amount_ml: amountMl, loggedAt: now.toISOString(), logged_at: now.toISOString(), createdAt: serverTimestamp() })
+    if (!Number.isFinite(amountMl) || amountMl <= 0 || amountMl > 20_000) throw new Error('Informe uma quantidade de água entre 0 e 20.000 ml.')
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error('Informe uma data válida para a hidratação.')
+    const now = serverTimestamp()
+    await addDoc(collection(firestore(), 'waterLogs'), { userId, date, amountMl, loggedAt: now, createdAt: now, updatedAt: now })
   },
 
   async water(userId: string, date: string) {
     const snapshot = await getDocs(query(collection(firestore(), 'waterLogs'), where('userId', '==', userId), where('date', '==', date)))
-    return snapshot.docs.map((item) => ({ id: item.id, amountMl: toNumber(item.data().amountMl ?? item.data().amount_ml), loggedAt: String(item.data().loggedAt ?? item.data().logged_at ?? '') }))
+    return snapshot.docs.map((item) => ({ id: item.id, amountMl: toNumber(item.data().amountMl ?? item.data().amount_ml), loggedAt: timestampToIso(item.data().loggedAt ?? item.data().logged_at) ?? '' }))
   },
 
   async deleteWater(userId: string, waterId: string) {

@@ -228,6 +228,7 @@ function tacoFood(record: TacoRecord): CatalogFood {
     isActive: true,
     catalogOrigin: 'taco',
     sourceFoodNumber: record.sourceFoodNumber,
+    measurementPolicy: 'mass-source',
   }
 }
 

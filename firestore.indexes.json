@@ -9,6 +9,22 @@
       ]
     },
     {
+      "collectionGroup": "mealItems",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "unitProfileId", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "mealItems",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "unit_profile_id", "order": "ASCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "waterLogs",
       "queryScope": "COLLECTION",
       "fields": [

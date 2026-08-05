@@ -3,6 +3,7 @@ import {
   getCachedCatalogMetadata,
   replaceCachedCatalogFoods,
 } from './offline'
+import type { CatalogMeasurementPolicy } from './types'
 
 /**
  * The public catalogue is deliberately independent from Firestore.  Keeping the
@@ -35,6 +36,7 @@ export type CatalogFood = {
   catalogOrigin?: 'curated-br' | 'taco'
   /** Stable source number supplied by the TACO 4th-edition dataset. */
   sourceFoodNumber?: number | null
+  measurementPolicy: CatalogMeasurementPolicy
 }
 
 export type FoodCatalogVersion = {
@@ -157,6 +159,18 @@ export function normalizeCatalogFood<T extends object>(raw: T): CatalogFood {
     : typeof givenKeywords === 'string' ? tokenize(givenKeywords) : []
   const isActiveValue = pickValue(record, ['isActive', 'is_active', 'active', 'ativo', 'status', 'estado'])
   const normalizedIsActive = normalizeFoodName(stringValue(isActiveValue))
+  const catalogOrigin = (() => {
+    const value = normalizeFoodName(stringValue(pickValue(record, ['catalogOrigin', 'catalog_origin', 'origemCatalogo', 'origem_catálogo'])))
+    return value === 'taco' ? 'taco' as const : value === 'curated br' || value === 'curated-br' || value === 'curado br' ? 'curated-br' as const : undefined
+  })()
+  const baseUnit = normalizeBaseUnit(pickValue(record, ['baseUnit', 'base_unit', 'unidadeBase', 'unidade_base', 'unit']))
+  const measurementPolicy: CatalogMeasurementPolicy = baseUnit === 'ml'
+    ? 'volume-source'
+    : catalogOrigin === 'taco'
+      ? 'mass-source'
+      : /bebida/iu.test(category ?? '')
+        ? 'requires-density'
+        : 'mass-source'
 
   return {
     externalId,
@@ -174,16 +188,14 @@ export function normalizeCatalogFood<T extends object>(raw: T): CatalogFood {
     sugar: toOptionalNumber(pickValue(record, ['sugar', 'sugars', 'acucar', 'açúcar', 'acucares', 'açúcares'])),
     sodium: toOptionalNumber(pickValue(record, ['sodium', 'sodio', 'sódio'])),
     baseQuantity: toNonNegativeNumber(pickValue(record, ['baseQuantity', 'base_quantity', 'quantidadeBase', 'quantidade_base']), 100),
-    baseUnit: normalizeBaseUnit(pickValue(record, ['baseUnit', 'base_unit', 'unidadeBase', 'unidade_base', 'unit'])),
+    baseUnit,
     unitWeightG: toOptionalNumber(pickValue(record, ['unitWeightG', 'unit_weight_g', 'pesoUnidade', 'peso_unidade'])) ?? null,
     portionWeightG: toOptionalNumber(pickValue(record, ['portionWeightG', 'portion_weight_g', 'pesoPorcao', 'peso_porção', 'pesoPorção'])) ?? null,
     source: nullableString(pickValue(record, ['source', 'fonte'])),
     language: nullableString(pickValue(record, ['language', 'nameLanguage', 'name_language', 'idioma', 'idiomaNome'])),
     isActive: !FALSE_VALUES.has(normalizedIsActive),
-    catalogOrigin: (() => {
-      const value = normalizeFoodName(stringValue(pickValue(record, ['catalogOrigin', 'catalog_origin', 'origemCatalogo', 'origem_catálogo'])))
-      return value === 'taco' ? 'taco' : value === 'curated br' || value === 'curated-br' || value === 'curado br' ? 'curated-br' : undefined
-    })(),
+    catalogOrigin,
+    measurementPolicy,
     sourceFoodNumber: (() => {
       const value = pickValue(record, ['sourceFoodNumber', 'source_food_number', 'numeroAlimento', 'numero_alimento', 'numero', 'número'])
       if (value == null || stringValue(value) === '') return undefined

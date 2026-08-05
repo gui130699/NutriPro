@@ -29,7 +29,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 2
+    "sourceFoodNumber": 2,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0004",
@@ -62,7 +63,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 4
+    "sourceFoodNumber": 4,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0005",
@@ -95,7 +97,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 5
+    "sourceFoodNumber": 5,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0006",
@@ -128,7 +131,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 6
+    "sourceFoodNumber": 6,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0009",
@@ -162,7 +166,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 9
+    "sourceFoodNumber": 9,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0010",
@@ -196,7 +201,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 10
+    "sourceFoodNumber": 10,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0011",
@@ -231,7 +237,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 11
+    "sourceFoodNumber": 11,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0012",
@@ -266,7 +273,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 12
+    "sourceFoodNumber": 12,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0014",
@@ -298,7 +306,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 14
+    "sourceFoodNumber": 14,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0015",
@@ -330,7 +339,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 15
+    "sourceFoodNumber": 15,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0017",
@@ -362,7 +372,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 17
+    "sourceFoodNumber": 17,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0018",
@@ -394,7 +405,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 18
+    "sourceFoodNumber": 18,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0019",
@@ -426,7 +438,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 19
+    "sourceFoodNumber": 19,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0020",
@@ -459,7 +472,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 20
+    "sourceFoodNumber": 20,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0021",
@@ -492,7 +506,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 21
+    "sourceFoodNumber": 21,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0022",
@@ -525,7 +540,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 22
+    "sourceFoodNumber": 22,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0023",
@@ -557,7 +573,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 23
+    "sourceFoodNumber": 23,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0024",
@@ -592,7 +609,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 24
+    "sourceFoodNumber": 24,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0025",
@@ -624,7 +642,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 25
+    "sourceFoodNumber": 25,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0026",
@@ -657,7 +676,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 26
+    "sourceFoodNumber": 26,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0027",
@@ -690,7 +710,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 27
+    "sourceFoodNumber": 27,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0028",
@@ -723,7 +744,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 28
+    "sourceFoodNumber": 28,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0029",
@@ -755,7 +777,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 29
+    "sourceFoodNumber": 29,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0030",
@@ -789,7 +812,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 30
+    "sourceFoodNumber": 30,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0031",
@@ -822,7 +846,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 31
+    "sourceFoodNumber": 31,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0032",
@@ -855,7 +880,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 32
+    "sourceFoodNumber": 32,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0033",
@@ -888,7 +914,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 33
+    "sourceFoodNumber": 33,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0034",
@@ -920,7 +947,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 34
+    "sourceFoodNumber": 34,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0035",
@@ -952,7 +980,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 35
+    "sourceFoodNumber": 35,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0036",
@@ -984,7 +1013,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 36
+    "sourceFoodNumber": 36,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0037",
@@ -1017,7 +1047,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 37
+    "sourceFoodNumber": 37,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0038",
@@ -1050,7 +1081,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 38
+    "sourceFoodNumber": 38,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0039",
@@ -1081,7 +1113,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 39
+    "sourceFoodNumber": 39,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0040",
@@ -1113,7 +1146,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 40
+    "sourceFoodNumber": 40,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0041",
@@ -1147,7 +1181,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 41
+    "sourceFoodNumber": 41,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0042",
@@ -1179,7 +1214,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 42
+    "sourceFoodNumber": 42,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0043",
@@ -1211,7 +1247,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 43
+    "sourceFoodNumber": 43,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0044",
@@ -1243,7 +1280,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 44
+    "sourceFoodNumber": 44,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0045",
@@ -1276,7 +1314,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 45
+    "sourceFoodNumber": 45,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0046",
@@ -1308,7 +1347,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 46
+    "sourceFoodNumber": 46,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0047",
@@ -1343,7 +1383,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 47
+    "sourceFoodNumber": 47,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0048",
@@ -1375,7 +1416,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 48
+    "sourceFoodNumber": 48,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0049",
@@ -1407,7 +1449,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 49
+    "sourceFoodNumber": 49,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0050",
@@ -1439,7 +1482,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 50
+    "sourceFoodNumber": 50,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0051",
@@ -1471,7 +1515,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 51
+    "sourceFoodNumber": 51,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0054",
@@ -1503,7 +1548,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 54
+    "sourceFoodNumber": 54,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0055",
@@ -1536,7 +1582,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 55
+    "sourceFoodNumber": 55,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0056",
@@ -1569,7 +1616,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 56
+    "sourceFoodNumber": 56,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0057",
@@ -1602,7 +1650,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 57
+    "sourceFoodNumber": 57,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0058",
@@ -1635,7 +1684,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 58
+    "sourceFoodNumber": 58,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0059",
@@ -1667,7 +1717,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 59
+    "sourceFoodNumber": 59,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0060",
@@ -1699,7 +1750,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 60
+    "sourceFoodNumber": 60,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0061",
@@ -1735,7 +1787,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 61
+    "sourceFoodNumber": 61,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0062",
@@ -1767,7 +1820,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 62
+    "sourceFoodNumber": 62,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0063",
@@ -1799,7 +1853,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 63
+    "sourceFoodNumber": 63,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0065",
@@ -1832,7 +1887,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 65
+    "sourceFoodNumber": 65,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0066",
@@ -1866,7 +1922,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 66
+    "sourceFoodNumber": 66,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0067",
@@ -1899,7 +1956,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 67
+    "sourceFoodNumber": 67,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0068",
@@ -1932,7 +1990,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 68
+    "sourceFoodNumber": 68,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0069",
@@ -1965,7 +2024,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 69
+    "sourceFoodNumber": 69,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0071",
@@ -1998,7 +2058,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 71
+    "sourceFoodNumber": 71,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0072",
@@ -2031,7 +2092,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 72
+    "sourceFoodNumber": 72,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0073",
@@ -2064,7 +2126,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 73
+    "sourceFoodNumber": 73,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0074",
@@ -2096,7 +2159,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 74
+    "sourceFoodNumber": 74,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0075",
@@ -2128,7 +2192,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 75
+    "sourceFoodNumber": 75,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0076",
@@ -2160,7 +2225,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 76
+    "sourceFoodNumber": 76,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0077",
@@ -2193,7 +2259,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 77
+    "sourceFoodNumber": 77,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0078",
@@ -2226,7 +2293,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 78
+    "sourceFoodNumber": 78,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0080",
@@ -2259,7 +2327,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 80
+    "sourceFoodNumber": 80,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0081",
@@ -2291,7 +2360,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 81
+    "sourceFoodNumber": 81,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0083",
@@ -2324,7 +2394,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 83
+    "sourceFoodNumber": 83,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0084",
@@ -2356,7 +2427,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 84
+    "sourceFoodNumber": 84,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0085",
@@ -2388,7 +2460,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 85
+    "sourceFoodNumber": 85,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0086",
@@ -2421,7 +2494,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 86
+    "sourceFoodNumber": 86,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0087",
@@ -2454,7 +2528,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 87
+    "sourceFoodNumber": 87,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0089",
@@ -2487,7 +2562,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 89
+    "sourceFoodNumber": 89,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0090",
@@ -2522,7 +2598,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 90
+    "sourceFoodNumber": 90,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0092",
@@ -2555,7 +2632,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 92
+    "sourceFoodNumber": 92,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0093",
@@ -2588,7 +2666,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 93
+    "sourceFoodNumber": 93,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0094",
@@ -2621,7 +2700,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 94
+    "sourceFoodNumber": 94,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0096",
@@ -2653,7 +2733,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 96
+    "sourceFoodNumber": 96,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0099",
@@ -2686,7 +2767,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 99
+    "sourceFoodNumber": 99,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0101",
@@ -2718,7 +2800,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 101
+    "sourceFoodNumber": 101,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0102",
@@ -2750,7 +2833,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 102
+    "sourceFoodNumber": 102,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0103",
@@ -2782,7 +2866,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 103
+    "sourceFoodNumber": 103,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0104",
@@ -2814,7 +2899,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 104
+    "sourceFoodNumber": 104,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0105",
@@ -2846,7 +2932,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 105
+    "sourceFoodNumber": 105,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0106",
@@ -2878,7 +2965,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 106
+    "sourceFoodNumber": 106,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0108",
@@ -2910,7 +2998,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 108
+    "sourceFoodNumber": 108,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0111",
@@ -2942,7 +3031,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 111
+    "sourceFoodNumber": 111,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0113",
@@ -2974,7 +3064,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 113
+    "sourceFoodNumber": 113,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0114",
@@ -3007,7 +3098,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 114
+    "sourceFoodNumber": 114,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0116",
@@ -3040,7 +3132,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 116
+    "sourceFoodNumber": 116,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0117",
@@ -3073,7 +3166,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 117
+    "sourceFoodNumber": 117,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0119",
@@ -3107,7 +3201,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 119
+    "sourceFoodNumber": 119,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0120",
@@ -3141,7 +3236,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 120
+    "sourceFoodNumber": 120,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0121",
@@ -3175,7 +3271,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 121
+    "sourceFoodNumber": 121,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0122",
@@ -3209,7 +3306,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 122
+    "sourceFoodNumber": 122,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0123",
@@ -3242,7 +3340,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 123
+    "sourceFoodNumber": 123,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0124",
@@ -3275,7 +3374,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 124
+    "sourceFoodNumber": 124,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0125",
@@ -3308,7 +3408,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 125
+    "sourceFoodNumber": 125,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0126",
@@ -3340,7 +3441,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 126
+    "sourceFoodNumber": 126,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0127",
@@ -3372,7 +3474,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 127
+    "sourceFoodNumber": 127,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0128",
@@ -3404,7 +3507,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 128
+    "sourceFoodNumber": 128,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0130",
@@ -3436,7 +3540,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 130
+    "sourceFoodNumber": 130,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0131",
@@ -3469,7 +3574,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 131
+    "sourceFoodNumber": 131,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0132",
@@ -3501,7 +3607,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 132
+    "sourceFoodNumber": 132,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0133",
@@ -3533,7 +3640,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 133
+    "sourceFoodNumber": 133,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0134",
@@ -3565,7 +3673,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 134
+    "sourceFoodNumber": 134,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0135",
@@ -3598,7 +3707,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 135
+    "sourceFoodNumber": 135,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0136",
@@ -3631,7 +3741,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 136
+    "sourceFoodNumber": 136,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0137",
@@ -3663,7 +3774,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 137
+    "sourceFoodNumber": 137,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0138",
@@ -3697,7 +3809,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 138
+    "sourceFoodNumber": 138,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0139",
@@ -3731,7 +3844,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 139
+    "sourceFoodNumber": 139,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0141",
@@ -3765,7 +3879,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 141
+    "sourceFoodNumber": 141,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0143",
@@ -3798,7 +3913,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 143
+    "sourceFoodNumber": 143,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0146",
@@ -3830,7 +3946,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 146
+    "sourceFoodNumber": 146,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0147",
@@ -3862,7 +3979,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 147
+    "sourceFoodNumber": 147,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0148",
@@ -3894,7 +4012,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 148
+    "sourceFoodNumber": 148,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0150",
@@ -3927,7 +4046,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 150
+    "sourceFoodNumber": 150,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0151",
@@ -3960,7 +4080,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 151
+    "sourceFoodNumber": 151,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0152",
@@ -3992,7 +4113,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 152
+    "sourceFoodNumber": 152,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0153",
@@ -4024,7 +4146,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 153
+    "sourceFoodNumber": 153,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0154",
@@ -4058,7 +4181,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 154
+    "sourceFoodNumber": 154,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0155",
@@ -4090,7 +4214,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 155
+    "sourceFoodNumber": 155,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0156",
@@ -4122,7 +4247,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 156
+    "sourceFoodNumber": 156,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0157",
@@ -4156,7 +4282,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 157
+    "sourceFoodNumber": 157,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0158",
@@ -4188,7 +4315,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 158
+    "sourceFoodNumber": 158,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0159",
@@ -4221,7 +4349,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 159
+    "sourceFoodNumber": 159,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0160",
@@ -4253,7 +4382,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 160
+    "sourceFoodNumber": 160,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0161",
@@ -4285,7 +4415,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 161
+    "sourceFoodNumber": 161,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0162",
@@ -4317,7 +4448,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 162
+    "sourceFoodNumber": 162,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0165",
@@ -4349,7 +4481,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 165
+    "sourceFoodNumber": 165,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0166",
@@ -4380,7 +4513,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 166
+    "sourceFoodNumber": 166,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0167",
@@ -4416,7 +4550,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 167
+    "sourceFoodNumber": 167,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0170",
@@ -4448,7 +4583,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 170
+    "sourceFoodNumber": 170,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0171",
@@ -4480,7 +4616,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 171
+    "sourceFoodNumber": 171,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0172",
@@ -4511,7 +4648,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 172
+    "sourceFoodNumber": 172,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0173",
@@ -4545,7 +4683,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 173
+    "sourceFoodNumber": 173,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0174",
@@ -4576,7 +4715,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 174
+    "sourceFoodNumber": 174,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0175",
@@ -4609,7 +4749,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 175
+    "sourceFoodNumber": 175,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0176",
@@ -4642,7 +4783,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 176
+    "sourceFoodNumber": 176,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0177",
@@ -4674,7 +4816,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 177
+    "sourceFoodNumber": 177,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0178",
@@ -4706,7 +4849,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 178
+    "sourceFoodNumber": 178,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0180",
@@ -4738,7 +4882,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 180
+    "sourceFoodNumber": 180,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0181",
@@ -4770,7 +4915,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 181
+    "sourceFoodNumber": 181,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0183",
@@ -4801,7 +4947,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 183
+    "sourceFoodNumber": 183,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0184",
@@ -4833,7 +4980,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 184
+    "sourceFoodNumber": 184,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0185",
@@ -4865,7 +5013,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 185
+    "sourceFoodNumber": 185,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0186",
@@ -4896,7 +5045,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 186
+    "sourceFoodNumber": 186,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0187",
@@ -4928,7 +5078,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 187
+    "sourceFoodNumber": 187,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0188",
@@ -4961,7 +5112,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 188
+    "sourceFoodNumber": 188,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0189",
@@ -4993,7 +5145,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 189
+    "sourceFoodNumber": 189,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0190",
@@ -5024,7 +5177,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 190
+    "sourceFoodNumber": 190,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0191",
@@ -5055,7 +5209,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 191
+    "sourceFoodNumber": 191,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0192",
@@ -5086,7 +5241,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 192
+    "sourceFoodNumber": 192,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0193",
@@ -5118,7 +5274,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 193
+    "sourceFoodNumber": 193,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0194",
@@ -5149,7 +5306,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 194
+    "sourceFoodNumber": 194,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0195",
@@ -5182,7 +5340,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 195
+    "sourceFoodNumber": 195,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0196",
@@ -5214,7 +5373,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 196
+    "sourceFoodNumber": 196,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0197",
@@ -5248,7 +5408,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 197
+    "sourceFoodNumber": 197,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0198",
@@ -5281,7 +5442,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 198
+    "sourceFoodNumber": 198,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0199",
@@ -5313,7 +5475,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 199
+    "sourceFoodNumber": 199,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0201",
@@ -5344,7 +5507,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 201
+    "sourceFoodNumber": 201,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0202",
@@ -5376,7 +5540,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 202
+    "sourceFoodNumber": 202,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0203",
@@ -5407,7 +5572,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 203
+    "sourceFoodNumber": 203,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0204",
@@ -5438,7 +5604,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 204
+    "sourceFoodNumber": 204,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0205",
@@ -5469,7 +5636,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 205
+    "sourceFoodNumber": 205,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0206",
@@ -5500,7 +5668,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 206
+    "sourceFoodNumber": 206,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0207",
@@ -5531,7 +5700,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 207
+    "sourceFoodNumber": 207,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0208",
@@ -5563,7 +5733,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 208
+    "sourceFoodNumber": 208,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0209",
@@ -5595,7 +5766,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 209
+    "sourceFoodNumber": 209,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0210",
@@ -5628,7 +5800,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 210
+    "sourceFoodNumber": 210,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0211",
@@ -5661,7 +5834,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 211
+    "sourceFoodNumber": 211,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0212",
@@ -5693,7 +5867,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 212
+    "sourceFoodNumber": 212,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0213",
@@ -5725,7 +5900,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 213
+    "sourceFoodNumber": 213,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0215",
@@ -5757,7 +5933,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 215
+    "sourceFoodNumber": 215,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0216",
@@ -5789,7 +5966,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 216
+    "sourceFoodNumber": 216,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0217",
@@ -5821,7 +5999,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 217
+    "sourceFoodNumber": 217,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0218",
@@ -5853,7 +6032,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 218
+    "sourceFoodNumber": 218,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0219",
@@ -5885,7 +6065,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 219
+    "sourceFoodNumber": 219,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0220",
@@ -5917,7 +6098,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 220
+    "sourceFoodNumber": 220,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0221",
@@ -5951,7 +6133,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 221
+    "sourceFoodNumber": 221,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0222",
@@ -5985,7 +6168,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 222
+    "sourceFoodNumber": 222,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0223",
@@ -6016,7 +6200,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 223
+    "sourceFoodNumber": 223,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0224",
@@ -6050,7 +6235,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 224
+    "sourceFoodNumber": 224,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0226",
@@ -6082,7 +6268,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 226
+    "sourceFoodNumber": 226,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0227",
@@ -6117,7 +6304,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 227
+    "sourceFoodNumber": 227,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0228",
@@ -6149,7 +6337,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 228
+    "sourceFoodNumber": 228,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0230",
@@ -6181,7 +6370,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 230
+    "sourceFoodNumber": 230,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0231",
@@ -6214,7 +6404,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 231
+    "sourceFoodNumber": 231,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0232",
@@ -6245,7 +6436,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 232
+    "sourceFoodNumber": 232,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0233",
@@ -6277,7 +6469,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 233
+    "sourceFoodNumber": 233,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0234",
@@ -6310,7 +6503,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 234
+    "sourceFoodNumber": 234,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0237",
@@ -6342,7 +6536,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 237
+    "sourceFoodNumber": 237,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0238",
@@ -6374,7 +6569,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 238
+    "sourceFoodNumber": 238,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0240",
@@ -6405,7 +6601,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 240
+    "sourceFoodNumber": 240,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0241",
@@ -6436,7 +6633,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 241
+    "sourceFoodNumber": 241,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0242",
@@ -6468,7 +6666,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 242
+    "sourceFoodNumber": 242,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0244",
@@ -6500,7 +6699,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 244
+    "sourceFoodNumber": 244,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0245",
@@ -6533,7 +6733,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 245
+    "sourceFoodNumber": 245,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0246",
@@ -6564,7 +6765,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 246
+    "sourceFoodNumber": 246,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0247",
@@ -6595,7 +6797,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 247
+    "sourceFoodNumber": 247,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0248",
@@ -6627,7 +6830,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 248
+    "sourceFoodNumber": 248,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0249",
@@ -6658,7 +6862,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 249
+    "sourceFoodNumber": 249,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0250",
@@ -6689,7 +6894,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 250
+    "sourceFoodNumber": 250,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0251",
@@ -6721,7 +6927,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 251
+    "sourceFoodNumber": 251,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0252",
@@ -6753,7 +6960,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 252
+    "sourceFoodNumber": 252,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0253",
@@ -6784,7 +6992,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 253
+    "sourceFoodNumber": 253,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0254",
@@ -6815,7 +7024,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 254
+    "sourceFoodNumber": 254,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0255",
@@ -6847,7 +7057,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 255
+    "sourceFoodNumber": 255,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0257",
@@ -6879,7 +7090,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 257
+    "sourceFoodNumber": 257,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0258",
@@ -6912,7 +7124,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 258
+    "sourceFoodNumber": 258,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0262",
@@ -6944,7 +7157,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 262
+    "sourceFoodNumber": 262,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0263",
@@ -6981,7 +7195,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 263
+    "sourceFoodNumber": 263,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0264",
@@ -7019,7 +7234,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 264
+    "sourceFoodNumber": 264,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0265",
@@ -7056,7 +7272,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 265
+    "sourceFoodNumber": 265,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0266",
@@ -7094,7 +7311,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 266
+    "sourceFoodNumber": 266,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0273",
@@ -7129,7 +7347,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 273
+    "sourceFoodNumber": 273,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0274",
@@ -7164,7 +7383,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 274
+    "sourceFoodNumber": 274,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0275",
@@ -7199,7 +7419,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 275
+    "sourceFoodNumber": 275,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0276",
@@ -7234,7 +7455,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 276
+    "sourceFoodNumber": 276,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0277",
@@ -7269,7 +7491,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 277
+    "sourceFoodNumber": 277,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0278",
@@ -7303,7 +7526,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 278
+    "sourceFoodNumber": 278,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0279",
@@ -7337,7 +7561,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 279
+    "sourceFoodNumber": 279,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0280",
@@ -7371,7 +7596,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 280
+    "sourceFoodNumber": 280,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0281",
@@ -7409,7 +7635,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 281
+    "sourceFoodNumber": 281,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0282",
@@ -7443,7 +7670,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 282
+    "sourceFoodNumber": 282,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0283",
@@ -7477,7 +7705,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 283
+    "sourceFoodNumber": 283,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0284",
@@ -7512,7 +7741,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 284
+    "sourceFoodNumber": 284,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0285",
@@ -7547,7 +7777,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 285
+    "sourceFoodNumber": 285,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0286",
@@ -7586,7 +7817,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 286
+    "sourceFoodNumber": 286,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0287",
@@ -7619,7 +7851,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 287
+    "sourceFoodNumber": 287,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0288",
@@ -7652,7 +7885,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 288
+    "sourceFoodNumber": 288,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0289",
@@ -7685,7 +7919,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 289
+    "sourceFoodNumber": 289,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0290",
@@ -7718,7 +7953,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 290
+    "sourceFoodNumber": 290,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0291",
@@ -7754,7 +7990,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 291
+    "sourceFoodNumber": 291,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0292",
@@ -7787,7 +8024,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 292
+    "sourceFoodNumber": 292,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0293",
@@ -7821,7 +8059,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 293
+    "sourceFoodNumber": 293,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0294",
@@ -7855,7 +8094,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 294
+    "sourceFoodNumber": 294,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0295",
@@ -7891,7 +8131,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 295
+    "sourceFoodNumber": 295,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0296",
@@ -7925,7 +8166,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 296
+    "sourceFoodNumber": 296,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0297",
@@ -7959,7 +8201,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 297
+    "sourceFoodNumber": 297,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0298",
@@ -7993,7 +8236,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 298
+    "sourceFoodNumber": 298,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0299",
@@ -8030,7 +8274,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 299
+    "sourceFoodNumber": 299,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0300",
@@ -8063,7 +8308,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 300
+    "sourceFoodNumber": 300,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0301",
@@ -8097,7 +8343,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 301
+    "sourceFoodNumber": 301,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0302",
@@ -8131,7 +8378,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 302
+    "sourceFoodNumber": 302,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0303",
@@ -8165,7 +8413,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 303
+    "sourceFoodNumber": 303,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0304",
@@ -8199,7 +8448,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 304
+    "sourceFoodNumber": 304,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0305",
@@ -8233,7 +8483,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 305
+    "sourceFoodNumber": 305,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0306",
@@ -8271,7 +8522,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 306
+    "sourceFoodNumber": 306,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0307",
@@ -8305,7 +8557,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 307
+    "sourceFoodNumber": 307,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0308",
@@ -8339,7 +8592,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 308
+    "sourceFoodNumber": 308,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0309",
@@ -8374,7 +8628,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 309
+    "sourceFoodNumber": 309,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0310",
@@ -8407,7 +8662,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 310
+    "sourceFoodNumber": 310,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0311",
@@ -8440,7 +8696,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 311
+    "sourceFoodNumber": 311,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0312",
@@ -8473,7 +8730,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 312
+    "sourceFoodNumber": 312,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0313",
@@ -8506,7 +8764,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 313
+    "sourceFoodNumber": 313,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0314",
@@ -8539,7 +8798,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 314
+    "sourceFoodNumber": 314,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0315",
@@ -8576,7 +8836,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 315
+    "sourceFoodNumber": 315,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0316",
@@ -8612,7 +8873,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 316
+    "sourceFoodNumber": 316,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0317",
@@ -8648,7 +8910,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 317
+    "sourceFoodNumber": 317,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0318",
@@ -8681,7 +8944,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 318
+    "sourceFoodNumber": 318,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0320",
@@ -8714,7 +8978,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 320
+    "sourceFoodNumber": 320,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0321",
@@ -8748,7 +9013,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 321
+    "sourceFoodNumber": 321,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0322",
@@ -8783,7 +9049,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 322
+    "sourceFoodNumber": 322,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0323",
@@ -8812,7 +9079,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 323
+    "sourceFoodNumber": 323,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0324",
@@ -8845,7 +9113,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 324
+    "sourceFoodNumber": 324,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0325",
@@ -8878,7 +9147,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 325
+    "sourceFoodNumber": 325,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0326",
@@ -8912,7 +9182,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 326
+    "sourceFoodNumber": 326,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0327",
@@ -8946,7 +9217,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 327
+    "sourceFoodNumber": 327,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0329",
@@ -8981,7 +9253,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 329
+    "sourceFoodNumber": 329,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0330",
@@ -9014,7 +9287,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 330
+    "sourceFoodNumber": 330,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0331",
@@ -9047,7 +9321,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 331
+    "sourceFoodNumber": 331,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0332",
@@ -9080,7 +9355,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 332
+    "sourceFoodNumber": 332,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0333",
@@ -9113,7 +9389,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 333
+    "sourceFoodNumber": 333,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0334",
@@ -9151,7 +9428,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 334
+    "sourceFoodNumber": 334,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0335",
@@ -9189,7 +9467,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 335
+    "sourceFoodNumber": 335,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0336",
@@ -9227,7 +9506,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 336
+    "sourceFoodNumber": 336,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0337",
@@ -9265,7 +9545,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 337
+    "sourceFoodNumber": 337,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0338",
@@ -9298,7 +9579,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 338
+    "sourceFoodNumber": 338,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0339",
@@ -9331,7 +9613,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 339
+    "sourceFoodNumber": 339,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0340",
@@ -9366,7 +9649,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 340
+    "sourceFoodNumber": 340,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0341",
@@ -9402,7 +9686,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 341
+    "sourceFoodNumber": 341,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0342",
@@ -9438,7 +9723,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 342
+    "sourceFoodNumber": 342,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0343",
@@ -9474,7 +9760,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 343
+    "sourceFoodNumber": 343,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0344",
@@ -9510,7 +9797,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 344
+    "sourceFoodNumber": 344,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0345",
@@ -9546,7 +9834,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 345
+    "sourceFoodNumber": 345,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0346",
@@ -9582,7 +9871,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 346
+    "sourceFoodNumber": 346,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0347",
@@ -9615,7 +9905,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 347
+    "sourceFoodNumber": 347,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0348",
@@ -9648,7 +9939,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 348
+    "sourceFoodNumber": 348,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0349",
@@ -9684,7 +9976,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 349
+    "sourceFoodNumber": 349,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0350",
@@ -9720,7 +10013,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 350
+    "sourceFoodNumber": 350,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0352",
@@ -9756,7 +10050,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 352
+    "sourceFoodNumber": 352,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0353",
@@ -9789,7 +10084,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 353
+    "sourceFoodNumber": 353,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0354",
@@ -9822,7 +10118,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 354
+    "sourceFoodNumber": 354,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0355",
@@ -9855,7 +10152,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 355
+    "sourceFoodNumber": 355,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0357",
@@ -9891,7 +10189,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 357
+    "sourceFoodNumber": 357,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0358",
@@ -9927,7 +10226,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 358
+    "sourceFoodNumber": 358,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0359",
@@ -9962,7 +10262,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 359
+    "sourceFoodNumber": 359,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0360",
@@ -9997,7 +10298,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 360
+    "sourceFoodNumber": 360,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0361",
@@ -10032,7 +10334,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 361
+    "sourceFoodNumber": 361,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0362",
@@ -10067,7 +10370,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 362
+    "sourceFoodNumber": 362,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0363",
@@ -10100,7 +10404,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 363
+    "sourceFoodNumber": 363,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0364",
@@ -10133,7 +10438,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 364
+    "sourceFoodNumber": 364,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0365",
@@ -10166,7 +10472,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 365
+    "sourceFoodNumber": 365,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0366",
@@ -10199,7 +10506,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 366
+    "sourceFoodNumber": 366,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0367",
@@ -10232,7 +10540,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 367
+    "sourceFoodNumber": 367,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0368",
@@ -10265,7 +10574,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 368
+    "sourceFoodNumber": 368,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0369",
@@ -10302,7 +10612,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 369
+    "sourceFoodNumber": 369,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0370",
@@ -10339,7 +10650,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 370
+    "sourceFoodNumber": 370,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0371",
@@ -10374,7 +10686,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 371
+    "sourceFoodNumber": 371,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0372",
@@ -10409,7 +10722,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 372
+    "sourceFoodNumber": 372,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0373",
@@ -10444,7 +10758,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 373
+    "sourceFoodNumber": 373,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0374",
@@ -10479,7 +10794,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 374
+    "sourceFoodNumber": 374,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0375",
@@ -10514,7 +10830,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 375
+    "sourceFoodNumber": 375,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0376",
@@ -10549,7 +10866,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 376
+    "sourceFoodNumber": 376,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0378",
@@ -10584,7 +10902,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 378
+    "sourceFoodNumber": 378,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0379",
@@ -10619,7 +10938,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 379
+    "sourceFoodNumber": 379,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0380",
@@ -10654,7 +10974,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 380
+    "sourceFoodNumber": 380,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0381",
@@ -10689,7 +11010,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 381
+    "sourceFoodNumber": 381,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0382",
@@ -10724,7 +11046,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 382
+    "sourceFoodNumber": 382,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0383",
@@ -10759,7 +11082,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 383
+    "sourceFoodNumber": 383,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0384",
@@ -10792,7 +11116,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 384
+    "sourceFoodNumber": 384,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0385",
@@ -10825,7 +11150,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 385
+    "sourceFoodNumber": 385,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0386",
@@ -10858,7 +11184,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 386
+    "sourceFoodNumber": 386,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0387",
@@ -10891,7 +11218,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 387
+    "sourceFoodNumber": 387,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0388",
@@ -10924,7 +11252,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 388
+    "sourceFoodNumber": 388,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0389",
@@ -10959,7 +11288,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 389
+    "sourceFoodNumber": 389,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0390",
@@ -10993,7 +11323,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 390
+    "sourceFoodNumber": 390,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0391",
@@ -11027,7 +11358,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 391
+    "sourceFoodNumber": 391,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0392",
@@ -11062,7 +11394,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 392
+    "sourceFoodNumber": 392,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0393",
@@ -11097,7 +11430,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 393
+    "sourceFoodNumber": 393,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0394",
@@ -11129,7 +11463,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 394
+    "sourceFoodNumber": 394,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0395",
@@ -11161,7 +11496,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 395
+    "sourceFoodNumber": 395,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0396",
@@ -11195,7 +11531,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 396
+    "sourceFoodNumber": 396,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0397",
@@ -11229,7 +11566,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 397
+    "sourceFoodNumber": 397,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0398",
@@ -11263,7 +11601,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 398
+    "sourceFoodNumber": 398,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0399",
@@ -11297,7 +11636,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 399
+    "sourceFoodNumber": 399,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0400",
@@ -11329,7 +11669,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 400
+    "sourceFoodNumber": 400,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0402",
@@ -11363,7 +11704,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 402
+    "sourceFoodNumber": 402,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0404",
@@ -11397,7 +11739,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 404
+    "sourceFoodNumber": 404,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0405",
@@ -11431,7 +11774,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 405
+    "sourceFoodNumber": 405,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0406",
@@ -11465,7 +11809,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 406
+    "sourceFoodNumber": 406,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0407",
@@ -11499,7 +11844,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 407
+    "sourceFoodNumber": 407,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0409",
@@ -11533,7 +11879,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 409
+    "sourceFoodNumber": 409,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0411",
@@ -11567,7 +11914,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 411
+    "sourceFoodNumber": 411,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0412",
@@ -11601,7 +11949,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 412
+    "sourceFoodNumber": 412,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0414",
@@ -11635,7 +11984,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 414
+    "sourceFoodNumber": 414,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0415",
@@ -11667,7 +12017,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 415
+    "sourceFoodNumber": 415,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0416",
@@ -11699,7 +12050,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 416
+    "sourceFoodNumber": 416,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0417",
@@ -11731,7 +12083,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 417
+    "sourceFoodNumber": 417,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0418",
@@ -11763,7 +12116,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 418
+    "sourceFoodNumber": 418,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0419",
@@ -11795,7 +12149,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 419
+    "sourceFoodNumber": 419,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0420",
@@ -11827,7 +12182,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 420
+    "sourceFoodNumber": 420,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0421",
@@ -11859,7 +12215,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 421
+    "sourceFoodNumber": 421,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0422",
@@ -11891,7 +12248,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 422
+    "sourceFoodNumber": 422,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0423",
@@ -11923,7 +12281,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 423
+    "sourceFoodNumber": 423,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0424",
@@ -11952,7 +12311,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 424
+    "sourceFoodNumber": 424,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0425",
@@ -11984,7 +12344,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 425
+    "sourceFoodNumber": 425,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0426",
@@ -12016,7 +12377,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 426
+    "sourceFoodNumber": 426,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0427",
@@ -12048,7 +12410,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 427
+    "sourceFoodNumber": 427,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0428",
@@ -12080,7 +12443,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 428
+    "sourceFoodNumber": 428,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0430",
@@ -12112,7 +12476,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 430
+    "sourceFoodNumber": 430,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0431",
@@ -12144,7 +12509,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 431
+    "sourceFoodNumber": 431,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0433",
@@ -12176,7 +12542,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 433
+    "sourceFoodNumber": 433,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0434",
@@ -12209,7 +12576,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 434
+    "sourceFoodNumber": 434,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0435",
@@ -12241,7 +12609,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 435
+    "sourceFoodNumber": 435,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0436",
@@ -12273,7 +12642,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 436
+    "sourceFoodNumber": 436,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0437",
@@ -12306,7 +12676,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 437
+    "sourceFoodNumber": 437,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0438",
@@ -12340,7 +12711,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 438
+    "sourceFoodNumber": 438,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0439",
@@ -12374,7 +12746,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 439
+    "sourceFoodNumber": 439,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0440",
@@ -12405,7 +12778,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 440
+    "sourceFoodNumber": 440,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0441",
@@ -12436,7 +12810,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 441
+    "sourceFoodNumber": 441,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0442",
@@ -12467,7 +12842,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 442
+    "sourceFoodNumber": 442,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0443",
@@ -12496,7 +12872,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 443
+    "sourceFoodNumber": 443,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0444",
@@ -12527,7 +12904,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 444
+    "sourceFoodNumber": 444,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0445",
@@ -12558,7 +12936,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 445
+    "sourceFoodNumber": 445,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0446",
@@ -12590,7 +12969,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 446
+    "sourceFoodNumber": 446,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0447",
@@ -12621,7 +13001,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 447
+    "sourceFoodNumber": 447,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0448",
@@ -12652,7 +13033,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 448
+    "sourceFoodNumber": 448,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0449",
@@ -12684,7 +13066,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 449
+    "sourceFoodNumber": 449,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0451",
@@ -12716,7 +13099,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 451
+    "sourceFoodNumber": 451,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0452",
@@ -12748,7 +13132,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 452
+    "sourceFoodNumber": 452,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0453",
@@ -12778,7 +13163,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 453
+    "sourceFoodNumber": 453,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0454",
@@ -12809,7 +13195,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 454
+    "sourceFoodNumber": 454,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0455",
@@ -12841,7 +13228,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 455
+    "sourceFoodNumber": 455,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0456",
@@ -12874,7 +13262,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 456
+    "sourceFoodNumber": 456,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0459",
@@ -12907,7 +13296,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 459
+    "sourceFoodNumber": 459,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0460",
@@ -12937,7 +13327,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 460
+    "sourceFoodNumber": 460,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0462",
@@ -12970,7 +13361,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 462
+    "sourceFoodNumber": 462,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0464",
@@ -13001,7 +13393,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 464
+    "sourceFoodNumber": 464,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0465",
@@ -13032,7 +13425,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 465
+    "sourceFoodNumber": 465,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0466",
@@ -13065,7 +13459,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 466
+    "sourceFoodNumber": 466,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0470",
@@ -13099,7 +13494,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 470
+    "sourceFoodNumber": 470,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0471",
@@ -13132,7 +13528,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 471
+    "sourceFoodNumber": 471,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0473",
@@ -13165,7 +13562,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 473
+    "sourceFoodNumber": 473,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0475",
@@ -13200,7 +13598,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 475
+    "sourceFoodNumber": 475,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0476",
@@ -13234,7 +13633,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 476
+    "sourceFoodNumber": 476,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0477",
@@ -13268,7 +13668,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 477
+    "sourceFoodNumber": 477,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0479",
@@ -13302,7 +13703,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 479
+    "sourceFoodNumber": 479,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0482",
@@ -13335,7 +13737,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 482
+    "sourceFoodNumber": 482,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0483",
@@ -13368,7 +13771,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 483
+    "sourceFoodNumber": 483,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0485",
@@ -13402,7 +13806,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 485
+    "sourceFoodNumber": 485,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0487",
@@ -13437,7 +13842,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 487
+    "sourceFoodNumber": 487,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0489",
@@ -13471,7 +13877,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 489
+    "sourceFoodNumber": 489,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0491",
@@ -13501,7 +13908,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 491
+    "sourceFoodNumber": 491,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0492",
@@ -13531,7 +13939,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 492
+    "sourceFoodNumber": 492,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0493",
@@ -13561,7 +13970,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 493
+    "sourceFoodNumber": 493,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0496",
@@ -13596,7 +14006,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 496
+    "sourceFoodNumber": 496,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0497",
@@ -13628,7 +14039,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 497
+    "sourceFoodNumber": 497,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0498",
@@ -13659,7 +14071,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 498
+    "sourceFoodNumber": 498,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0499",
@@ -13689,7 +14102,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 499
+    "sourceFoodNumber": 499,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0500",
@@ -13721,7 +14135,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 500
+    "sourceFoodNumber": 500,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0501",
@@ -13753,7 +14168,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 501
+    "sourceFoodNumber": 501,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0502",
@@ -13784,7 +14200,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 502
+    "sourceFoodNumber": 502,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0503",
@@ -13815,7 +14232,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 503
+    "sourceFoodNumber": 503,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0504",
@@ -13845,7 +14263,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 504
+    "sourceFoodNumber": 504,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0505",
@@ -13877,7 +14296,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 505
+    "sourceFoodNumber": 505,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0506",
@@ -13905,7 +14325,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 506
+    "sourceFoodNumber": 506,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0508",
@@ -13933,7 +14354,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 508
+    "sourceFoodNumber": 508,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0509",
@@ -13961,7 +14383,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 509
+    "sourceFoodNumber": 509,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0510",
@@ -13989,7 +14412,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 510
+    "sourceFoodNumber": 510,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0511",
@@ -14018,7 +14442,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 511
+    "sourceFoodNumber": 511,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0512",
@@ -14046,7 +14471,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 512
+    "sourceFoodNumber": 512,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0513",
@@ -14076,7 +14502,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 513
+    "sourceFoodNumber": 513,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0514",
@@ -14106,7 +14533,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 514
+    "sourceFoodNumber": 514,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0515",
@@ -14136,7 +14564,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 515
+    "sourceFoodNumber": 515,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0518",
@@ -14162,7 +14591,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 518
+    "sourceFoodNumber": 518,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0519",
@@ -14193,7 +14623,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 519
+    "sourceFoodNumber": 519,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0520",
@@ -14225,7 +14656,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 520
+    "sourceFoodNumber": 520,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0521",
@@ -14257,7 +14689,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 521
+    "sourceFoodNumber": 521,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0522",
@@ -14291,7 +14724,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 522
+    "sourceFoodNumber": 522,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0523",
@@ -14323,7 +14757,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 523
+    "sourceFoodNumber": 523,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0525",
@@ -14351,7 +14786,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 525
+    "sourceFoodNumber": 525,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0526",
@@ -14381,7 +14817,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 526
+    "sourceFoodNumber": 526,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0527",
@@ -14416,7 +14853,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 527
+    "sourceFoodNumber": 527,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0528",
@@ -14444,7 +14882,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 528
+    "sourceFoodNumber": 528,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0529",
@@ -14478,7 +14917,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 529
+    "sourceFoodNumber": 529,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0530",
@@ -14509,7 +14949,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 530
+    "sourceFoodNumber": 530,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0531",
@@ -14540,7 +14981,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 531
+    "sourceFoodNumber": 531,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0532",
@@ -14571,7 +15013,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 532
+    "sourceFoodNumber": 532,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0533",
@@ -14605,7 +15048,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 533
+    "sourceFoodNumber": 533,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0534",
@@ -14635,7 +15079,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 534
+    "sourceFoodNumber": 534,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0535",
@@ -14665,7 +15110,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 535
+    "sourceFoodNumber": 535,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0536",
@@ -14693,7 +15139,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 536
+    "sourceFoodNumber": 536,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0537",
@@ -14724,7 +15171,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 537
+    "sourceFoodNumber": 537,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0538",
@@ -14755,7 +15203,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 538
+    "sourceFoodNumber": 538,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0539",
@@ -14786,7 +15235,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 539
+    "sourceFoodNumber": 539,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0541",
@@ -14817,7 +15267,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 541
+    "sourceFoodNumber": 541,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0542",
@@ -14848,7 +15299,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 542
+    "sourceFoodNumber": 542,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0543",
@@ -14876,7 +15328,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 543
+    "sourceFoodNumber": 543,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0544",
@@ -14904,7 +15357,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 544
+    "sourceFoodNumber": 544,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0545",
@@ -14937,7 +15391,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 545
+    "sourceFoodNumber": 545,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0546",
@@ -14971,7 +15426,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 546
+    "sourceFoodNumber": 546,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0547",
@@ -15002,7 +15458,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 547
+    "sourceFoodNumber": 547,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0548",
@@ -15030,7 +15487,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 548
+    "sourceFoodNumber": 548,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0549",
@@ -15058,7 +15516,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 549
+    "sourceFoodNumber": 549,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0550",
@@ -15086,7 +15545,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 550
+    "sourceFoodNumber": 550,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0551",
@@ -15117,7 +15577,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 551
+    "sourceFoodNumber": 551,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0552",
@@ -15150,7 +15611,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 552
+    "sourceFoodNumber": 552,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0553",
@@ -15180,7 +15642,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 553
+    "sourceFoodNumber": 553,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0554",
@@ -15208,7 +15671,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 554
+    "sourceFoodNumber": 554,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0555",
@@ -15239,7 +15703,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 555
+    "sourceFoodNumber": 555,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0556",
@@ -15267,7 +15732,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 556
+    "sourceFoodNumber": 556,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0557",
@@ -15299,7 +15765,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 557
+    "sourceFoodNumber": 557,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0558",
@@ -15331,7 +15798,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 558
+    "sourceFoodNumber": 558,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0559",
@@ -15363,7 +15831,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 559
+    "sourceFoodNumber": 559,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0562",
@@ -15395,7 +15864,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 562
+    "sourceFoodNumber": 562,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0564",
@@ -15427,7 +15897,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 564
+    "sourceFoodNumber": 564,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0565",
@@ -15459,7 +15930,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 565
+    "sourceFoodNumber": 565,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0566",
@@ -15491,7 +15963,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 566
+    "sourceFoodNumber": 566,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0568",
@@ -15523,7 +15996,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 568
+    "sourceFoodNumber": 568,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0569",
@@ -15555,7 +16029,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 569
+    "sourceFoodNumber": 569,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0570",
@@ -15587,7 +16062,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 570
+    "sourceFoodNumber": 570,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0571",
@@ -15619,7 +16095,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 571
+    "sourceFoodNumber": 571,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0572",
@@ -15651,7 +16128,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 572
+    "sourceFoodNumber": 572,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0573",
@@ -15683,7 +16161,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 573
+    "sourceFoodNumber": 573,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0574",
@@ -15715,7 +16194,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 574
+    "sourceFoodNumber": 574,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0575",
@@ -15748,7 +16228,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 575
+    "sourceFoodNumber": 575,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0576",
@@ -15779,7 +16260,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 576
+    "sourceFoodNumber": 576,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0578",
@@ -15810,7 +16292,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 578
+    "sourceFoodNumber": 578,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0579",
@@ -15841,7 +16324,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 579
+    "sourceFoodNumber": 579,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0580",
@@ -15874,7 +16358,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 580
+    "sourceFoodNumber": 580,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0581",
@@ -15905,7 +16390,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 581
+    "sourceFoodNumber": 581,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0582",
@@ -15939,7 +16425,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 582
+    "sourceFoodNumber": 582,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0583",
@@ -15972,7 +16459,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 583
+    "sourceFoodNumber": 583,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0584",
@@ -16004,7 +16492,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 584
+    "sourceFoodNumber": 584,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0585",
@@ -16035,7 +16524,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 585
+    "sourceFoodNumber": 585,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0586",
@@ -16067,7 +16557,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 586
+    "sourceFoodNumber": 586,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0587",
@@ -16099,7 +16590,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 587
+    "sourceFoodNumber": 587,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0588",
@@ -16133,7 +16625,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 588
+    "sourceFoodNumber": 588,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0589",
@@ -16166,7 +16659,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 589
+    "sourceFoodNumber": 589,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0592",
@@ -16200,7 +16694,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 592
+    "sourceFoodNumber": 592,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0593",
@@ -16231,7 +16726,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 593
+    "sourceFoodNumber": 593,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0594",
@@ -16262,7 +16758,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 594
+    "sourceFoodNumber": 594,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0595",
@@ -16293,7 +16790,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 595
+    "sourceFoodNumber": 595,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0596",
@@ -16324,7 +16822,8 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 596
+    "sourceFoodNumber": 596,
+    "measurementPolicy": "mass-source"
   },
   {
     "externalId": "TACO0597",
@@ -16355,6 +16854,7 @@
     "language": "pt-BR",
     "isActive": true,
     "catalogOrigin": "taco",
-    "sourceFoodNumber": 597
+    "sourceFoodNumber": 597,
+    "measurementPolicy": "mass-source"
   }
 ]

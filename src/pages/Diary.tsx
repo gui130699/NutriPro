@@ -37,6 +37,7 @@ export function Diary() {
   const [temporaryUnit, setTemporaryUnit] = useState<TemporaryFoodUnit | null>(null)
   const [unitDialogOpen, setUnitDialogOpen] = useState(false)
   const [unitDialogProfile, setUnitDialogProfile] = useState<FoodUnitProfile | null>(null)
+  const [unitDialogInitialName, setUnitDialogInitialName] = useState('')
   const [unitAutoSelectionKey, setUnitAutoSelectionKey] = useState<string | null>(null)
   const [mealId, setMealId] = useState('')
   const [customWater, setCustomWater] = useState('')
@@ -181,8 +182,32 @@ export function Diary() {
   }
 
   const chooseUnit = (value: UnitChoiceKey) => {
+    if (value === 'unidade' || value === 'porção') {
+      const matchingProfiles = activeUnitProfiles.filter((profile) => value === 'unidade'
+        ? profile.isDefault
+        : /por[cç][aã]o/iu.test(`${profile.name} ${profile.singularLabel}`))
+      const profile = matchingProfiles.find((item) => item.isDefault) ?? matchingProfiles[0]
+      const suggestion = catalogUnitChoices.find((item) => item.singularLabel === value)
+      if (profile) {
+        setTemporaryUnit(null)
+        setUnitChoice(`profile:${profile.id}`)
+        setUnitAutoSelectionKey(autoSelectionKey)
+        return
+      }
+      if (suggestion) {
+        setTemporaryUnit(null)
+        setUnitChoice(`catalog:${suggestion.id}`)
+        setUnitAutoSelectionKey(autoSelectionKey)
+        return
+      }
+      setUnitDialogProfile(null)
+      setUnitDialogInitialName(value)
+      setUnitDialogOpen(true)
+      return
+    }
     if (value === 'new-unit') {
       setUnitDialogProfile(null)
+      setUnitDialogInitialName('')
       setUnitDialogOpen(true)
       return
     }
@@ -193,7 +218,12 @@ export function Diary() {
 
   const saveUnitProfile = async (draft: Parameters<typeof nutritionService.saveFoodUnitProfile>[1]) => {
     const profile = await nutritionService.saveFoodUnitProfile(userId!, draft, { replacesProfileId: unitDialogProfile?.id ?? null })
-    await client.invalidateQueries({ queryKey: ['food-unit-profiles', userId, selectedFood?.id, selectedFoodSource] })
+    const profilesQueryKey = ['food-unit-profiles', userId, selectedFood?.id, selectedFoodSource]
+    client.setQueryData<FoodUnitProfile[]>(profilesQueryKey, (current = []) => [
+      profile,
+      ...current.filter((item) => item.id !== profile.id && item.id !== unitDialogProfile?.id),
+    ])
+    if (navigator.onLine) await client.invalidateQueries({ queryKey: profilesQueryKey })
     setTemporaryUnit(null)
     setUnitChoice(`profile:${profile.id}`)
     setUnitAutoSelectionKey(autoSelectionKey)
@@ -201,6 +231,7 @@ export function Diary() {
 
   const openUnitManager = () => {
     setUnitDialogProfile(selectedStoredChoice && !('isPersisted' in selectedStoredChoice) ? selectedStoredChoice : null)
+    setUnitDialogInitialName('')
     setUnitDialogOpen(true)
   }
 
@@ -245,20 +276,22 @@ export function Diary() {
           <div className="unit-choice-control">
             <select value={unitChoice} onChange={(event) => chooseUnit(event.target.value as UnitChoiceKey)} aria-label="Unidade" disabled={!selectedFood}>
               {directUnits.map((value) => <option key={value} value={value}>{value}</option>)}
+              <option value="unidade">unidade</option>
+              <option value="porção">porção</option>
               {activeUnitProfiles.length > 0 && <optgroup label="Minhas medidas">{activeUnitProfiles.map((profile) => <option key={profile.id} value={`profile:${profile.id}`}>{profile.name}{profile.isDefault ? ' (padrão)' : ''}</option>)}</optgroup>}
               {catalogUnitChoices.length > 0 && <optgroup label="Sugestões do catálogo">{catalogUnitChoices.map((profile) => <option key={profile.id} value={`catalog:${profile.id}`}>{profile.name}</option>)}</optgroup>}
               {temporaryUnit && <option value="temporary">{temporaryUnit.name || temporaryUnit.singularLabel || 'Medida temporária'} (só agora)</option>}
-              <option value="new-unit">+ unidade personalizada…</option>
+              <option value="new-unit">+ nova medida</option>
             </select>
             <button type="button" className="unit-manage-button" onClick={openUnitManager} disabled={!selectedFood} aria-label="Gerenciar ou editar medida"><Ruler size={15} /> Gerenciar</button>
           </div>
         </div>
         <button className="btn btn-primary" disabled={addItem.isPending || !selectedMeal || !selectedFood || invalidUnit} onClick={() => addItem.mutate()}>{addItem.isPending ? 'Registrando…' : <><Plus size={16} /> Adicionar</>}</button>
       </div>
-      {selectedFood && <p className="selected-food-note">Selecionado: <strong>{selectedFood.name}</strong> · base nutricional: 100 {selectedFood.baseUnit}. {selectedStoredChoice ? `Medida escolhida: ${selectedStoredChoice.name}.` : 'Use g/ml diretamente ou informe uma medida personalizada.'} {selectedStoredChoice && 'syncStatus' in selectedStoredChoice && selectedStoredChoice.syncStatus === 'pending' ? <em> Aguardando sincronização.</em> : null}</p>}
+      {selectedFood && <p className="selected-food-note">Selecionado: <strong>{selectedFood.name}</strong> · fonte nutricional: 100 {selectedFood.baseUnit}. {selectedFood.catalogOrigin === 'taco' && selectedFood.baseUnit === 'g' && /bebida/iu.test(selectedFood.category ?? '') ? 'Para usar ml, configure a densidade ou uma medida personalizada. ' : ''}{selectedStoredChoice ? `Medida escolhida: ${selectedStoredChoice.name}.` : 'Use a medida-base ou escolha unidade, porção ou nova medida.'} {selectedStoredChoice && 'syncStatus' in selectedStoredChoice && selectedStoredChoice.syncStatus === 'pending' ? <em> Aguardando sincronização.</em> : null}</p>}
       {addItem.error && <p className="form-error">{addItem.error.message}</p>}
       {catalog.isError && <p className="form-error">O catálogo público está indisponível agora; seus alimentos particulares continuam disponíveis.</p>}
-      <FoodUnitProfileDialog open={unitDialogOpen} food={selectedFood} foodSource={selectedFoodSource} profile={unitDialogProfile} defaultChecked={!activeUnitProfiles.some((profile) => profile.isDefault)} onClose={closeUnitDialog} onSave={saveUnitProfile} onUseTemporary={useTemporaryUnit} />
+      <FoodUnitProfileDialog open={unitDialogOpen} food={selectedFood} foodSource={selectedFoodSource} profile={unitDialogProfile} initialName={unitDialogInitialName} defaultChecked={!activeUnitProfiles.some((profile) => profile.isDefault)} onClose={closeUnitDialog} onSave={saveUnitProfile} onUseTemporary={useTemporaryUnit} />
     </section>
 
     <section className="diary-content-grid"><div className="meal-list"><div className="section-title-row"><div><p className="eyebrow">Refeições</p><h2 className="section-heading">Como foi o seu dia</h2></div><span className="item-count">{items.data?.length ?? 0} item(ns)</span></div>{grouped.map((group) => <MealSection key={group.key} group={group} onAdd={() => { if (group.id && activeMeals.some((meal) => meal.id === group.id)) setMealId(group.id); document.getElementById('add-meal')?.scrollIntoView({ behavior: 'smooth', block: 'center' }) }} onDelete={(id) => setDeleteAction({ kind: 'item', id })} />)}</div>

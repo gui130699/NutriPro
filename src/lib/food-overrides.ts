@@ -2,7 +2,8 @@ import type { CatalogFood } from './food-catalog'
 import type { Food, FoodOverride } from './types'
 
 const editableFoodKeys = [
-  'name', 'brand', 'description', 'category', 'baseUnit', 'calories', 'protein', 'carbs', 'fat', 'fiber', 'saturatedFat', 'sugar', 'sodium', 'unitWeightG', 'portionWeightG', 'source', 'notes', 'isActive',
+  'name', 'brand', 'category', 'calories', 'protein', 'carbs', 'fat', 'fiber',
+  'unitWeightG', 'portionWeightG', 'notes',
 ] as const satisfies readonly (keyof Food)[]
 
 /** Combines a local public record with only the authenticated user's override. */
@@ -28,6 +29,8 @@ export function mergePublicFoodWithOverride(catalogFood: CatalogFood, override?:
     isActive: catalogFood.isActive,
     isPublic: true,
     isFavorite,
+    catalogOrigin: catalogFood.catalogOrigin,
+    measurementPolicy: catalogFood.measurementPolicy,
   }
   if (!override) return original
 

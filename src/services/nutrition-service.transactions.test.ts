@@ -13,26 +13,43 @@ const firestore = vi.hoisted(() => {
     addDoc: vi.fn(),
     collection: vi.fn((_database: unknown, name: string) => ({ name })),
     deleteDoc: vi.fn(),
+    deleteField: vi.fn(() => 'DELETE_FIELD'),
     doc: vi.fn((...args: unknown[]) => {
       if (args.length === 1) return { collection: (args[0] as { name: string }).name, id: 'new-meal' }
       return { collection: args[1], id: args[2] }
     }),
     getDoc: vi.fn(),
     getDocs: vi.fn(),
-    limit: vi.fn(),
+    limit: vi.fn((value: number) => ({ kind: 'limit', value })),
     orderBy: vi.fn(),
-    query: vi.fn(),
+    query: vi.fn((source: unknown, ...constraints: unknown[]) => ({ source, constraints })),
     runTransaction: vi.fn(async (_database: unknown, callback: (transaction: unknown) => unknown) => callback(transaction)),
     serverTimestamp: vi.fn(() => 'SERVER_TIMESTAMP'),
     setDoc: vi.fn(),
     updateDoc: vi.fn(),
-    where: vi.fn(),
+    where: vi.fn((field: string, operator: string, value: unknown) => ({ kind: 'where', field, operator, value })),
     writeBatch: vi.fn(),
   }
 })
 
 vi.mock('firebase/firestore', () => firestore)
 vi.mock('../lib/firebase', () => ({ db: {} }))
+vi.mock('../lib/offline', () => ({
+  cacheFoodDensityProfile: vi.fn(async () => undefined),
+  cacheFoodUnitProfile: vi.fn(async () => undefined),
+  cacheFoodUnitProfiles: vi.fn(async () => undefined),
+  enqueueFoodDensityProfileOperation: vi.fn(async () => undefined),
+  enqueueFoodUnitProfileOperation: vi.fn(async () => undefined),
+  getCachedFoodDensityProfile: vi.fn(async () => null),
+  getCachedFoodUnitProfile: vi.fn(async () => null),
+  getCachedFoodUnitProfiles: vi.fn(async () => []),
+  pendingFoodDensityProfileIds: vi.fn(async () => new Set()),
+  pendingFoodUnitProfileIds: vi.fn(async () => new Set()),
+  removeCachedFoodDensityProfile: vi.fn(async () => undefined),
+  removeCachedFoodUnitProfile: vi.fn(async () => undefined),
+  syncFoodDensityProfileOperations: vi.fn(async () => 0),
+  syncFoodUnitProfileOperations: vi.fn(async () => 0),
+}))
 
 import { nutritionService } from './nutrition-service'
 
@@ -73,6 +90,12 @@ describe('nutritionService meal usage transactions', () => {
     firestore.transaction.delete.mockReset()
     firestore.runTransaction.mockClear()
     firestore.serverTimestamp.mockClear()
+    firestore.getDoc.mockReset()
+    firestore.getDocs.mockReset()
+    firestore.deleteDoc.mockReset()
+    firestore.query.mockClear()
+    firestore.where.mockClear()
+    firestore.limit.mockClear()
   })
 
   it('creates a meal item and its source-qualified usage aggregate in one transaction', async () => {
@@ -134,6 +157,7 @@ describe('nutritionService meal usage transactions', () => {
       amountPerUnitSnapshot: 25,
       baseMeasureSnapshot: 'g',
       consumedBaseAmount: 50,
+      nutrientBaseAmount: 50,
       consumedGrams: 50,
       calories: 50,
     })
@@ -165,5 +189,40 @@ describe('nutritionService meal usage transactions', () => {
     const payload = firestore.transaction.set.mock.calls[0]?.[1] as Record<string, unknown>
     expect(payload).toMatchObject({ userId: 'user-1', publicFoodId: 'public-42', isHidden: true, updatedAt: 'SERVER_TIMESTAMP' })
     expect(payload).not.toHaveProperty('createdAt')
+  })
+
+  it('verifica uso de unidade com consultas canônica e legada limitadas a um item', async () => {
+    firestore.getDoc.mockResolvedValue(snapshot(true, { userId: 'user-1' }))
+    firestore.getDocs.mockResolvedValue({ docs: [] })
+
+    await nutritionService.deleteFoodUnitProfile('user-1', 'profile-42', true)
+
+    expect(firestore.limit).toHaveBeenCalledTimes(2)
+    expect(firestore.limit).toHaveBeenNthCalledWith(1, 1)
+    expect(firestore.limit).toHaveBeenNthCalledWith(2, 1)
+    expect(firestore.where).toHaveBeenCalledWith('unitProfileId', '==', 'profile-42')
+    expect(firestore.where).toHaveBeenCalledWith('unit_profile_id', '==', 'profile-42')
+    expect(firestore.deleteDoc).toHaveBeenCalledWith(expect.objectContaining({ collection: 'foodUnitProfiles', id: 'profile-42' }))
+  })
+
+  it('busca somente perfis do mesmo usuário, alimento e origem ao definir o padrão', async () => {
+    const profile = {
+      userId: 'user-1', foodId: 'food-42', foodSource: 'private', name: 'Fatia',
+      singularLabel: 'fatia', measureType: 'mass', baseMeasure: 'g', amountPerUnit: 25,
+      isDefault: false, isActive: true, origin: 'user',
+    }
+    firestore.getDoc.mockResolvedValue(snapshot(true, profile))
+    firestore.getDocs.mockResolvedValue({ docs: [] })
+    firestore.transaction.get.mockResolvedValue(snapshot(true, profile))
+
+    await nutritionService.setDefaultFoodUnitProfile('user-1', 'profile-42')
+
+    expect(firestore.where).toHaveBeenCalledWith('userId', '==', 'user-1')
+    expect(firestore.where).toHaveBeenCalledWith('foodId', '==', 'food-42')
+    expect(firestore.where).toHaveBeenCalledWith('foodSource', '==', 'private')
+    expect(firestore.transaction.update).toHaveBeenCalledWith(
+      expect.objectContaining({ collection: 'foodUnitProfiles', id: 'profile-42' }),
+      expect.objectContaining({ isDefault: true }),
+    )
   })
 })

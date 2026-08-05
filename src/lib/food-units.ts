@@ -16,7 +16,7 @@ import type {
 
 export const FOOD_UNIT_MIN_AMOUNT = 0.1
 export const FOOD_UNIT_MAX_AMOUNT = 10_000
-export const FOOD_DENSITY_MAX_GRAMS_PER_ML = 10_000
+export const FOOD_DENSITY_MAX_GRAMS_PER_ML = 20
 
 type NormalizedFoodUnitProfileDraft = Omit<FoodUnitProfile, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'syncStatus'>
 type NormalizedFoodDensityProfileDraft = Omit<FoodDensityProfile, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'syncStatus'>

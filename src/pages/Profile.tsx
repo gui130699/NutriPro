@@ -14,6 +14,7 @@ import { auth, db } from '../lib/firebase'
 import type { UserGoal } from '../lib/types'
 import { evolutionService } from '../services/evolution-service'
 import { nutritionService } from '../services/nutrition-service'
+import { loadFoodCatalog } from '../lib/food-catalog'
 
 const goals: UserGoal[] = ['Emagrecimento', 'Manutenção', 'Ganho de peso', 'Saúde e bem-estar']
 
@@ -80,6 +81,7 @@ export function Profile() {
   const { theme, setTheme, isSyncing, syncError } = useThemeContext()
   const userId = user?.uid
   const [notice, setNotice] = useState<string | null>(null)
+  const [formReady, setFormReady] = useState(false)
   const loaded = useRef(false)
   const { register, handleSubmit, reset, formState: { errors, isSubmitting, isDirty } } = useForm<ProfileForm>({
     resolver: zodResolver(profileSchema),
@@ -97,6 +99,7 @@ export function Profile() {
   })
   const nutritionGoals = useQuery({ queryKey: ['goals', userId], queryFn: () => nutritionService.goals(userId!), enabled: Boolean(userId) })
   const latestWeight = useQuery({ queryKey: ['weight-latest', userId], queryFn: () => evolutionService.latestWeight(userId!), enabled: Boolean(userId) })
+  const catalog = useQuery({ queryKey: ['food-catalog'], queryFn: () => loadFoodCatalog(), enabled: Boolean(userId) })
 
   useEffect(() => {
     if (loaded.current || profile.isLoading || nutritionGoals.isLoading || latestWeight.isLoading) return
@@ -116,6 +119,7 @@ export function Profile() {
       waterMl: displayNumber(savedGoals?.waterMl),
     })
     loaded.current = true
+    setFormReady(true)
   }, [latestWeight.data?.weightKg, latestWeight.isLoading, nutritionGoals.data, nutritionGoals.isLoading, profile.data, profile.isLoading, reset])
 
   const saveProfile = useMutation({
@@ -181,6 +185,8 @@ export function Profile() {
   const initials = (profile.data?.name || user?.email || 'NP').slice(0, 2).toUpperCase()
   const status = saveProfile.error instanceof Error ? saveProfile.error.message : null
 
+  if (!formReady) return <section className="profile-page" aria-busy="true"><p className="section-loading" role="status">Carregando perfil e metas…</p></section>
+
   return <section className="profile-page">
     <header className="profile-page-header"><div><p className="eyebrow">Sua conta</p><h1 className="page-title">Tudo sobre <span>você.</span></h1><p className="page-subtitle">Ajuste suas preferências, metas e histórico sem perder o que já foi registrado.</p></div></header>
     <section className="profile-identity"><div className="large-profile-avatar">{initials}</div><div><p>Conta NutriPro</p><h2>{profile.data?.name || user?.email || 'Seu espaço pessoal'}</h2><span><ShieldCheck size={14} /> Conta protegida</span></div><button className="small-outline-btn" type="button" onClick={() => document.getElementById('profile-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Editar perfil <ChevronRight size={13} /></button></section>
@@ -218,7 +224,7 @@ export function Profile() {
       </div>
       <aside className="profile-side"><article className="profile-support"><span><CircleHelp size={20} /></span><h2>Precisa de ajuda?</h2><p>Use as listas para organizar alimentos e acompanhe seu progresso pela central de evolução.</p><button type="button" onClick={() => navigate('/evolucao')}>Abrir evolução <ChevronRight size={14} /></button></article><article className="profile-privacy"><div><ShieldCheck size={18} /><span>Privacidade em primeiro lugar</span></div><p>Somente você pode acessar seus dados alimentares e registros corporais.</p></article></aside>
     </div>
-    <footer className="profile-footer"><div><p>Gerenciar conta</p><small>Você pode sair quando quiser.</small></div><button type="button" onClick={async () => { if (auth) await signOut(auth); navigate('/entrar') }} className="signout-button"><LogOut size={16} /> Sair da conta</button></footer>
+    <footer className="profile-footer"><div><p>NutriPro {__APP_VERSION__}</p><small>Catálogo {catalog.data?.version.version ?? 'carregando…'} · Você pode sair quando quiser.</small></div><button type="button" onClick={async () => { if (auth) await signOut(auth); navigate('/entrar') }} className="signout-button"><LogOut size={16} /> Sair da conta</button></footer>
   </section>
 }
 

@@ -20,7 +20,7 @@ service cloud.firestore {
     }
 
     function hasField(data, key) {
-      return data.keys().hasAll([key]);
+      return key in data;
     }
 
     function validDate(value) {
@@ -42,6 +42,18 @@ service cloud.firestore {
       return !hasField(data, key)
         || data[key] == null
         || (data[key] is number && data[key] >= minValue && data[key] <= maxValue);
+    }
+
+    function requiredTimestamp(data, key) {
+      return hasField(data, key) && data[key] is timestamp;
+    }
+
+    function optionalTimestamp(data, key) {
+      return !hasField(data, key) || data[key] == null || data[key] is timestamp;
+    }
+
+    function validOwner(data) {
+      return validNonEmptyString(data.userId, 1000);
     }
 
     function validWeight(value) {
@@ -82,7 +94,13 @@ service cloud.firestore {
     }
 
     function validFoodCreate(data) {
-      return validNonEmptyString(data.name, 300)
+      return data.keys().hasOnly([
+          'userId', 'name', 'brand', 'description', 'category', 'baseUnit',
+          'calories', 'protein', 'carbs', 'fat', 'fiber', 'saturatedFat',
+          'sugar', 'sodium', 'unitWeightG', 'portionWeightG', 'source',
+          'notes', 'isActive', 'isPublic', 'createdAt', 'updatedAt'
+        ])
+        && validNonEmptyString(data.name, 300)
         && data.isPublic == false
         && validNutrition(data)
         && optionalNumber(data, 'unitWeightG', 0, 100000)
@@ -92,11 +110,20 @@ service cloud.firestore {
         && optionalString(data, 'brand', 300)
         && optionalString(data, 'category', 300)
         && optionalString(data, 'source', 2000)
-        && optionalString(data, 'notes', 5000);
+        && optionalString(data, 'description', 5000)
+        && optionalString(data, 'notes', 5000)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validFoodUpdate(data) {
-      return (!hasField(data, 'name') || validNonEmptyString(data.name, 300))
+      return data.keys().hasOnly([
+          'userId', 'name', 'brand', 'description', 'category', 'baseUnit',
+          'calories', 'protein', 'carbs', 'fat', 'fiber', 'saturatedFat',
+          'sugar', 'sodium', 'unitWeightG', 'portionWeightG', 'source',
+          'notes', 'isActive', 'isPublic', 'createdAt', 'updatedAt'
+        ])
+        && (!hasField(data, 'name') || validNonEmptyString(data.name, 300))
         && validNutrition(data)
         && optionalNumber(data, 'unitWeightG', 0, 100000)
         && optionalNumber(data, 'portionWeightG', 0, 100000)
@@ -105,74 +132,134 @@ service cloud.firestore {
         && optionalString(data, 'brand', 300)
         && optionalString(data, 'category', 300)
         && optionalString(data, 'source', 2000)
-        && optionalString(data, 'notes', 5000);
+        && optionalString(data, 'description', 5000)
+        && optionalString(data, 'notes', 5000)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validGoalsCreate(data) {
-      return data.calories is number && data.calories >= 0 && data.calories <= 20000
+      return data.keys().hasOnly([
+          'userId', 'calories', 'protein', 'carbs', 'fat', 'fiber', 'waterMl',
+          'water_ml', 'weightGoalKg', 'weight_goal_kg', 'createdAt', 'updatedAt'
+        ])
+        && data.calories is number && data.calories >= 0 && data.calories <= 20000
         && data.protein is number && data.protein >= 0 && data.protein <= 2000
         && data.carbs is number && data.carbs >= 0 && data.carbs <= 3000
         && data.fat is number && data.fat >= 0 && data.fat <= 2000
         && data.fiber is number && data.fiber >= 0 && data.fiber <= 1000
         && data.waterMl is number && data.waterMl >= 0 && data.waterMl <= 20000
-        && optionalWeight(data, 'weightGoalKg');
+        && optionalWeight(data, 'weightGoalKg')
+        && optionalWeight(data, 'weight_goal_kg')
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validGoalsUpdate(data) {
-      return optionalNumber(data, 'calories', 0, 20000)
+      return data.keys().hasOnly([
+          'userId', 'calories', 'protein', 'carbs', 'fat', 'fiber', 'waterMl',
+          'water_ml', 'weightGoalKg', 'weight_goal_kg', 'createdAt', 'updatedAt'
+        ])
+        && optionalNumber(data, 'calories', 0, 20000)
         && optionalNumber(data, 'protein', 0, 2000)
         && optionalNumber(data, 'carbs', 0, 3000)
         && optionalNumber(data, 'fat', 0, 2000)
         && optionalNumber(data, 'fiber', 0, 1000)
         && optionalNumber(data, 'waterMl', 0, 20000)
         && optionalNumber(data, 'water_ml', 0, 20000)
-        && optionalWeight(data, 'weightGoalKg');
+        && optionalWeight(data, 'weightGoalKg')
+        && optionalWeight(data, 'weight_goal_kg')
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
+    }
+
+    function validProfile(data) {
+      return data.keys().hasOnly([
+          'userId', 'name', 'displayName', 'email', 'birthDate', 'heightCm',
+          'goal', 'onboardingCompleted', 'onboardingCompletedAt', 'createdAt',
+          'updatedAt'
+        ])
+        && validOwner(data)
+        && optionalString(data, 'name', 80)
+        && optionalString(data, 'displayName', 80)
+        && optionalString(data, 'email', 320)
+        && (!hasField(data, 'birthDate') || data.birthDate == null || validDate(data.birthDate))
+        && optionalNumber(data, 'heightCm', 80, 260)
+        && (!hasField(data, 'goal') || data.goal == null || data.goal in ['Emagrecimento', 'Manutenção', 'Ganho de peso', 'Saúde e bem-estar'])
+        && (!hasField(data, 'onboardingCompleted') || data.onboardingCompleted is bool)
+        && optionalTimestamp(data, 'onboardingCompletedAt')
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validMealTypeCreate(data) {
-      return validNonEmptyString(data.name, 100)
+      return data.keys().hasOnly([
+          'userId', 'name', 'icon', 'color', 'suggestedTime', 'order',
+          'isActive', 'isDefault', 'deletedAt', 'createdAt', 'updatedAt'
+        ])
+        && validNonEmptyString(data.name, 100)
         && validNonEmptyString(data.icon, 100)
         && data.order is number && data.order >= 0 && data.order <= 1000
         && data.isActive is bool
         && data.isDefault is bool
         && optionalString(data, 'color', 30)
         && optionalString(data, 'suggestedTime', 20)
-        && optionalString(data, 'deletedAt', 100);
+        && optionalString(data, 'deletedAt', 100)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validMealTypeUpdate(data) {
-      return (!hasField(data, 'name') || validNonEmptyString(data.name, 100))
+      return data.keys().hasOnly([
+          'userId', 'name', 'icon', 'color', 'suggestedTime', 'order',
+          'isActive', 'isDefault', 'deletedAt', 'createdAt', 'updatedAt'
+        ])
+        && (!hasField(data, 'name') || validNonEmptyString(data.name, 100))
         && (!hasField(data, 'icon') || validNonEmptyString(data.icon, 100))
         && optionalNumber(data, 'order', 0, 1000)
         && (!hasField(data, 'isActive') || data.isActive is bool)
         && (!hasField(data, 'isDefault') || data.isDefault is bool)
         && optionalString(data, 'color', 30)
         && optionalString(data, 'suggestedTime', 20)
-        && optionalString(data, 'deletedAt', 100);
+        && optionalString(data, 'deletedAt', 100)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validWeightLogCreate(data) {
-      return validDate(data.date)
+      return data.keys().hasOnly([
+          'userId', 'date', 'weightKg', 'weight', 'source', 'time', 'notes',
+          'fasted', 'fasting', 'createdAt', 'updatedAt'
+        ])
+        && validDate(data.date)
         && validWeight(data.weightKg)
         && validWeightSource(data.source)
         && optionalString(data, 'notes', 5000)
         && optionalString(data, 'time', 20)
         && (!hasField(data, 'fasted') || data.fasted == null || data.fasted is bool)
-        && (!hasField(data, 'fasting') || data.fasting == null || data.fasting is bool);
+        && (!hasField(data, 'fasting') || data.fasting == null || data.fasting is bool)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     // Existing onboarding records may have the legacy `weight` alias and no
     // newer optional fields. Keep them writable while validating every field
     // that is present in the updated document.
     function validWeightLogUpdate(data) {
-      return optionalDate(data, 'date')
+      return data.keys().hasOnly([
+          'userId', 'date', 'weightKg', 'weight', 'source', 'time', 'notes',
+          'fasted', 'fasting', 'createdAt', 'updatedAt'
+        ])
+        && optionalDate(data, 'date')
         && optionalWeight(data, 'weightKg')
         && optionalWeight(data, 'weight')
         && optionalWeightSource(data)
         && optionalString(data, 'notes', 5000)
         && optionalString(data, 'time', 20)
         && (!hasField(data, 'fasted') || data.fasted == null || data.fasted is bool)
-        && (!hasField(data, 'fasting') || data.fasting == null || data.fasting is bool);
+        && (!hasField(data, 'fasting') || data.fasting == null || data.fasting is bool)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function hasBodyMeasurement(data, key) {
@@ -183,7 +270,14 @@ service cloud.firestore {
     }
 
     function validBodyMeasurement(data) {
-      return validDate(data.date)
+      return data.keys().hasOnly([
+          'userId', 'date', 'weightKg', 'neckCm', 'shouldersCm', 'chestCm',
+          'waistCm', 'abdomenCm', 'hipCm', 'leftArmRelaxedCm',
+          'rightArmRelaxedCm', 'leftArmContractedCm', 'rightArmContractedCm',
+          'leftForearmCm', 'rightForearmCm', 'leftThighCm', 'rightThighCm',
+          'leftCalfCm', 'rightCalfCm', 'notes', 'createdAt', 'updatedAt'
+        ])
+        && validDate(data.date)
         && optionalWeight(data, 'weightKg')
         && optionalNumber(data, 'neckCm', 0, 500)
         && optionalNumber(data, 'shouldersCm', 0, 500)
@@ -220,7 +314,9 @@ service cloud.firestore {
           || hasBodyMeasurement(data, 'rightThighCm')
           || hasBodyMeasurement(data, 'leftCalfCm')
           || hasBodyMeasurement(data, 'rightCalfCm')
-        );
+        )
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validBodyFatMethod(value) {
@@ -238,7 +334,21 @@ service cloud.firestore {
     }
 
     function validPhysicalAssessment(data) {
-      return validDate(data.assessmentDate)
+      return data.keys().hasOnly([
+          'userId', 'evaluatorName', 'evaluatorRegistration', 'assessmentDate',
+          'weightKg', 'heightCm', 'bodyFatMethod', 'biologicalSex', 'ageYears',
+          'reportedBodyFatPercent', 'calculatedBodyFatPercent', 'fatMassKg',
+          'leanMassKg', 'muscleMassKg', 'boneMassKg', 'bodyWaterPercent',
+          'visceralFatLevel', 'metabolicAge', 'basalMetabolicRateKcal', 'bmi',
+          'waistHipRatio', 'waistHeightRatio', 'neckCm', 'chestCm', 'waistCm',
+          'abdomenCm', 'hipCm', 'tricepsSkinfoldMm', 'bicepsSkinfoldMm',
+          'subscapularSkinfoldMm', 'suprailiacSkinfoldMm',
+          'abdominalSkinfoldMm', 'chestSkinfoldMm', 'midaxillarySkinfoldMm',
+          'thighSkinfoldMm', 'calfSkinfoldMm', 'restingHeartRate',
+          'systolicBloodPressure', 'diastolicBloodPressure', 'goals',
+          'observations', 'recommendations', 'createdAt', 'updatedAt'
+        ])
+        && validDate(data.assessmentDate)
         && validWeight(data.weightKg)
         && data.heightCm is number && data.heightCm >= 80 && data.heightCm <= 260
         && validBodyFatMethod(data.bodyFatMethod)
@@ -278,19 +388,66 @@ service cloud.firestore {
         && optionalString(data, 'evaluatorRegistration', 100)
         && optionalString(data, 'goals', 5000)
         && optionalString(data, 'observations', 10000)
-        && optionalString(data, 'recommendations', 10000);
+        && optionalString(data, 'recommendations', 10000)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validFoodUsage(data) {
-      return validNonEmptyString(data.foodId, 1000)
+      return data.keys().hasOnly([
+          'userId', 'foodId', 'foodSource', 'usageCount', 'lastUsedAt',
+          'createdAt', 'updatedAt'
+        ])
+        && validNonEmptyString(data.foodId, 1000)
         && data.foodSource in ['public', 'private']
         && data.usageCount is number
         && data.usageCount >= 0
-        && data.usageCount <= 1000000;
+        && data.usageCount <= 1000000
+        && optionalTimestamp(data, 'lastUsedAt')
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
+    }
+
+    function validFoodOverride(data) {
+      return data.keys().hasOnly([
+          'userId', 'publicFoodId', 'name', 'category', 'brand', 'calories',
+          'protein', 'carbs', 'fat', 'fiber', 'unitWeightG', 'portionWeightG',
+          'notes', 'isHidden', 'createdAt', 'updatedAt'
+        ])
+        && validOwner(data)
+        && validNonEmptyString(data.publicFoodId, 1000)
+        && optionalString(data, 'name', 300)
+        && (!hasField(data, 'name') || data.name == null || data.name.size() > 0)
+        && optionalString(data, 'category', 300)
+        && optionalString(data, 'brand', 300)
+        && optionalString(data, 'notes', 5000)
+        && optionalNumber(data, 'calories', 0, 100000)
+        && optionalNumber(data, 'protein', 0, 100000)
+        && optionalNumber(data, 'carbs', 0, 100000)
+        && optionalNumber(data, 'fat', 0, 100000)
+        && optionalNumber(data, 'fiber', 0, 100000)
+        && optionalNumber(data, 'unitWeightG', 0.1, 100000)
+        && optionalNumber(data, 'portionWeightG', 0.1, 100000)
+        && (!hasField(data, 'isHidden') || data.isHidden is bool)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
+    }
+
+    function validFoodFavorite(data) {
+      return data.keys().hasOnly(['userId', 'foodId', 'foodSource', 'createdAt'])
+        && validOwner(data)
+        && validNonEmptyString(data.foodId, 1000)
+        && data.foodSource in ['public', 'private']
+        && requiredTimestamp(data, 'createdAt');
     }
 
     function validFoodUnitProfile(data) {
-      return validNonEmptyString(data.foodId, 1000)
+      return data.keys().hasOnly([
+          'userId', 'foodId', 'foodSource', 'name', 'singularLabel',
+          'pluralLabel', 'measureType', 'baseMeasure', 'amountPerUnit',
+          'isDefault', 'isActive', 'origin', 'notes', 'createdAt', 'updatedAt'
+        ])
+        && validNonEmptyString(data.foodId, 1000)
         && data.foodSource in ['public', 'private']
         && validNonEmptyString(data.name, 120)
         && validNonEmptyString(data.singularLabel, 120)
@@ -308,27 +465,90 @@ service cloud.firestore {
         && data.isActive is bool
         && (data.isActive == true || data.isDefault == false)
         && data.origin in ['catalog', 'user']
-        && optionalString(data, 'notes', 2000);
+        && optionalString(data, 'notes', 2000)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     function validFoodDensityProfile(data) {
-      return validNonEmptyString(data.foodId, 1000)
+      return data.keys().hasOnly([
+          'userId', 'foodId', 'foodSource', 'gramsPerMl', 'source', 'notes',
+          'createdAt', 'updatedAt'
+        ])
+        && validNonEmptyString(data.foodId, 1000)
         && data.foodSource in ['public', 'private']
         && data.gramsPerMl is number
         && data.gramsPerMl > 0
-        && data.gramsPerMl <= 10000
+        && data.gramsPerMl <= 20
         && data.source in ['label', 'user', 'professional']
-        && optionalString(data, 'notes', 2000);
+        && optionalString(data, 'notes', 2000)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
+    }
+
+    function validMealItem(data) {
+      return data.keys().hasOnly([
+          'userId', 'date', 'mealTypeId', 'mealNameSnapshot',
+          'mealIconSnapshot', 'foodId', 'foodSource', 'foodNameSnapshot',
+          'calories', 'protein', 'carbs', 'fat', 'fiber', 'saturatedFat',
+          'sugar', 'sodium', 'unitWeightGSnapshot', 'quantity', 'unit',
+          'unitProfileId', 'unitLabelSnapshot', 'amountPerUnitSnapshot',
+          'baseMeasureSnapshot', 'consumedBaseAmount', 'nutrientBaseAmount',
+          'consumedGrams', 'usageAggregated', 'createdAt', 'updatedAt'
+        ])
+        && validOwner(data)
+        && validDate(data.date)
+        && (
+          validNonEmptyString(data.mealTypeId, 1000)
+          || validNonEmptyString(data.mealNameSnapshot, 120)
+        )
+        && validNonEmptyString(data.foodId, 1000)
+        && data.foodSource in ['public', 'private']
+        && validNonEmptyString(data.foodNameSnapshot, 300)
+        && data.quantity is number && data.quantity > 0 && data.quantity <= 100000
+        && data.unit in ['g', 'kg', 'ml', 'l', 'unidade', 'porção']
+        && data.calories is number && data.calories >= 0 && data.calories <= 10000000
+        && data.protein is number && data.protein >= 0 && data.protein <= 10000000
+        && data.carbs is number && data.carbs >= 0 && data.carbs <= 10000000
+        && data.fat is number && data.fat >= 0 && data.fat <= 10000000
+        && data.fiber is number && data.fiber >= 0 && data.fiber <= 10000000
+        && optionalNumber(data, 'saturatedFat', 0, 10000000)
+        && optionalNumber(data, 'sugar', 0, 10000000)
+        && optionalNumber(data, 'sodium', 0, 100000000)
+        && optionalNumber(data, 'unitWeightGSnapshot', 0.1, 100000)
+        && (!hasField(data, 'unitProfileId') || data.unitProfileId == null || validNonEmptyString(data.unitProfileId, 2000))
+        && optionalString(data, 'unitLabelSnapshot', 120)
+        && optionalNumber(data, 'amountPerUnitSnapshot', 0.1, 10000)
+        && (!hasField(data, 'baseMeasureSnapshot') || data.baseMeasureSnapshot == null || data.baseMeasureSnapshot in ['g', 'ml'])
+        && optionalNumber(data, 'consumedBaseAmount', 0.000001, 100000000)
+        && data.nutrientBaseAmount is number && data.nutrientBaseAmount > 0 && data.nutrientBaseAmount <= 100000000
+        && data.consumedGrams is number && data.consumedGrams > 0 && data.consumedGrams <= 100000000
+        && (!hasField(data, 'usageAggregated') || data.usageAggregated is bool)
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
+    }
+
+    function validWaterLog(data) {
+      return data.keys().hasOnly(['userId', 'date', 'amountMl', 'loggedAt', 'createdAt', 'updatedAt'])
+        && validOwner(data)
+        && validDate(data.date)
+        && data.amountMl is number && data.amountMl > 0 && data.amountMl <= 20000
+        && data.loggedAt is timestamp
+        && requiredTimestamp(data, 'createdAt')
+        && requiredTimestamp(data, 'updatedAt');
     }
 
     match /profiles/{userId} {
       allow read: if signedIn() && userId == request.auth.uid;
       allow create: if signedIn()
         && userId == request.auth.uid
-        && request.resource.data.userId == request.auth.uid;
+        && request.resource.data.userId == request.auth.uid
+        && validProfile(request.resource.data);
       allow update: if signedIn()
         && userId == request.auth.uid
-        && request.resource.data.userId == resource.data.userId;
+        && request.resource.data.userId == resource.data.userId
+        && validProfile(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if signedIn() && userId == request.auth.uid;
     }
 
@@ -337,18 +557,26 @@ service cloud.firestore {
       allow create: if signedIn()
         && userId == request.auth.uid
         && request.resource.data.userId == request.auth.uid
-        && request.resource.data.theme in ['light', 'dark', 'system'];
+        && request.resource.data.theme in ['light', 'dark', 'system']
+        && request.resource.data.keys().hasOnly(['userId', 'theme', 'createdAt', 'updatedAt'])
+        && requiredTimestamp(request.resource.data, 'createdAt')
+        && requiredTimestamp(request.resource.data, 'updatedAt');
       allow update: if signedIn()
         && userId == request.auth.uid
         && request.resource.data.userId == resource.data.userId
-        && request.resource.data.theme in ['light', 'dark', 'system'];
+        && request.resource.data.theme in ['light', 'dark', 'system']
+        && request.resource.data.keys().hasOnly(['userId', 'theme', 'createdAt', 'updatedAt'])
+        && request.resource.data.createdAt == resource.data.createdAt
+        && requiredTimestamp(request.resource.data, 'updatedAt');
       allow delete: if signedIn() && userId == request.auth.uid;
     }
 
     match /goals/{goalId} {
-      allow read: if ownsExisting();
+      allow read: if ownsExisting() || (signedIn() && goalId == request.auth.uid);
       allow create: if createsOwn() && validGoalsCreate(request.resource.data);
-      allow update: if updatesOwnWithoutChangingOwner() && validGoalsUpdate(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validGoalsUpdate(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
@@ -362,84 +590,141 @@ service cloud.firestore {
         && resource.data.isPublic == false
         && request.resource.data.userId == resource.data.userId
         && request.resource.data.isPublic == false
-        && validFoodUpdate(request.resource.data);
+        && validFoodUpdate(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting() && resource.data.isPublic == false;
     }
 
     match /foodOverrides/{overrideId} {
-      allow read: if ownsExisting();
-      allow create: if createsOwn();
-      allow update: if updatesOwnWithoutChangingOwner();
+      allow get: if ownsExisting()
+        || (signedIn()
+          && !exists(/databases/$(database)/documents/foodOverrides/$(overrideId))
+          && overrideId.matches('^' + request.auth.uid + '_.*$'));
+      allow list: if ownsExisting();
+      allow create: if createsOwn() && validFoodOverride(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validFoodOverride(request.resource.data)
+        && request.resource.data.publicFoodId == resource.data.publicFoodId
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /foodFavorites/{favoriteId} {
-      allow read: if ownsExisting();
-      allow create: if createsOwn();
-      allow update: if updatesOwnWithoutChangingOwner();
+      allow get: if ownsExisting()
+        || (signedIn()
+          && !exists(/databases/$(database)/documents/foodFavorites/$(favoriteId))
+          && favoriteId.matches('^' + request.auth.uid + '_.*$'));
+      allow list: if ownsExisting();
+      allow create: if createsOwn() && validFoodFavorite(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validFoodFavorite(request.resource.data)
+        && request.resource.data.foodId == resource.data.foodId
+        && request.resource.data.foodSource == resource.data.foodSource
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /foodUsage/{usageId} {
-      allow read: if ownsExisting();
+      allow get: if ownsExisting()
+        || (signedIn()
+          && !exists(/databases/$(database)/documents/foodUsage/$(usageId))
+          && usageId.matches('^usage_' + request.auth.uid + '_(public|private)_.*$'));
+      allow list: if ownsExisting();
       allow create: if createsOwn() && validFoodUsage(request.resource.data);
-      allow update: if updatesOwnWithoutChangingOwner() && validFoodUsage(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validFoodUsage(request.resource.data)
+        && request.resource.data.foodId == resource.data.foodId
+        && request.resource.data.foodSource == resource.data.foodSource
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /foodUnitProfiles/{profileId} {
-      allow read: if ownsExisting();
+      allow get: if ownsExisting()
+        || (signedIn()
+          && !exists(/databases/$(database)/documents/foodUnitProfiles/$(profileId))
+          && profileId.matches('^' + request.auth.uid + '_(public|private)_.*$'));
+      allow list: if ownsExisting();
       allow create: if createsOwn() && validFoodUnitProfile(request.resource.data);
-      allow update: if updatesOwnWithoutChangingOwner() && validFoodUnitProfile(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validFoodUnitProfile(request.resource.data)
+        && request.resource.data.foodId == resource.data.foodId
+        && request.resource.data.foodSource == resource.data.foodSource
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /foodDensityProfiles/{profileId} {
-      allow read: if ownsExisting();
+      allow get: if ownsExisting()
+        || (signedIn()
+          && !exists(/databases/$(database)/documents/foodDensityProfiles/$(profileId))
+          && profileId.matches('^density_' + request.auth.uid + '_(public|private)_.*$'));
+      allow list: if ownsExisting();
       allow create: if createsOwn() && validFoodDensityProfile(request.resource.data);
-      allow update: if updatesOwnWithoutChangingOwner() && validFoodDensityProfile(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validFoodDensityProfile(request.resource.data)
+        && request.resource.data.foodId == resource.data.foodId
+        && request.resource.data.foodSource == resource.data.foodSource
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /mealTypes/{mealTypeId} {
       allow read: if ownsExisting();
       allow create: if createsOwn() && validMealTypeCreate(request.resource.data);
-      allow update: if updatesOwnWithoutChangingOwner() && validMealTypeUpdate(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validMealTypeUpdate(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /mealItems/{mealItemId} {
       allow read: if ownsExisting();
-      allow create: if createsOwn();
-      allow update: if updatesOwnWithoutChangingOwner();
+      allow create: if createsOwn() && validMealItem(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validMealItem(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /waterLogs/{waterLogId} {
       allow read: if ownsExisting();
-      allow create: if createsOwn();
-      allow update: if updatesOwnWithoutChangingOwner();
+      allow create: if createsOwn() && validWaterLog(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validWaterLog(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /weightLogs/{weightLogId} {
-      allow read: if ownsExisting();
+      allow get: if ownsExisting()
+        || (signedIn() && weightLogId == request.auth.uid + '_initial')
+        || (signedIn()
+          && !exists(/databases/$(database)/documents/weightLogs/$(weightLogId))
+          && weightLogId.matches('^linked_' + request.auth.uid + '_.*$'));
+      allow list: if ownsExisting();
       allow create: if createsOwn() && validWeightLogCreate(request.resource.data);
-      allow update: if updatesOwnWithoutChangingOwner() && validWeightLogUpdate(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validWeightLogUpdate(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /bodyMeasurements/{measurementId} {
       allow read: if ownsExisting();
       allow create: if createsOwn() && validBodyMeasurement(request.resource.data);
-      allow update: if updatesOwnWithoutChangingOwner() && validBodyMeasurement(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validBodyMeasurement(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 
     match /physicalAssessments/{assessmentId} {
       allow read: if ownsExisting();
       allow create: if createsOwn() && validPhysicalAssessment(request.resource.data);
-      allow update: if updatesOwnWithoutChangingOwner() && validPhysicalAssessment(request.resource.data);
+      allow update: if updatesOwnWithoutChangingOwner()
+        && validPhysicalAssessment(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if ownsExisting();
     }
 

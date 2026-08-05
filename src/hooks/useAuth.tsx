@@ -16,7 +16,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const appUser = value ? Object.assign(value, { id: value.uid }) as AppUser : null
       setUser(appUser)
       setLoading(false)
-      if (appUser) void nutritionService.initializeUser(appUser.uid).catch(() => undefined)
     })
   }, [])
 
