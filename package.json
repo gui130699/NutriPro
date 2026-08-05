@@ -17,6 +17,7 @@
     "migrate:meals": "tsx scripts/migrate-meal-snapshots.ts",
     "migrate:food-usage": "tsx scripts/migrate-food-usage.ts",
     "pwa:icons": "tsx scripts/generate-pwa-icons.ts",
+    "docs:complete": "tsx scripts/generate-project-documentation.ts",
     "preview": "vite preview"
   },
   "dependencies": {
