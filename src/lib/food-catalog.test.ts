@@ -20,6 +20,13 @@ describe('catálogo público de alimentos', () => {
     expect(food.searchKeywords).toEqual(expect.arrayContaining(['pao de queijo', 'pao', 'queijo', 'padaria']))
     expect(food.protein).toBe(5.4)
     expect(food.baseQuantity).toBe(100)
+    expect(food.measurementPolicy).toBe('mass-source')
+  })
+
+  it('preserva a política de medida da fonte sem assumir equivalência entre g e ml', () => {
+    expect(normalizeCatalogFood({ externalId: 'TACO0474', name: 'Bebida TACO', category: 'Bebidas', baseUnit: 'g', catalogOrigin: 'taco' }).measurementPolicy).toBe('mass-source')
+    expect(normalizeCatalogFood({ externalId: 'BR0056', name: 'Leite', category: 'Bebidas', baseUnit: 'ml', catalogOrigin: 'curated-br' }).measurementPolicy).toBe('volume-source')
+    expect(normalizeCatalogFood({ externalId: 'X1', name: 'Bebida em massa', category: 'Bebidas', baseUnit: 'g' }).measurementPolicy).toBe('requires-density')
   })
 
   it('cria palavras-chave pesquisáveis a partir do nome, categoria e marca', () => {

@@ -17,6 +17,7 @@ const curatedFood = {
   externalId: 'BR0001', name: 'Arroz integral cozido', nameNormalized: 'arroz integral cozido', searchKeywords: ['arroz'],
   category: 'Cereais e derivados', brand: null, calories: 124, protein: 2.6, carbs: 25.8, fat: 1, fiber: 2.7,
   baseQuantity: 100, baseUnit: 'g' as const, unitWeightG: null, portionWeightG: null, source: 'TACO', language: 'pt-BR', isActive: true,
+  measurementPolicy: 'mass-source' as const,
 }
 
 describe('importação TACO 4ª edição', () => {

@@ -1,14 +1,20 @@
 {
   "name": "nutripro",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.9.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "node scripts/clean-build.mjs && tsc -b && vite build",
     "lint": "oxlint",
-    "test": "vitest run",
+    "test": "npm run test:unit",
+    "test:typecheck": "tsc -b --pretty false",
+    "test:unit": "vitest run --exclude tests/firestore",
+    "test:rules": "vitest run tests/firestore",
+    "test:firebase": "firebase emulators:exec --project nutripro-test --only auth,firestore \"npm run test:rules\"",
     "test:e2e": "playwright test",
+    "test:e2e:firebase": "firebase emulators:exec --project nutripro-test --only auth,firestore \"playwright test --config playwright.firebase.config.ts\"",
+    "test:e2e:firebase:offline": "firebase emulators:exec --project nutripro-test --only auth,firestore \"playwright test --config playwright.firebase.config.ts --grep=offline\"",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:report": "playwright show-report",
@@ -17,13 +23,13 @@
     "migrate:meals": "tsx scripts/migrate-meal-snapshots.ts",
     "migrate:food-usage": "tsx scripts/migrate-food-usage.ts",
     "pwa:icons": "tsx scripts/generate-pwa-icons.ts",
+    "docs:complete": "tsx scripts/generate-project-documentation.ts",
+    "test:all": "npm run catalog:validate && npm run test:typecheck && npm run lint && npm run test:unit && npm run test:firebase && npm run test:e2e:firebase && npm run build && npm run test:e2e",
     "preview": "vite preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.5.7",
     "@tanstack/react-query": "^5.101.4",
-    "@tanstack/react-query-devtools": "^5.101.4",
-    "date-fns": "^4.4.0",
     "dexie": "^4.4.4",
     "firebase": "^12.16.0",
     "lucide-react": "^1.28.0",
@@ -35,7 +41,12 @@
     "vite-plugin-pwa": "^1.3.0",
     "zod": "^3.25.76"
   },
+  "overrides": {
+    "fast-uri": "3.1.5"
+  },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@firebase/rules-unit-testing": "^5.0.1",
     "@playwright/test": "^1.62.0",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.0",
@@ -44,8 +55,8 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
-    "eslint-config-prettier": "^10.1.8",
     "firebase-admin": "^14.2.0",
+    "firebase-tools": "^15.25.1",
     "jsdom": "^29.1.1",
     "oxlint": "^1.75.0",
     "prettier": "^3.9.6",

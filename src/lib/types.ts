@@ -4,6 +4,7 @@ export type FoodSource = 'public' | 'private'
 export type FoodUnitMeasureType = 'mass' | 'volume'
 export type FoodUnitProfileOrigin = 'catalog' | 'user'
 export type FoodDensitySource = 'label' | 'user' | 'professional'
+export type CatalogMeasurementPolicy = 'mass-source' | 'volume-source' | 'requires-density'
 export type SyncStatus = 'synced' | 'pending'
 export type ThemePreference = 'light' | 'dark' | 'system'
 
@@ -36,6 +37,8 @@ export type Food = Nutrients & {
   externalId?: string
   createdAt?: string
   updatedAt?: string
+  catalogOrigin?: 'curated-br' | 'taco'
+  measurementPolicy?: CatalogMeasurementPolicy
 }
 
 export type PublicFood = Nutrients & {
@@ -159,6 +162,7 @@ export type MealItemUnitSnapshot = {
   amountPerUnitSnapshot?: number | null
   baseMeasureSnapshot?: BaseUnit | null
   consumedBaseAmount?: number | null
+  nutrientBaseAmount?: number | null
 }
 
 export type MealItemUnitSelection = {
@@ -206,6 +210,7 @@ export type MealItem = Nutrients & MealItemUnitSnapshot & {
   unit: Unit
   consumedGrams: number
   createdAt?: string
+  updatedAt?: string
 }
 
 export type Goal = {

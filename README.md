@@ -55,7 +55,7 @@ Os valores nutricionais são referências por 100 `g` ou `ml`, não substituem r
 
 ## Unidades e porções por pessoa
 
-O diário mantém `g`/`kg` para alimentos de massa e `ml`/`l` para líquidos. Para registrar uma medida caseira, selecione **+ unidade personalizada…**; o formulário abre automaticamente e pede o nome e o valor em `g` ou `ml` conforme a base do alimento. O sistema não estima peso, não aceita zero, negativos, texto, valores não finitos ou fora de `0,1` a `10.000`.
+O diário mantém `g`/`kg` para alimentos de massa e `ml`/`l` para líquidos. As opções diretas **unidade** e **porção** usam a medida pessoal ou a sugestão do catálogo; se ela não existir, o formulário abre automaticamente. **+ nova medida** sempre permite criar uma medida explícita. O formulário pede nome, quantidade-base, unidade-base, rótulos singular/plural e preferência de padrão. O sistema não estima peso, não aceita zero, negativos, texto, valores não finitos ou fora de `0,1` a `10.000`.
 
 - **Salvar para as próximas vezes** cria um perfil pessoal em `foodUnitProfiles`; há várias medidas por alimento, uma padrão, edição, duplicação, desativação, restauração e exclusão física apenas quando não há lançamento histórico que a referencie.
 - **Usar só desta vez** produz somente o snapshot do lançamento; não cria documento de perfil.
@@ -73,6 +73,12 @@ As coleções `foodUnitProfiles` e `foodDensityProfiles` têm regras próprias d
 
 O restante do isolamento já existente é preservado: perfis, metas, alimentos privados, overrides, favoritos, tipos de refeição, diário, hidratação, evolução e preferências continuam acessíveis apenas pela pessoa proprietária.
 
+As regras também validam chaves permitidas, tipos, limites numéricos, timestamps de servidor, proprietário imutável e snapshots históricos de `mealItems`, `waterLogs`, `weightLogs`, `bodyMeasurements` e `physicalAssessments`. Favoritos e demais documentos determinísticos podem consultar um ID ainda ausente somente quando o prefixo pertence à sessão autenticada; isso permite transações idempotentes sem abrir leitura cruzada entre contas.
+
+### Auditoria de dependências
+
+`fast-uri` é fixado em `3.1.5` por `overrides`, versão corrigida para o advisory `GHSA-7p8r-x3mc-p8w7`. Em 2026-08-05, `npm audit --omit=dev` ainda sinaliza `react-router@7.18.2` por `GHSA-qwww-vcr4-c8h2`; o próprio advisory restringe o impacto às APIs RSC instáveis, que não são usadas por esta SPA. A versão corrigida indicada (`8.3.0`) ainda não estava publicada no npm. Não foi aplicado downgrade para `7.11.0`, pois essa versão apresentava um conjunto maior de advisories. Reavaliar assim que uma versão corrigida compatível for publicada.
+
 ## Recursos preservados
 
 - Autenticação por e-mail/senha, recuperação de acesso e onboarding persistente.
@@ -83,7 +89,7 @@ O restante do isolamento já existente é preservado: perfis, metas, alimentos p
 
 ## Requisitos e execução local
 
-1. Instale Node.js 20 ou superior e Firebase CLI.
+1. Instale Node.js **22 ou 24 LTS**. Para os Emulators, instale também **JDK 21**. A Firebase CLI já é dependência de desenvolvimento do projeto.
 2. Copie `.env.example` para `.env`.
 3. Preencha as variáveis `VITE_FIREBASE_*` com a configuração Web do projeto Firebase.
 4. No Firebase Authentication, habilite **E-mail/senha**.
@@ -93,6 +99,8 @@ O restante do isolamento já existente é preservado: perfis, metas, alimentos p
 npm ci
 npm run dev
 ```
+
+Os testes desta auditoria também rodaram em Node `25.1.0`, mas `superstatic` (dependência da Firebase CLI) declara suporte a Node 20/22/24; por isso Node 22 ou 24 é a configuração recomendada e sem aviso de engine.
 
 A configuração Web do Firebase é pública por natureza. Não envie conta de serviço, credencial administrativa ou `.env` ao Git; o controle de acesso dos dados pessoais é feito em `firestore.rules`.
 
@@ -107,16 +115,28 @@ A configuração Web do Firebase é pública por natureza. Não envie conta de s
 Antes de publicar, execute:
 
 ```bash
+npm ci
 npm run catalog:validate
+npm run test:typecheck
 npm run lint
-npm run test
+npm run test:unit
+npm run test:firebase
+npm run test:e2e:firebase
 npx playwright install chromium
 npm run test:e2e
 npm run build
 NUTRIPRO_GITHUB_PAGES=true npm run build
 ```
 
-`VITE_E2E=true`, usado pela suíte Playwright, isola a interface de Firebase para que os smoke tests não leiam nem gravem dados de produção. O roteiro detalhado, inclusive os cenários autenticados ainda pendentes de homologação/Emulator, está em [docs/TESTES-FUNCIONAIS.md](docs/TESTES-FUNCIONAIS.md).
+`npm run test:all` agrega catálogo, tipagem, lint, unitários, regras, fluxos autenticados, build/PWA e smoke público. A matriz final de 2026-08-05 aprovou **81 testes unitários**, **21 testes de regras**, **13 fluxos autenticados** e **23 cenários públicos**, além dos dois builds. `VITE_E2E=true` isola apenas a suíte pública; a suíte autenticada usa Auth e Firestore Emulator com projeto falso `nutripro-test`. Nenhum teste acessa ou modifica produção. O roteiro, os comandos e as evidências estão em [docs/TESTES-FUNCIONAIS.md](docs/TESTES-FUNCIONAIS.md) e [docs/RELATORIO-AUDITORIA-COMPLETA.md](docs/RELATORIO-AUDITORIA-COMPLETA.md).
+
+Documentação adicional:
+
+- [Matriz de cobertura](docs/MATRIZ-COBERTURA-TESTES.md)
+- [Segurança e qualidade](docs/RELATORIO-SEGURANCA-E-QUALIDADE.md)
+- [Importação TACO e política de medidas](docs/RELATORIO-IMPORTACAO-ALIMENTOS.md)
+- `NutriPro-documentacao-e-codigo.txt`: índice consolidado
+- `NutriPro-projeto-completo.txt`: conteúdo textual integral, comandos e código-fonte
 
 ## Publicação
 

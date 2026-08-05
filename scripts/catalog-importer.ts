@@ -295,6 +295,11 @@ function toCatalogFood(row: CsvRow, schema: CsvSchema, line: number): CatalogFoo
     source,
     language,
     isActive: activeValue === 'S',
+    measurementPolicy: baseUnit === 'ml'
+      ? 'volume-source'
+      : /bebida/iu.test(category ?? '')
+        ? 'requires-density'
+        : 'mass-source',
   }
 }
 

@@ -1,9 +1,14 @@
 import { expect, test } from '@playwright/test'
 
 const viewports = [
+  { name: 'celular 320 × 568', width: 320, height: 568 },
+  { name: 'celular 360 × 800', width: 360, height: 800 },
   { name: 'celular 375 × 667', width: 375, height: 667 },
   { name: 'celular 390 × 844', width: 390, height: 844 },
+  { name: 'celular 414 × 896', width: 414, height: 896 },
   { name: 'tablet 768 × 1024', width: 768, height: 1024 },
+  { name: 'tablet 820 × 1180', width: 820, height: 1180 },
+  { name: 'tablet horizontal 1024 × 768', width: 1024, height: 768 },
   { name: 'desktop 1366 × 768', width: 1366, height: 768 },
   { name: 'desktop 1920 × 1080', width: 1920, height: 1080 },
 ]

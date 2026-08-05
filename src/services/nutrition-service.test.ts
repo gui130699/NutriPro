@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { foodUsageCountsFromRecords, foodUsageDocumentId, foodUsageKey } from './nutrition-service'
+import { foodUsageCountsFromRecords, foodUsageDocumentId, foodUsageKey, sanitizeFoodOverrideChanges } from './nutrition-service'
 
 describe('food usage aggregates', () => {
   it('keeps public and private foods with the same id separate', () => {
@@ -27,5 +27,18 @@ describe('food usage aggregates', () => {
 
   it('uses a deterministic document id safe for food ids containing a slash', () => {
     expect(foodUsageDocumentId('user/a', 'public', 'food/a')).toBe('usage_user%2Fa_public_food%2Fa')
+  })
+})
+
+describe('personalização de alimento público', () => {
+  it('mantém somente os campos autorizados pelas regras', () => {
+    expect(sanitizeFoodOverrideChanges({
+      name: 'Nome pessoal',
+      calories: 120,
+      isHidden: true,
+      baseUnit: 'ml',
+      userId: 'outro-usuario',
+      createdAt: 'sobrescrito',
+    })).toEqual({ name: 'Nome pessoal', calories: 120, isHidden: true })
   })
 })

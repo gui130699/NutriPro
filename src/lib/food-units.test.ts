@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   FOOD_UNIT_MAX_AMOUNT,
+  FOOD_DENSITY_MAX_GRAMS_PER_ML,
   catalogUnitSuggestions,
   convertFoodBaseAmount,
   defaultFoodUnitChoice,
@@ -8,6 +9,7 @@ import {
   foodUnitProfileId,
   normalizeUnitProfileName,
   parseUnitAmount,
+  parseFoodDensity,
   resolveMealItemUnitSelection,
   validateFoodUnitProfileDraft,
 } from './food-units'
@@ -123,6 +125,8 @@ describe('unidades inteligentes de alimentos', () => {
     expect(() => parseUnitAmount('-1', 'ml')).toThrow('entre')
     expect(() => parseUnitAmount('abc', 'g')).toThrow('número válido')
     expect(() => parseUnitAmount(FOOD_UNIT_MAX_AMOUNT + 0.1, 'g')).toThrow('entre')
+    expect(parseFoodDensity('1,05')).toBe(1.05)
+    expect(() => parseFoodDensity(FOOD_DENSITY_MAX_GRAMS_PER_ML + 0.01)).toThrow('no máximo')
     expect(() => validateFoodUnitProfileDraft({
       foodId: banana.id,
       foodSource: 'public',
