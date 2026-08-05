@@ -98,6 +98,13 @@ O Axe inicialmente encontrou três contrastes insuficientes na tela de acesso. A
 
 ## E2E autenticado — 13 cenários
 
+A suíte autenticada executa `npm run build` e serve o resultado com
+`npm run preview` antes de abrir o Chromium. Assim, os 13 cenários validam os
+chunks otimizados de produção contra Auth e Firestore Emulator, sem acessar o
+projeto real. Essa cobertura impede a regressão em que uma divisão manual dos
+módulos Firebase passava no servidor de desenvolvimento, mas quebrava a
+inicialização do Firestore no GitHub Pages.
+
 Todos os cenários usam usuários descartáveis, limpam Auth/Firestore Emulator entre testes e recusam execução se as variáveis não apontarem para `127.0.0.1:8080` e `127.0.0.1:9099`.
 
 1. Perfil completo abre o dashboard; perfil ausente abre onboarding.

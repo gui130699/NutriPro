@@ -14,7 +14,10 @@ const firebaseConfig = { apiKey: import.meta.env.VITE_FIREBASE_API_KEY, authDoma
 // must not wait for, or write to, the production Firebase project.
 const e2eMode = import.meta.env.VITE_E2E === 'true'
 const hasFirebaseConfig = Object.values(firebaseConfig).every(Boolean)
-const useFirebaseEmulators = import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true' && !import.meta.env.PROD
+// This explicit build-time flag is set only by the authenticated Playwright
+// suite. Allowing it in a production build makes that suite exercise the exact
+// optimized bundle published by Pages while still pointing at local emulators.
+const useFirebaseEmulators = import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true'
 
 export const firebaseConfigured = e2eMode || hasFirebaseConfig
 const app = !e2eMode && hasFirebaseConfig ? (getApps().length ? getApp() : initializeApp(firebaseConfig)) : null

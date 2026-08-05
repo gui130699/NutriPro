@@ -16,7 +16,9 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
   webServer: {
-    command: 'node ./node_modules/vite/bin/vite.js --mode test --host 127.0.0.1 --port 4174',
+    // Exercise the optimized production chunks. The previous dev-server run
+    // could not detect invalid cross-chunk Firebase initialization.
+    command: 'npm run build && npm run preview -- --host 127.0.0.1 --port 4174',
     url: baseURL,
     reuseExistingServer: false,
     timeout: 120_000,

@@ -18,42 +18,6 @@ export default defineConfig({
     // Keep stale hashed bundles out of the service-worker precache, especially
     // when a previous build was interrupted on a synced Windows workspace.
     emptyOutDir: true,
-    rolldownOptions: {
-      output: {
-        codeSplitting: {
-          groups: [
-            {
-              name: 'firebase-firestore',
-              test: /node_modules[\\/]@firebase[\\/](firestore|webchannel-wrapper)/,
-              priority: 30,
-              minSize: 0,
-              includeDependenciesRecursively: false,
-            },
-            {
-              name: 'firebase-auth',
-              test: /node_modules[\\/]@firebase[\\/]auth/,
-              priority: 30,
-              minSize: 0,
-              includeDependenciesRecursively: false,
-            },
-            {
-              name: 'firebase-core',
-              test: /node_modules[\\/](@firebase|firebase)[\\/]/,
-              priority: 20,
-              minSize: 0,
-              includeDependenciesRecursively: false,
-            },
-            {
-              name: 'charts',
-              test: /node_modules[\\/](recharts|d3-|victory-vendor|react-smooth)[\\/]/,
-              priority: 20,
-              minSize: 0,
-              includeDependenciesRecursively: false,
-            },
-          ],
-        },
-      },
-    },
   },
   test: {
     include: ['src/**/*.test.ts', 'tests/firestore/**/*.test.ts'],
