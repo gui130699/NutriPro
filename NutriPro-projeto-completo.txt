@@ -1,7 +1,7 @@
 NUTRIPRO — PROJETO COMPLETO: DOCUMENTAÇÃO, COMANDOS E CÓDIGO-FONTE
 ===================================================================
 
-Gerado em (UTC): 2026-08-05T15:43:05.168Z
+Gerado em (UTC): 2026-08-05T15:51:41.099Z
 Codificação: UTF-8
 
 Este arquivo é uma visão autocontida do repositório. Ele reúne a documentação
@@ -19467,8 +19467,8 @@ ARQUIVO: docs/TESTES-FUNCIONAIS.md
 ==================================
 
 
-Tamanho: 10826 bytes
-SHA-256: c5346364cc36c6c8db73f0a79458c43133b93a383127a017f9f4d46d835d4b96
+Tamanho: 11100 bytes
+SHA-256: 6f3667e05bee416e2f8a8fa34d1c56681a4004d92c49546280c5685288a7d780
 
 ```
 # Testes funcionais e homologação — NutriPro 0.9.0
@@ -19651,14 +19651,18 @@ Nenhuma versão em ml foi inventada para alimentos TACO. A interface alerta que 
 
 - `generateSW` produziu `dist/sw.js` e `dist/workbox-2fbc6a65.js`.
 - 47 entradas, aproximadamente 1,799 MiB, foram incluídas no precache.
+- O service worker usa `autoUpdate`, `skipWaiting`, `clientsClaim` e limpeza de
+  caches antigos. Uma versão nova assume o controle sem depender do bundle
+  anterior, inclusive quando esse bundle falha durante a inicialização.
 - O catálogo público mantém troca atômica no IndexedDB e não substitui cache íntegro por download parcial.
 - Firestore usa cache persistente multiaba.
 - A instalação real em Android/iOS/desktop físico **não foi executada**; somente os fluxos de prompt/guia foram automatizados.
 
 ## O que não foi executado
 
-- Nenhum deploy para Firebase Hosting, Firestore ou GitHub Pages.
-- Nenhum `firebase deploy`, merge em `main` ou migração contra produção.
+- Nenhum deploy para Firebase Hosting ou Firestore.
+- Nenhum `firebase deploy` ou migração contra produção. O GitHub Pages foi
+  publicado pelos workflows versionados do repositório.
 - Nenhuma instalação PWA física em Android, iOS, Windows ou macOS.
 - Nenhum leitor de tela físico; a evidência de acessibilidade é Axe + teclado automatizado.
 - Nenhuma escrita em credenciais, contas ou dados reais.
@@ -21338,8 +21342,8 @@ ARQUIVO: playwright.firebase.config.ts
 ======================================
 
 
-Tamanho: 1368 bytes
-SHA-256: 9718ed5a3e44464455a5d9ecfa18cf9ee01ea555f409c2e79855e6ac4275cdd8
+Tamanho: 1373 bytes
+SHA-256: 47389ab8330278837425d139fa8be510bea98c6b80a5809d778d811cf0c1a978
 
 ```
 import { defineConfig, devices } from '@playwright/test'
@@ -26741,8 +26745,8 @@ ARQUIVO: src/lib/firebase.ts
 ============================
 
 
-Tamanho: 2433 bytes
-SHA-256: 5e909a837d813fa4d30333bbf364fb93d01ea8f511f6ab85d9e1fff11db6d8af
+Tamanho: 2437 bytes
+SHA-256: 06c98ec3ec2f7fe0546138c290dfa81c6f509c566941e63c70111d843b9c0564
 
 ```
 import { getApp, getApps, initializeApp } from 'firebase/app'
@@ -29748,8 +29752,8 @@ ARQUIVO: src/main.tsx
 =====================
 
 
-Tamanho: 1347 bytes
-SHA-256: 9fa52b240e0834b942b21e159b687ea47406f6d0b179098557ecb266949883ad
+Tamanho: 1161 bytes
+SHA-256: e06b180e7a2e2e20749355d3f099a53771b6ae50ddf63a7c2c9df70950fbe27a
 
 ```
 import { StrictMode } from 'react'
@@ -29771,14 +29775,7 @@ const pagesRedirect = restoredPagesRoute(window.location.search, import.meta.env
 if (pagesRedirect) window.history.replaceState(null, '', pagesRedirect)
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 30_000, retry: 1 } } })
-const updateServiceWorker = registerSW({
-  immediate: true,
-  onNeedRefresh: () => {
-    if (window.confirm('Uma nova versão está disponível. Atualizar agora?')) {
-      void updateServiceWorker(true)
-    }
-  },
-})
+registerSW({ immediate: true })
 createRoot(document.getElementById('root')!).render(<StrictMode><QueryClientProvider client={queryClient}><BrowserRouter basename={import.meta.env.BASE_URL}><App /></BrowserRouter></QueryClientProvider></StrictMode>)
 
 ```
@@ -35156,8 +35153,8 @@ ARQUIVO: vite.config.ts
 =======================
 
 
-Tamanho: 1896 bytes
-SHA-256: f91e99a8d69aed20c3456626a7c9673a6bfd386efc2de4ff912ae9165192f649
+Tamanho: 2143 bytes
+SHA-256: a0fa6e9e9c004c82b6c0d7d837e2c155d2f9449365657388317d97f2a3edcabd
 
 ```
 import { defineConfig } from 'vitest/config'
@@ -35188,7 +35185,9 @@ export default defineConfig({
     tailwindcss(),
     react(),
     VitePWA({
-      registerType: 'prompt',
+      // Activate new releases immediately. This is also the recovery path when
+      // an older JavaScript bundle fails before it can request an update.
+      registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
         id: './',
@@ -35208,7 +35207,10 @@ export default defineConfig({
         ],
       },
       workbox: {
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
         navigateFallback: `${base}index.html`,
+        skipWaiting: true,
       },
     }),
   ],

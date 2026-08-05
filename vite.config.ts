@@ -26,7 +26,9 @@ export default defineConfig({
     tailwindcss(),
     react(),
     VitePWA({
-      registerType: 'prompt',
+      // Activate new releases immediately. This is also the recovery path when
+      // an older JavaScript bundle fails before it can request an update.
+      registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
         id: './',
@@ -46,7 +48,10 @@ export default defineConfig({
         ],
       },
       workbox: {
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
         navigateFallback: `${base}index.html`,
+        skipWaiting: true,
       },
     }),
   ],
